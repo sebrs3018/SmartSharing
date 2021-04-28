@@ -19,7 +19,7 @@
         app:srcCompat="@drawable/logo" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/etUser"
         android:layout_width="250dp"
         android:layout_height="40dp"
         android:background="#11000000"
@@ -29,15 +29,15 @@
         android:inputType="textPersonName"
         android:textSize="16dp"
         android:layout_marginBottom="35dp"
-        android:layout_above="@+id/editText2"
+        android:layout_above="@+id/etPassword"
         android:layout_centerHorizontal="true" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/etPassword"
         android:layout_width="250dp"
         android:layout_height="40dp"
-        android:layout_alignStart="@+id/editText"
-        android:layout_alignLeft="@+id/editText"
+        android:layout_alignStart="@+id/etUser"
+        android:layout_alignLeft="@+id/etUser"
         android:layout_alignBottom="@+id/cardView"
         android:layout_marginStart="0dp"
         android:layout_marginLeft="0dp"
@@ -63,7 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="46dp">
 
-            <TextView
+            <Button
                 android:id="@+id/bttLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
