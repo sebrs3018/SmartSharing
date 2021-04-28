@@ -10,6 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Login">
         <activity android:name=".MainActivity">
+
+            <meta-data
+                android:name="com.google.firebase:firebase-ml-vision.DEPENDENCIES"
+                android:value="face"
+                >
+            </meta-data>
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
