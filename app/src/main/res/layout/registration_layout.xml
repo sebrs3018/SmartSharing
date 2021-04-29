@@ -52,7 +52,7 @@
         android:id="@+id/cardView"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_above="@+id/textView2"
+        android:layout_above="@+id/tvLogin_page"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="31dp"
         app:cardBackgroundColor="#E91E63"
@@ -63,12 +63,12 @@
             android:layout_width="match_parent"
             android:layout_height="46dp">
 
-            <Button
-                android:id="@+id/bttLogin"
+            <TextView
+                android:id="@+id/tvRegister"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="Login"
+                android:text="Register"
                 android:textColor="#fff"
                 android:textSize="18sp" />
 
@@ -76,10 +76,10 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tvLogin_page"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Registrati!"
+        android:text="Sign-in!"
         android:textColor="@color/white"
         android:layout_above="@+id/linearLayout"
         android:layout_centerHorizontal="true"
