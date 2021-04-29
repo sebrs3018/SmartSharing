@@ -51,7 +51,12 @@ public class MainActivity extends AppCompatActivity {
         cameraView          = findViewById(R.id.camera_view);
         cameraView.setFacing(CameraKit.Constants.FACING_FRONT);
 
-        alertDialog = new SpotsDialog.Builder().setContext(this).setMessage("Please Wait, Loading...").setCancelable(false).build();
+        alertDialog = new SpotsDialog.Builder()
+                                     .setContext(this)
+                                     .setMessage("Please Wait, Loading...")
+                                     .setCancelable(false)
+                                     .build();
+
 
         bttFaceDetection.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onImage(CameraKitImage cameraKitImage) {
-                alertDialog.show();
+                alertDialog.show(); //Mostra il dialogo quando si to
                 Bitmap bitmap = cameraKitImage.getBitmap();
                 bitmap = Bitmap.createScaledBitmap(bitmap, cameraView.getWidth(), cameraView.getHeight(), false);
                 cameraView.stop();
@@ -103,6 +108,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(List<FirebaseVisionFace> firebaseVisionFaces) {
                 getFaceResults(firebaseVisionFaces);
+
+
+                alertDialog = new SpotsDialog.Builder()
+                        .setContext(MainActivity.this)
+                        .setMessage("Utente Riconosciuto!")
+                        .setCancelable(false)
+                        .build();
+                alertDialog.show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -120,10 +133,10 @@ public class MainActivity extends AppCompatActivity {
         for (FirebaseVisionFace face : firebaseVisionFaces){
             Rect rect = face.getBoundingBox();
             RectOverlay rectOverlay = new RectOverlay(graphicOverlay, rect);
-
             graphicOverlay.add(rectOverlay);
         }
         alertDialog.dismiss();
+
 
 
         counter = counter++;
@@ -133,7 +146,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-
         cameraView.stop();
     }
 
@@ -141,8 +153,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         cameraView.start();
-
     }
 }
