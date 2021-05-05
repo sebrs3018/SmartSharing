@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Login</string>
+    <string name="LogFileName">Logs.txt</string>
+    <string name="LogsPath">/data/user/0/com.sebrs3018.login/files/SmartSharing/Logs.txt</string>
+    <string name="FingerPrintActivity">com.sebrs3018.SmartSharing.FingerprintDetector</string>
+    <string name="username">username</string>
 </resources>

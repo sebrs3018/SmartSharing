@@ -1,4 +1,4 @@
-package com.sebrs3018.login;
+package com.sebrs3018.SmartSharing;
 
 import android.app.AlertDialog;
 import android.graphics.Bitmap;
@@ -18,8 +18,8 @@ import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.face.FirebaseVisionFace;
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetector;
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions;
-import com.sebrs3018.login.Helper.GraphicOverlay;
-import com.sebrs3018.login.Helper.RectOverlay;
+import com.sebrs3018.SmartSharing.Helper.GraphicOverlay;
+import com.sebrs3018.SmartSharing.Helper.RectOverlay;
 import com.wonderkiln.camerakit.CameraKit;
 import com.wonderkiln.camerakit.CameraKitError;
 import com.wonderkiln.camerakit.CameraKitEvent;
@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
                         .setMessage("Utente Riconosciuto!")
                         .setCancelable(false)
                         .build();
+
                 alertDialog.show();
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -123,8 +124,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Error: " +  e.getMessage(), Toast.LENGTH_SHORT);
             }
         });
-
-
     }
 
     private void getFaceResults(List<FirebaseVisionFace> firebaseVisionFaces) {
@@ -132,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
         //Get rectangles on the pictures
         for (FirebaseVisionFace face : firebaseVisionFaces){
             Rect rect = face.getBoundingBox();
+
             RectOverlay rectOverlay = new RectOverlay(graphicOverlay, rect);
             graphicOverlay.add(rectOverlay);
         }

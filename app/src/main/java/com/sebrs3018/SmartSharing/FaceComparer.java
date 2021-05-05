@@ -1,4 +1,4 @@
-package com.sebrs3018.login;
+package com.sebrs3018.SmartSharing;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -163,6 +163,7 @@ public class FaceComparer extends AppCompatActivity {
         // --> immagine originale dovrà essere presa dal DB
         if(requestCode==12 && resultCode==RESULT_OK && data!=null) {
             imageuri = data.getData();
+
             try {
                 oribitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageuri);
                 oriImage.setImageBitmap(oribitmap);

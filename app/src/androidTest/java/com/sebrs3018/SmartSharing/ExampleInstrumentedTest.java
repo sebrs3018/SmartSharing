@@ -1,4 +1,4 @@
-package com.sebrs3018.login;
+package com.sebrs3018.SmartSharing;
 
 import android.content.Context;
 

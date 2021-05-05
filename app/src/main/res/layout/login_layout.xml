@@ -22,15 +22,15 @@
         android:id="@+id/etUser"
         android:layout_width="250dp"
         android:layout_height="40dp"
+        android:layout_above="@+id/etPassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
         android:background="#11000000"
         android:drawableLeft="@drawable/ic_action_user"
         android:ems="10"
         android:hint="Username"
         android:inputType="textPersonName"
-        android:textSize="16dp"
-        android:layout_marginBottom="35dp"
-        android:layout_above="@+id/etPassword"
-        android:layout_centerHorizontal="true" />
+        android:textSize="16dp" />
 
     <EditText
         android:id="@+id/etPassword"
@@ -41,12 +41,50 @@
         android:layout_alignBottom="@+id/cardView"
         android:layout_marginStart="0dp"
         android:layout_marginLeft="0dp"
-        android:layout_marginBottom="142dp"
+        android:layout_marginBottom="250dp"
         android:background="#11000000"
         android:drawableLeft="@drawable/ic_action_pass"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/etUser"
+        android:layout_alignBottom="@+id/cardView"
+        android:layout_marginStart="-10dp"
+        android:layout_marginBottom="159dp"
+        android:text="Access With fingerprint"
+        />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvBioAccess"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_above="@+id/tvRegister_page"
+        android:layout_alignStart="@+id/etUser"
+        android:layout_alignBottom="@+id/cardView"
+        android:layout_marginStart="-25dp"
+        android:layout_marginBottom="74dp"
+        app:cardBackgroundColor="#E91E63"
+        app:cardCornerRadius="25dp"
+        app:cardElevation="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="46dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Access With Fingerprint"
+                android:textColor="#fff"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -73,7 +111,13 @@
                 android:textSize="18sp" />
 
         </RelativeLayout>
+
     </androidx.cardview.widget.CardView>
+
+
+
+
+
 
     <TextView
         android:id="@+id/tvRegister_page"

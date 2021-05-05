@@ -1,4 +1,4 @@
-package com.sebrs3018.login.Helper;
+package com.sebrs3018.SmartSharing.Helper;
 
 /*
  * Copyright (C) The Android Open Source Project

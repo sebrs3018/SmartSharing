@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.sebrs3018.login">
+    package="com.sebrs3018.SmartSharing">
 
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
@@ -15,7 +19,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Login">
-        <activity android:name=".FaceComparer">
+        <activity android:name="com.sebrs3018.SmartSharing.LoginActivity">
 
             <meta-data
                 android:name="com.google.firebase:firebase-ml-vision.DEPENDENCIES"
@@ -25,17 +29,27 @@
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <activity android:name=".RegistrationActivity">
             <intent-filter>
-                <action android:name="com.sebrs3018.login.RegistrationActivity"/>
+                <action android:name="com.sebrs3018.SmartSharing.RegistrationActivity"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+
+        <activity android:name=".FingerprintDetector">
+            <intent-filter>
+                <action android:name="com.sebrs3018.SmartSharing.FingerprintDetector"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+
+
+
     </application>
 
 </manifest>
