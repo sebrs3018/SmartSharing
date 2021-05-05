@@ -18,7 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnFailureListener;
+/*import com.google.android.gms.tasksa.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.face.Face;
@@ -32,7 +32,7 @@ import org.tensorflow.lite.support.common.ops.NormalizeOp;
 import org.tensorflow.lite.support.image.ImageProcessor;
 import org.tensorflow.lite.support.image.TensorImage;
 import org.tensorflow.lite.support.image.ops.ResizeOp;
-import org.tensorflow.lite.support.image.ops.ResizeWithCropOrPadOp;
+import org.tensorflow.lite.support.image.ops.ResizeWithCropOrPadOp;*/
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -43,7 +43,7 @@ import java.util.List;
 
 public class FaceComparer extends AppCompatActivity {
 
-    protected Interpreter tflite;
+//    protected Interpreter tflite;
     private  int imageSizeX;
     private  int imageSizeY;
 
@@ -61,7 +61,7 @@ public class FaceComparer extends AppCompatActivity {
     float[][] ori_embedding = new float[1][128];
     float[][] test_embedding = new float[1][128];
 
-    @Override
+/*    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.face_comparer);
@@ -159,7 +159,7 @@ public class FaceComparer extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        /* blocco per processare immagine original */
+        *//* blocco per processare immagine original *//*
         // --> immagine originale dovrà essere presa dal DB
         if(requestCode==12 && resultCode==RESULT_OK && data!=null) {
             imageuri = data.getData();
@@ -173,7 +173,7 @@ public class FaceComparer extends AppCompatActivity {
             }
         }
 
-        /* blocco per processare immagine test */
+        *//* blocco per processare immagine test *//*
         if(requestCode==13 && resultCode==RESULT_OK && data!=null) {
             imageuri = data.getData();
             try {
@@ -223,7 +223,7 @@ public class FaceComparer extends AppCompatActivity {
         int[] imageShape = tflite.getInputTensor(imageTensorIndex).shape(); // {1, height, width, 3}
         imageSizeY = imageShape[1];
         imageSizeX = imageShape[2];
-        /* tflite è un Interpreter */
+        *//* tflite è un Interpreter *//*
         DataType imageDataType = tflite.getInputTensor(imageTensorIndex).dataType();
 
         inputImageBuffer = new TensorImage(imageDataType);
@@ -235,6 +235,6 @@ public class FaceComparer extends AppCompatActivity {
             ori_embedding = embedding;
         else if (imagetype.equals("test"))
             test_embedding = embedding;
-    }
+    }*/
 }
 

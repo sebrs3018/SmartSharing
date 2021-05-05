@@ -21,7 +21,7 @@ import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.google.android.gms.vision.CameraSource;
+//import com.google.android.gms.vision.CameraSource;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -39,7 +39,6 @@ import java.util.Set;
  * <ol>
  * <li>{@link Graphic#scaleX(float)} and {@link Graphic#scaleY(float)} adjust the size of the
  * supplied value from the preview scale to the view scale.</li>
- * <li>{@link Graphic#translateX(float)} and {@link Graphic#translateY(float)} adjust the coordinate
  * from the preview's coordinate system to the view coordinate system.</li>
  * </ol>
  */
@@ -49,7 +48,7 @@ public class GraphicOverlay extends View {
     private float mWidthScaleFactor = 1.0f;
     private int mPreviewHeight;
     private float mHeightScaleFactor = 1.0f;
-    private int mFacing = CameraSource.CAMERA_FACING_BACK;
+//    private int mFacing = CameraSource.CAMERA_FACING_BACK;
     private Set<Graphic> mGraphics = new HashSet<>();
 
     /**
@@ -97,6 +96,7 @@ public class GraphicOverlay extends View {
          * Adjusts the x coordinate from the preview's coordinate system to the view coordinate
          * system.
          */
+/*
         public float translateX(float x) {
             if (mOverlay.mFacing == CameraSource.CAMERA_FACING_FRONT) {
                 return mOverlay.getWidth() - scaleX(x);
@@ -104,6 +104,7 @@ public class GraphicOverlay extends View {
                 return scaleX(x);
             }
         }
+*/
 
         /**
          * Adjusts the y coordinate from the preview's coordinate system to the view coordinate
@@ -156,14 +157,14 @@ public class GraphicOverlay extends View {
      * Sets the camera attributes for size and facing direction, which informs how to transform
      * image coordinates later.
      */
-    public void setCameraInfo(int previewWidth, int previewHeight, int facing) {
+/*    public void setCameraInfo(int previewWidth, int previewHeight, int facing) {
         synchronized (mLock) {
             mPreviewWidth = previewWidth;
             mPreviewHeight = previewHeight;
             mFacing = facing;
         }
         postInvalidate();
-    }
+    }*/
 
     /**
      * Draws the overlay with its associated graphic objects.

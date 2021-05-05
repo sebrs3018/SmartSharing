@@ -67,9 +67,6 @@ public class RegistrationActivity extends AppCompatActivity {
                 db = new DbManager(RegistrationActivity.this);
 
                 if(db.insertUser(_user, DBUtils.md5(_password))) {    //salvo in DB password cifrata
-                    writeFileOnInternalStorage(RegistrationActivity.this, getString(R.string.LogFileName), _user);
-
-
 
                     /* finestrella pop-up */
                     new AlertDialog.Builder(RegistrationActivity.this)
@@ -83,25 +80,19 @@ public class RegistrationActivity extends AppCompatActivity {
                                             intent4results.putExtra(getString(R.string.username), _user);
                                             startActivityForResult(intent4results, ACTIVITY_REQUEST_CODE);*/
                                             FingerprintDetector fingerprintDetector = new FingerprintDetector(_user, RegistrationActivity.this);
-                                            fingerprintDetector.startFingerPrintDetection();
+                                            fingerprintDetector.startFingerPrintDetection(true);
+                                            /* Tengo traccia degli utenti che hanno inserito anche le loro impronta */
+                                            writeFileOnInternalStorage(RegistrationActivity.this, getString(R.string.LogFileName), _user);
                                         }
                                     })
                                     .setNegativeButton("No", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             dialog.dismiss();
+                                            startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
                                         }
                                     }).create().show();
-
-                    /*TODO: non è necessario creare un'altra Activity, è sufficiente attivare il pop-up
-                    * IDEA: trasformare FingerprintAuthentication in una classe in cui si passa il contesto
-                    *       cercare di di fare una finestra in cui si chiede se si vuole registrare l'impronta o meno!
-                    * */
-
-
-                   // startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
                 }
-
             }
         });
 
@@ -111,7 +102,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     //Chiamato in automatico quando un activity chiama metodo setResult --> arrivaa starActiviyForResult
     //requestCode corrisponde al code per chiamarla ==> dato da setResult (riga 69)
-    @Override
+/*    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -120,11 +111,11 @@ public class RegistrationActivity extends AppCompatActivity {
             //controllo che l'activity di supporto mi abbia inviato il risultato corretto (definito da me)
             if( resultCode == Activity.RESULT_OK ){
                 Toast.makeText(RegistrationActivity.this, "Registrazione impronta avvenuta con successo! ", Toast.LENGTH_LONG).show();
-                /*TODO: una volta avvenuta la registrazione dell'impronta, ritorno alla pagina di login*/
+                *//*TODO: una volta avvenuta la registrazione dell'impronta, ritorno alla pagina di login*//*
             }
         }
 
-    }
+    }*/
 
 
 

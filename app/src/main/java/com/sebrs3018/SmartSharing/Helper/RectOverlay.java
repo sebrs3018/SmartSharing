@@ -34,8 +34,8 @@ public class RectOverlay extends GraphicOverlay.Graphic {
     @Override
     public void draw(Canvas canvas) {
         RectF rectF     = new RectF(rect);
-        rectF.left      = translateX(rectF.left);
-        rectF.right     = translateX(rectF.right);
+/*        rectF.left      = translateX(rectF.left);
+        rectF.right     = translateX(rectF.right);*/
         rectF.top       = translateY(rectF.top);
         rectF.bottom    = translateY(rectF.bottom);
 

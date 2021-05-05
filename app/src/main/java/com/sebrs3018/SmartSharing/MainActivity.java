@@ -11,13 +11,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnFailureListener;
+/*import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.face.FirebaseVisionFace;
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetector;
-import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions;
+import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions;*/
 import com.sebrs3018.SmartSharing.Helper.GraphicOverlay;
 import com.sebrs3018.SmartSharing.Helper.RectOverlay;
 import com.wonderkiln.camerakit.CameraKit;
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         bttFaceDetection    = findViewById(R.id.detect_face_btn);
         graphicOverlay      = findViewById(R.id.graphic_overlay);
-        cameraView          = findViewById(R.id.camera_view);
+//        cameraView          = findViewById(R.id.camera_view);
         cameraView.setFacing(CameraKit.Constants.FACING_FRONT);
 
         alertDialog = new SpotsDialog.Builder()
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 bitmap = Bitmap.createScaledBitmap(bitmap, cameraView.getWidth(), cameraView.getHeight(), false);
                 cameraView.stop();
 
-                processFaceDetection(bitmap);
+//                processFaceDetection(bitmap);
 
             }
 
@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+/*
     private void processFaceDetection(Bitmap bitmap) {
         FirebaseVisionImage firebaseVisionImage = FirebaseVisionImage.fromBitmap(bitmap);
         FirebaseVisionFaceDetectorOptions firebaseVisionFaceDetectorOptions = new FirebaseVisionFaceDetectorOptions.Builder().build();
@@ -141,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
 
         counter = counter++;
     }
+*/
 
 
     @Override

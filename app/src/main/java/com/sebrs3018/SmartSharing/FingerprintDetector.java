@@ -45,6 +45,7 @@ public class FingerprintDetector  {
     private BiometricPrompt biometricPrompt;
     private BiometricPrompt.PromptInfo promptInfo;
     private Context context;
+    private boolean success;
 
     private String USERNAMEKEY;  //l'username' mi servirà come chiave!
 
@@ -83,9 +84,10 @@ public class FingerprintDetector  {
         }
     }
 
-    public void startFingerPrintDetection(){
+    public boolean startFingerPrintDetection(boolean isRegistration){
+
         executor = ContextCompat.getMainExecutor(context);
-        biometricPrompt = new BiometricPrompt((RegistrationActivity) context,
+        biometricPrompt = new BiometricPrompt((FragmentActivity) context,
                 executor, new BiometricPrompt.AuthenticationCallback() {
             @Override
             public void onAuthenticationError(int errorCode,
@@ -100,35 +102,38 @@ public class FingerprintDetector  {
             public void onAuthenticationSucceeded(
                     @NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
-                byte[] encryptedInfo = new byte[0];
+/*                byte[] encryptedInfo = new byte[0];
                 try {
 
-                    /* encryption/deceryption di username */
+                    *//* encryption/deceryption di username *//*
                     encryptedInfo = result.getCryptoObject().getCipher().doFinal(
                             USERNAMEKEY.getBytes(Charset.defaultCharset()));
 
 
                 } catch (BadPaddingException | IllegalBlockSizeException e) {
                     e.printStackTrace();
-                }
-
-                Log.d("MY_APP_TAG", "Encrypted information: " +
-                        Arrays.toString(encryptedInfo));
+                }*/
+/*                Log.d("MY_APP_TAG", "Encrypted information: " +
+                        Arrays.toString(encryptedInfo));*/
 
                 Toast.makeText(context,
-                        "Registrazione impronta avvenuta con successo!", Toast.LENGTH_SHORT).show();
+                        "Registrazione/Riconoscimento impronta avvenuto con successo!", Toast.LENGTH_SHORT).show();
 
-/*                *//* Rimando indietro il risultato di buona riuscita *//*
-                setResult(Activity.RESULT_OK, new Intent());
-                finish();*/
+                /* Ritorno alla scherma di login */
+                success = true;
+                if(isRegistration)
+                    context.startActivity(new Intent(context, LoginActivity.class));
+                else
+                    Toast.makeText(context, "Benvenuto!", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onAuthenticationFailed() {
                 super.onAuthenticationFailed();
-                Toast.makeText(context, "Authentication failed",
+/*                Toast.makeText(context, "Authentication failed",
                         Toast.LENGTH_SHORT)
-                        .show();
+                        .show();*/
+                success = false;
             }
         });
 
@@ -149,6 +154,7 @@ public class FingerprintDetector  {
             }
             biometricPrompt.authenticate(promptInfo, new BiometricPrompt.CryptoObject(cipher));
 //        });
+        return success;
     }
 
 /*    @RequiresApi(api = Build.VERSION_CODES.M)

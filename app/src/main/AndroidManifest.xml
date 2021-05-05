@@ -40,9 +40,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".FingerprintDetector">
+        <activity android:name=".RegisteredUsers">
             <intent-filter>
-                <action android:name="com.sebrs3018.SmartSharing.FingerprintDetector"/>
+                <action android:name="com.sebrs3018.SmartSharing.RegisteredUsers"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>

@@ -53,6 +53,8 @@ public class DbManager
 
     public boolean login(String email, String password)
     {
+        boolean success = true;
+
         String queryString = String.format("SELECT " + FIELD_ID + " FROM " + DatabaseStrings.TBL_NAME + " WHERE " + DatabaseStrings.FIELD_EMAIL + " = '%s' AND " +  DatabaseStrings.FIELD_PASSWORD + " = '%s'",
                             email,  DBUtils.md5(password));
 
@@ -65,11 +67,13 @@ public class DbManager
         }
 
         Cursor cursor = db.rawQuery(queryString, null);
-        cursor.moveToFirst();   //mi prendo l'unica entry
+        if(!cursor.moveToFirst())   //mi prendo l'unica entry
+            success = false;
 
         db.close();
         cursor.close();
-        return true;
+
+        return success;
     }
 
     public boolean delete(long id)
