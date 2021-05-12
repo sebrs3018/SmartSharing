@@ -2,6 +2,7 @@ package com.sebrs3018.SmartSharing;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -12,6 +13,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.sebrs3018.SmartSharing.DB.DbManager;
 
 import java.io.BufferedReader;
@@ -26,10 +29,14 @@ public class LoginActivity extends AppCompatActivity {
 
     private final String FullPathLog = "/data/user/0/com.sebrs3018.login/files/SmartSharing/Logs.txt";
     private String TAG = "LoginActivity";
-    private TextView tvLogin = null, tvRegister_page = null; // tvLogin è il bottone per loggare.
-    private EditText etUser = null, etPassword = null;
+    private TextView tvRegister_page = null; // tvLogin è il bottone per loggare.
+
+    private TextInputLayout ilUser = null, ilPassword = null;
+    private TextInputEditText etUser = null, etPassword = null;
+
+
     private DbManager db = null;
-    private CardView cvBioAccess = null;
+    private CardView cvBioAccess = null, cvLogin = null;
     private TextView tvBioAuth = null;
 
 //    private FirebaseAuth firebaseAuthenticator = null;
@@ -39,13 +46,15 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
 
-        etUser = findViewById(R.id.etUser);
-        etPassword = findViewById(R.id.etPassword);
-        tvLogin = findViewById(R.id.tvLogin);
-        tvRegister_page = findViewById(R.id.tvRegister_page);
+        etUser      = findViewById(R.id.etUser);
+        etPassword  = findViewById(R.id.etPassword);
+
+        ilPassword  = findViewById(R.id.ilPassword);
+
         cvBioAccess = findViewById(R.id.cvBioAccess);
+        cvLogin     = findViewById(R.id.cvLogin);
 
-
+        tvRegister_page = findViewById(R.id.tvRegister_page);
         // Redirect alla page di registrazione
         tvRegister_page.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,8 +62,6 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(LoginActivity.this, RegistrationActivity.class));
             }
         });
-
-
         /* Listener per pulsante acccesso con impronta digitale */
         cvBioAccess.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,12 +71,18 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         /* Login regular */
-        tvLogin.setOnClickListener(new View.OnClickListener() {
+        cvLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 String _user = etUser.getText().toString().trim();
                 String _password = etPassword.getText().toString().trim();
+
+                if(!isPasswordValid(etPassword.getText()))
+                    ilPassword.setError("La password deve contere almeno 8 caratteri");
+                else
+                    ilPassword.setError(null);
+
 
                 db = new DbManager(LoginActivity.this);
 
@@ -84,7 +97,12 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
 
+
+
+    private boolean isPasswordValid(@Nullable Editable text) {
+        return text != null && text.length() >= 8;
     }
 
 

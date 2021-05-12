@@ -4,4 +4,15 @@
     <string name="LogsPath">/data/user/0/com.sebrs3018.login/files/SmartSharing/Logs.txt</string>
     <string name="FingerPrintActivity">com.sebrs3018.SmartSharing.FingerprintDetector</string>
     <string name="username">username</string>
+    <string name="title_activity_navigation">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_search">Search</string>
+    <string name="more">more</string>
+    <string name="content_description_more">content_description_more</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="password">Password</string>
+    <string name="FingerPrintAccess">Access With Fingerprint</string>
+    <string name="cvLoginText">Login</string>
 </resources>

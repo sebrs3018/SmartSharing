@@ -8,22 +8,27 @@
 
     <com.camerakit.CameraKitView
         android:id="@+id/cameraKitView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:camera_facing="back"
-        android:adjustViewBounds="true" />
+        android:layout_width="418dp"
+        android:layout_height="619dp"
+        android:adjustViewBounds="true"
+        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.648" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="116dp"
         android:layout_height="wrap_content"
-        android:id="@+id/bttScan"
-        android:backgroundTint="@color/black"
-        android:text="TAP TO SCAN"
+        android:text="Tap to scan"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintEnd_toStartOf="parent"
-        >
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.971" />
 
-    </androidx.appcompat.widget.AppCompatButton>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
