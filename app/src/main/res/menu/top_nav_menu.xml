@@ -16,15 +16,12 @@
         android:id="@+id/microphone"
         android:icon="@drawable/ic_baseline_mic_24"
         android:title="ActivateSpeechRecognition"
-
         app:showAsAction="ifRoom"
         />
 
 
     <item android:title="Help"
         />
-
-
 
 
     <item

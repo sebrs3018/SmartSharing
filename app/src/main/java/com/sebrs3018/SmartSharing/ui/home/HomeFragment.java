@@ -44,16 +44,7 @@ public class HomeFragment extends Fragment {
 
         ((AppCompatActivity) getActivity()).setSupportActionBar(binding.topAppBar);
 
-        // Setting up the RecyclerView
-        RecyclerView recyclerView = binding.recyclerView;
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false));
-        BookCardRecyclerViewAdapter adapter = new BookCardRecyclerViewAdapter(
-                BookEntry.initProductEntryList(getResources()));
-        recyclerView.setAdapter(adapter);
-        int largePadding = getResources().getDimensionPixelSize(R.dimen.book_product_grid_spacing);
-        int smallPadding = getResources().getDimensionPixelSize(R.dimen.book_product_grid_spacing_small);
-        recyclerView.addItemDecoration(new BookGridItemDecoration(largePadding, smallPadding));
+
 
 
 

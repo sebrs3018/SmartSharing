@@ -112,7 +112,11 @@ public class Navigation_Activity extends AppCompatActivity {
         }
     };
 
-
+    //TODO: da valutare se rimuoverlo o meno
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
 
 }

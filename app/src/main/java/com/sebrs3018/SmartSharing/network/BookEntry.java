@@ -69,4 +69,15 @@ public class BookEntry {
         }.getType();
         return gson.fromJson(jsonProductsString, productListType);
     }
+
+
+    public String getTitle(){
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+
 }
