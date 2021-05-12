@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
 public class LoginActivity extends AppCompatActivity {
 
     private final String FullPathLog = "/data/user/0/com.sebrs3018.login/files/SmartSharing/Logs.txt";
-    private String TAG = "LoginActivity";
+    private final String TAG = "LoginActivity";
     private TextView tvRegister_page = null; // tvLogin è il bottone per loggare.
 
     private TextInputLayout ilUser = null, ilPassword = null;
@@ -39,7 +40,6 @@ public class LoginActivity extends AppCompatActivity {
     private CardView cvBioAccess = null, cvLogin = null;
     private TextView tvBioAuth = null;
 
-//    private FirebaseAuth firebaseAuthenticator = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,7 +55,8 @@ public class LoginActivity extends AppCompatActivity {
         cvLogin     = findViewById(R.id.cvLogin);
 
         tvRegister_page = findViewById(R.id.tvRegister_page);
-        // Redirect alla page di registrazione
+
+        /* Redirect alla page di registrazione */
         tvRegister_page.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,6 +84,15 @@ public class LoginActivity extends AppCompatActivity {
                 else
                     ilPassword.setError(null);
 
+        /* Parte intuile, usata solo per testare lo scanner*/
+//        Button bttToScanner = findViewById(R.id.bttToScanner);
+//        bttToScanner.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(LoginActivity.this, BarcodeScanner.class));
+//            }
+//        });
+
 
                 db = new DbManager(LoginActivity.this);
 
@@ -106,6 +116,4 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-
 }
-

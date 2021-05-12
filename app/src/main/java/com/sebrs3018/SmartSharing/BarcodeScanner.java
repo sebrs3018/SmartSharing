@@ -1,82 +1,131 @@
 package com.sebrs3018.SmartSharing;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import com.camerakit.CameraKitView;
-import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-import java.io.FileOutputStream;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.mlkit.vision.barcode.Barcode;
+import com.google.mlkit.vision.barcode.BarcodeScannerOptions;
+import com.google.mlkit.vision.barcode.BarcodeScanning;
+import com.google.mlkit.vision.common.InputImage;
+import com.sebrs3018.SmartSharing.DB.DbContext;
+import com.wonderkiln.camerakit.CameraKitError;
+import com.wonderkiln.camerakit.CameraKitEvent;
+import com.wonderkiln.camerakit.CameraKitEventListener;
+import com.wonderkiln.camerakit.CameraKitImage;
+import com.wonderkiln.camerakit.CameraKitVideo;
+import com.wonderkiln.camerakit.CameraView;
+
+
+import java.util.List;
 
 public class BarcodeScanner extends AppCompatActivity {
 
+    private final String TAG = "BarcodeScanner";
+    private CameraView cameraView = null;
+    private Button bttScan = null;
 
-    private CameraKitView cameraKitView = null;
-    private Button button = null;
+    private InputImage inputImage = null;
+    private com.google.mlkit.vision.barcode.BarcodeScanner scanner = null;
+    private String barcodeInfo = null;
 
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.barcode_scanner);
-        cameraKitView = findViewById(R.id.cameraKitView);
 
-        button = findViewById(R.id.button2);
+        cameraView = findViewById(R.id.cameraView);
+        bttScan = findViewById(R.id.bttScan);
 
-        button.setOnClickListener(new View.OnClickListener(){
+        scanner = BarcodeScanning.getClient();
 
+        bttScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cameraKitView.captureImage(new CameraKitView.ImageCallback() {
-                    @Override
-                    public void onImage(CameraKitView cameraKitView, final byte[] capturedImage) {
-                        Toast.makeText(BarcodeScanner.this, "" + capturedImage.length, Toast.LENGTH_SHORT).show();
-                        File savedPhoto = new File(Environment.getExternalStorageDirectory(), "photo.jpg");
-                        try {
-                            FileOutputStream outputStream = new FileOutputStream(savedPhoto.getPath());
-                            outputStream.write(capturedImage);
-                            outputStream.close();
-                        } catch (java.io.IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-            });
-        }
-        });
-    }
+                Log.e(TAG, "onClick() fired");
+                cameraView.start();
+                cameraView.captureImage();
+            } /* OnClick() */
+        }); /* OnClick() Listener */
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        cameraKitView.onStart();
+        cameraView.addCameraKitListener(new CameraKitEventListener() {
+            @Override
+            public void onEvent(CameraKitEvent cameraKitEvent) {
+                /* non ci serve */
+            }
+
+            @Override
+            public void onError(CameraKitError cameraKitError) {
+                /* non ci serve */
+            }
+
+            @Override
+            public void onImage(CameraKitImage cameraKitImage) {
+                Log.e(TAG, "onImage() fired");
+                Bitmap bitmap = cameraKitImage.getBitmap();
+                bitmap = Bitmap.createScaledBitmap(bitmap, cameraView.getWidth(), cameraView.getHeight(), false);
+
+                inputImage = InputImage.fromBitmap(bitmap, 0);
+                scanBarcode(inputImage);
+//                cameraView.stop();
+            }
+
+            @Override
+            public void onVideo(CameraKitVideo cameraKitVideo) {
+                /* non ci serve */
+            }
+        });
+    }/* onCreate() */
+
+    public void scanBarcode(InputImage _image){
+        if (inputImage != null){
+            Task<List<Barcode>> result = scanner.process(_image).addOnSuccessListener(new OnSuccessListener<List<Barcode>>() {
+                @Override
+                public void onSuccess(List<Barcode> barcodes) {
+                    Log.e(TAG,"barcodes size: "+ barcodes.size());
+
+                    for (Barcode b : barcodes){
+                        if (b.getValueType() == Barcode.TYPE_ISBN){
+                            barcodeInfo = b.getRawValue();
+                            Toast.makeText(BarcodeScanner.this, "Barcode Found: "+barcodeInfo, Toast.LENGTH_SHORT).show();
+                        }else{
+                            Log.e(TAG,"Smartsharing can only scan barcodes, try again.");
+                        }
+                    } /* for Barcode ... */
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.e(TAG,"Error: onFailure() fired.");
+                    Log.e(TAG,"Error: "+e);
+                }
+            });
+        } else {
+            Toast.makeText(BarcodeScanner.this,"Impossible to scan from null imageInput", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        cameraKitView.onResume();
+        cameraView.start();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        cameraKitView.onPause();
+        cameraView.stop();
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        cameraKitView.onStop();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        cameraKitView.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
 }
