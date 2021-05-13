@@ -92,13 +92,10 @@ public class LoginActivity extends AppCompatActivity {
 //                startActivity(new Intent(LoginActivity.this, BarcodeScanner.class));
 //            }
 //        });
-
-
                 db = new DbManager(LoginActivity.this);
 
                 if (db.login(_user, _password)) {
-                    Toast.makeText(LoginActivity.this, "Login Success!!!!!!!", Toast.LENGTH_SHORT).show();
-                    Log.i(TAG, "onClick: Login success!!!!!!");
+                    startActivity(new Intent(LoginActivity.this, Navigation_Activity.class));
                 } else {
                     Toast.makeText(LoginActivity.this, "Login Failure!!!!!!!", Toast.LENGTH_SHORT).show();
                     Log.i(TAG, "onClick: Login Failure!!!!!!");
