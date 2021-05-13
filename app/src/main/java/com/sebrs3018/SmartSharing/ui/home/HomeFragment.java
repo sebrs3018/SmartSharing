@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sebrs3018.SmartSharing.GridCardBooks.BookGridItemDecoration;
@@ -46,7 +47,25 @@ public class HomeFragment extends Fragment {
 
 
 
+        // Setting up the RecyclerView - Nuovi Arrivi
+        binding.rvHorizontal.setHasFixedSize(true);
+        binding.rvHorizontal.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
+        /* Inizializzo adapter dei dati */
+        BookCardRecyclerViewAdapter adapter = new BookCardRecyclerViewAdapter(BookEntry.initProductEntryList(getResources()) );
+        binding.rvHorizontal.setAdapter(adapter);
+        int largePadding = getResources().getDimensionPixelSize(R.dimen.book_product_grid_spacing);
+        int smallPadding = getResources().getDimensionPixelSize(R.dimen.book_product_grid_spacing_small);
+        binding.rvHorizontal.addItemDecoration(new BookGridItemDecoration(largePadding, smallPadding));
+
+        // Setting up the RecyclerView - Consigliati
+        binding.rvHorizontal2.setHasFixedSize(true);
+        binding.rvHorizontal2.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+        /* Inizializzo adapter dei dati */
+        BookCardRecyclerViewAdapter cAdapter = new BookCardRecyclerViewAdapter(BookEntry.initProductEntryList(getResources()) );
+        binding.rvHorizontal2.setAdapter(cAdapter);
+        binding.rvHorizontal2.addItemDecoration(new BookGridItemDecoration(largePadding, smallPadding));
 
         return root;
     }
