@@ -5,18 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".BarcodeScanner">
+    tools:context=".BCScanner">
 
-    <com.wonderkiln.camerakit.CameraView
-        android:id="@+id/cameraView"
+    <com.camerakit.CameraKitView
+        android:id="@+id/cameraKV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:adjustViewBounds="true"
-        app:layout_constraintBottom_toTopOf="@+id/bttScan"
-        />
-<!--        app:camera_permissions="camera"-->
-<!--        app:camera_focus="continuous"-->
-<!--        app:camera_facing="back"-->
+        android:keepScreenOn="true"
+        app:camera_facing="back"
+        app:camera_focus="continuous"
+        app:camera_permissions="camera" />
 
     <Button
         android:layout_width="match_parent"
