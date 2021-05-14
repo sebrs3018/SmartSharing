@@ -60,8 +60,8 @@ public class FingerprintDetector  {
 
     private void initPromp(){
         promptInfo = new BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Biometric login for SmartSharing")
-                .setSubtitle("Log in using your biometric credential")
+                .setTitle("Biometric login")
+                .setSubtitle("Accedi col fingerprint")
                 .setNegativeButtonText("Annulla")
                 .build();
 
@@ -110,6 +110,7 @@ public class FingerprintDetector  {
                 }
                 else
                     Toast.makeText(context, "Benvenuto " + USERNAMEKEY , Toast.LENGTH_SHORT).show();
+                    context.startActivity(new Intent(context, Navigation_Activity.class));
             }
 
             @Override
