@@ -40,7 +40,6 @@ import javax.crypto.SecretKey;
 
 public class FingerprintDetector  {
 
-
     private Executor executor;
     private BiometricPrompt biometricPrompt;
     private BiometricPrompt.PromptInfo promptInfo;
@@ -48,8 +47,6 @@ public class FingerprintDetector  {
     private boolean success;
 
     private String USERNAMEKEY;  //l'username' mi servirà come chiave!
-
-
 
     public FingerprintDetector(String _usernameKey, Context _context){
         USERNAMEKEY = _usernameKey;
@@ -61,7 +58,6 @@ public class FingerprintDetector  {
     private void initPromp(){
         promptInfo = new BiometricPrompt.PromptInfo.Builder()
                 .setTitle("Biometric login")
-                .setSubtitle("Accedi col fingerprint")
                 .setNegativeButtonText("Annulla")
                 .build();
 
@@ -108,9 +104,10 @@ public class FingerprintDetector  {
                             "Registrazione impronta avvenuto con successo!", Toast.LENGTH_SHORT).show();
                     context.startActivity(new Intent(context, LoginActivity.class));
                 }
-                else
+                else{
                     Toast.makeText(context, "Benvenuto " + USERNAMEKEY , Toast.LENGTH_SHORT).show();
                     context.startActivity(new Intent(context, Navigation_Activity.class));
+                }
             }
 
             @Override

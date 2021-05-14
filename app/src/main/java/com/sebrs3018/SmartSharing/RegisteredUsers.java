@@ -34,66 +34,12 @@ import java.util.List;
 public class RegisteredUsers extends AppCompatActivity implements OnUserListener {
 
     private final String TAG = "RegisteredUsers";
-    private TextView tvRegisteredUser1 = null;
-    private TextView tvRegisteredUser2 = null;
-    private TextView tvRegisteredUser3 = null;
-
     private List<User> registeredUsers;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registered_users);
-
-/*        tvRegisteredUser1 = findViewById(R.id.tvUser1);
-        tvRegisteredUser2 = findViewById(R.id.tvUser2);
-        tvRegisteredUser3 = findViewById(R.id.tvUser3);*/
-
-        /* Recupero tutti i log che sono salvati nel dispositivo dell'utente */
-//        ArrayList<String> registeredUsers  = ReadLogs(getString(R.string.LogsPath));
-
-        /* Mostro al massimo tre utenti */
-/*        if(registeredUsers.isEmpty())
-            tvRegisteredUser1.append("Non ci sono utenti registrati");*/
-
-       /* int counter = 0;
-        for (String username : registeredUsers){
-            if(counter == 0){
-                tvRegisteredUser1.append(username);
-                tvRegisteredUser1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        FingerprintDetector fingerprintDetector = new FingerprintDetector(username, RegisteredUsers.this);
-                        fingerprintDetector.startFingerPrintDetection(false);
-                    }
-                });
-            }
-            else if(counter == 1){
-                tvRegisteredUser2.append(username);
-                tvRegisteredUser2.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        FingerprintDetector fingerprintDetector = new FingerprintDetector(username, RegisteredUsers.this);
-                        fingerprintDetector.startFingerPrintDetection(false);
-                    }
-                });
-            }
-            else if(counter == 2){
-                tvRegisteredUser3.append(username);
-                tvRegisteredUser3.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        FingerprintDetector fingerprintDetector = new FingerprintDetector(username, RegisteredUsers.this);
-                        fingerprintDetector.startFingerPrintDetection(false);
-                    }
-                });
-            }
-            else
-                break;
-
-        counter++;*/
-
-
 
         // Setting up the RecyclerView
         RecyclerView recyclerView = findViewById(R.id.rvRegisteredUsers);
@@ -106,8 +52,6 @@ public class RegisteredUsers extends AppCompatActivity implements OnUserListener
         recyclerView.setAdapter(adapter);
         int smallPadding = getResources().getDimensionPixelSize(R.dimen.book_product_grid_spacing_small);
         recyclerView.addItemDecoration(new UserGridItemDecoration(smallPadding));
-
-
 
         }
 

@@ -165,6 +165,7 @@ public class RegistrationActivity extends AppCompatActivity {
         etPassword.setText(null);
         etCPassword.setText(null);
     }
+
     private void registerFingerPrint(String _user){
         new AlertDialog.Builder(RegistrationActivity.this)
                 .setTitle("Salva FingerPrint")
