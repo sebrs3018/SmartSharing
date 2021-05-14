@@ -62,7 +62,7 @@ public class FingerprintDetector  {
         promptInfo = new BiometricPrompt.PromptInfo.Builder()
                 .setTitle("Biometric login for SmartSharing")
                 .setSubtitle("Log in using your biometric credential")
-                .setNegativeButtonText("Use account password")
+                .setNegativeButtonText("Annulla")
                 .build();
 
     }
@@ -89,50 +89,35 @@ public class FingerprintDetector  {
         executor = ContextCompat.getMainExecutor(context);
         biometricPrompt = new BiometricPrompt((FragmentActivity) context,
                 executor, new BiometricPrompt.AuthenticationCallback() {
-            @Override
+            @Override       //Viene attivato quando si torna indietro col pulsante indietro dell'OS
             public void onAuthenticationError(int errorCode,
                                               @NonNull CharSequence errString) {
                 super.onAuthenticationError(errorCode, errString);
-                Toast.makeText(context,
-                        "Authentication error: " + errString, Toast.LENGTH_SHORT)
-                        .show();
+                context.startActivity(new Intent(context, LoginActivity.class));
             }
 
             @Override
             public void onAuthenticationSucceeded(
                     @NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
-/*                byte[] encryptedInfo = new byte[0];
-                try {
-
-                    *//* encryption/deceryption di username *//*
-                    encryptedInfo = result.getCryptoObject().getCipher().doFinal(
-                            USERNAMEKEY.getBytes(Charset.defaultCharset()));
-
-
-                } catch (BadPaddingException | IllegalBlockSizeException e) {
-                    e.printStackTrace();
-                }*/
-/*                Log.d("MY_APP_TAG", "Encrypted information: " +
-                        Arrays.toString(encryptedInfo));*/
-
-                Toast.makeText(context,
-                        "Registrazione/Riconoscimento impronta avvenuto con successo!", Toast.LENGTH_SHORT).show();
 
                 /* Ritorno alla scherma di login */
                 success = true;
-                if(isRegistration)
+                if(isRegistration){
+                    Toast.makeText(context,
+                            "Registrazione impronta avvenuto con successo!", Toast.LENGTH_SHORT).show();
                     context.startActivity(new Intent(context, LoginActivity.class));
+                }
                 else
-                    Toast.makeText(context, "Benvenuto!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Benvenuto " + USERNAMEKEY , Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onAuthenticationFailed() {
                 super.onAuthenticationFailed();
-/*                Toast.makeText(context, "Authentication failed",
+                Toast.makeText(context, "Authentication failed",
                         Toast.LENGTH_SHORT)
-                        .show();*/
+                        .show();
                 success = false;
             }
         });
@@ -167,9 +152,6 @@ public class FingerprintDetector  {
         Intent i = getIntent();
         USERNAMEKEY = i.getStringExtra(getString(R.string.username));
     }*/
-
-
-
 
 
 

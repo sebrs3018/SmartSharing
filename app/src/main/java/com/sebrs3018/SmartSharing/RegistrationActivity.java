@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.CursorAdapter;
@@ -15,7 +17,10 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.sebrs3018.SmartSharing.DB.DBUtils;
 import com.sebrs3018.SmartSharing.DB.DbManager;
 
@@ -26,26 +31,22 @@ import java.io.FileWriter;
 public class RegistrationActivity extends AppCompatActivity {
 
     private final String TAG = "RegistrationActivity";
-    private TextView tvRegister = null, tvLogin_page = null; // tvRegister è il bottone per registrarsi.
-    private EditText etUser = null, etPassword = null;
+    private TextView tvLogin_page = null;                       // tvRegister è il bottone per registrarsi.
+    private TextInputEditText etUser = null, etPassword = null, etCPassword = null, etAddress = null; // campi di input per user e password
+    private TextInputLayout ilPassword, ilCPassword, ilUser, ilAddress;
+    private CardView cvRegister = null;
     private DbManager db = null;
-    private CursorAdapter adapter;
-    private static Context savedContext;
-    final int ACTIVITY_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_layout);
 
-        savedContext = this;
-        tvRegister = findViewById(R.id.tvRegister);
+        initRegistrationFields();
+
+        /* Inizializzo pulsanti per registrazione */
+        cvRegister = findViewById(R.id.cvRegister);
         tvLogin_page = findViewById(R.id.tvLogin_page);
-
-
-        etUser = findViewById(R.id.etUser);
-        etPassword = findViewById(R.id.etPassword);
-
 
         // Redirect alla page di login
         tvLogin_page.setOnClickListener(new View.OnClickListener() {
@@ -55,69 +56,63 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         });
 
-
-
-        tvRegister.setOnClickListener(new View.OnClickListener() {
+        cvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                String _user = etUser.getText().toString().trim();
-                String _password = etPassword.getText().toString().trim();
+                String _user, _password, _cPassword, _address;
+
+                if(!isInputDataValid(etUser.getText(), false)){
+                    ilUser.setError("Il nome utente non può essere vuoto!");
+                    etUser.setText(null);
+                    return;
+                }
+                _user = etUser.getText().toString();
+                ilUser.setError(null);
+
+                if(!isInputDataValid(etAddress.getText(), false)){
+                    ilAddress.setError("L'indirizzo non può essere vuoto!");
+                    etAddress.setText(null);
+                    return;
+                }
+                ilAddress.setError(null);
+                _address = etAddress.getText().toString();
+
+                /* Validazione input */
+                if(!isInputDataValid(etPassword.getText(), true)){
+                    ilPassword.setError("La password deve contere almeno 8 caratteri");
+                    resetPassFields();
+                    return;
+                }
+                ilPassword.setError(null);
+                _password = etPassword.getText().toString();
+
+                if(!isInputDataValid(etCPassword.getText(), true)){
+                    ilCPassword.setError("Le password non coincidono");
+                    resetPassFields();
+                    return;
+                }
+                ilCPassword.setError(null);
+                _cPassword = etCPassword.getText().toString();
+
+                if(!_cPassword.equals(_password)){
+                    ilPassword.setError("Le password non coincidono");
+                    resetPassFields();
+                    return;
+                }
+                ilPassword.setError(null);
 
                 db = new DbManager(RegistrationActivity.this);
-
                 if(db.insertUser(_user, DBUtils.md5(_password))) {    //salvo in DB password cifrata
-
-                    /* finestrella pop-up */
-                    new AlertDialog.Builder(RegistrationActivity.this)
-                                    .setTitle("SetUp FingerPrint")
-                                    .setMessage("Vuoi inserire un'impronta?")
-                                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            /* Associo all'email dell'utente la sua impronta digitale*/
-                                            /*Intent intent4results = new Intent(getString(R.string.FingerPrintActivity));
-                                            intent4results.putExtra(getString(R.string.username), _user);
-                                            startActivityForResult(intent4results, ACTIVITY_REQUEST_CODE);*/
-                                            FingerprintDetector fingerprintDetector = new FingerprintDetector(_user, RegistrationActivity.this);
-                                            fingerprintDetector.startFingerPrintDetection(true);
-                                            /* Tengo traccia degli utenti che hanno inserito anche le loro impronta */
-                                            writeFileOnInternalStorage(RegistrationActivity.this, getString(R.string.LogFileName), _user);
-                                        }
-                                    })
-                                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.dismiss();
-                                            startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
-                                        }
-                                    }).create().show();
+                    /* finestrella pop-up per inserimento impronta */
+                    registerFingerPrint(_user);
                 }
+                else
+                    Toast.makeText(RegistrationActivity.this, "Utente già registrato", Toast.LENGTH_LONG).show();
             }
         });
 
     }
-
-
-
-    //Chiamato in automatico quando un activity chiama metodo setResult --> arrivaa starActiviyForResult
-    //requestCode corrisponde al code per chiamarla ==> dato da setResult (riga 69)
-/*    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        //controllo che il request_code sia quello che voglio io
-        if( requestCode == ACTIVITY_REQUEST_CODE ){
-            //controllo che l'activity di supporto mi abbia inviato il risultato corretto (definito da me)
-            if( resultCode == Activity.RESULT_OK ){
-                Toast.makeText(RegistrationActivity.this, "Registrazione impronta avvenuta con successo! ", Toast.LENGTH_LONG).show();
-                *//*TODO: una volta avvenuta la registrazione dell'impronta, ritorno alla pagina di login*//*
-            }
-        }
-
-    }*/
-
-
 
     /*IDEA: salvare tutte le email usate dall'utente nel SUO dispositivo */
     // Precondizione: si salva su Storage sse l'utente si registra!
@@ -145,6 +140,53 @@ public class RegistrationActivity extends AppCompatActivity {
 
     }
 
+    private boolean isInputDataValid(@Nullable Editable text, boolean isPassword) {
+        if(text == null)
+            return false;
+        if(isPassword && text.length() <= 8)
+            return false;
+        return text.toString().trim().length() != 0;
+    }
+    private void initRegistrationFields(){
+        ilUser = findViewById(R.id.ilRegUser);
+        etUser = findViewById(R.id.etRegUser);
+
+        ilAddress = findViewById(R.id.ilRegAddress);
+        etAddress = findViewById(R.id.etRegAddress);
+
+        ilPassword = findViewById(R.id.ilRegPassword);
+        etPassword = findViewById(R.id.etRegPassword);
+
+        ilCPassword = findViewById(R.id.ilRegCPassword);
+        etCPassword = findViewById(R.id.etRegCPassword);
+
+    }
+    private void resetPassFields(){
+        etPassword.setText(null);
+        etCPassword.setText(null);
+    }
+    private void registerFingerPrint(String _user){
+        new AlertDialog.Builder(RegistrationActivity.this)
+                .setTitle("Salva FingerPrint")
+                .setMessage("Vuoi inserire un'impronta?")
+                .setPositiveButton("Va bene", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        /* Associo all'email dell'utente la sua impronta digitale*/
+                        FingerprintDetector fingerprintDetector = new FingerprintDetector(_user, RegistrationActivity.this);
+                        fingerprintDetector.startFingerPrintDetection(true);
+                        /* Tengo traccia degli utenti che hanno inserito anche le loro impronta */
+                        writeFileOnInternalStorage(RegistrationActivity.this, getString(R.string.LogFileName), _user);
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
+                    }
+                }).create().show();
+    }
 
 
 }

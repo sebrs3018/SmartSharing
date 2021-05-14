@@ -21,7 +21,7 @@
         android:theme="@style/Theme.Login">
 
 
-        <activity android:name=".Navigation_Activity">
+        <activity android:name=".LoginActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,13 +31,13 @@
         </activity>
 
 
- <!--       <activity android:name=".Navigation_Activity" >
+        <activity android:name=".Navigation_Activity" >
             <intent-filter>
                 <action android:name="com.sebrs3018.SmartSharing.Navigation_Activity" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity>-->
+        </activity>
 
 
         <activity

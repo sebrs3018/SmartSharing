@@ -17,6 +17,8 @@ import androidx.cardview.widget.CardView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.sebrs3018.SmartSharing.DB.DbManager;
+import com.sebrs3018.SmartSharing.Exceptions.InvalidPasswordException;
+import com.sebrs3018.SmartSharing.Exceptions.UserNotFoundException;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -38,23 +40,13 @@ public class LoginActivity extends AppCompatActivity {
 
     private DbManager db = null;
     private CardView cvBioAccess = null, cvLogin = null;
-    private TextView tvBioAuth = null;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
 
-        etUser      = findViewById(R.id.etUser);
-        etPassword  = findViewById(R.id.etPassword);
-
-        ilPassword  = findViewById(R.id.ilPassword);
-
-        cvBioAccess = findViewById(R.id.cvBioAccess);
-        cvLogin     = findViewById(R.id.cvLogin);
-
-        tvRegister_page = findViewById(R.id.tvRegister_page);
+        initComponents();
 
         /* Redirect alla page di registrazione */
         tvRegister_page.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(LoginActivity.this, RegistrationActivity.class));
             }
         });
+
         /* Listener per pulsante acccesso con impronta digitale */
         cvBioAccess.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,40 +69,68 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String _user = etUser.getText().toString().trim();
-                String _password = etPassword.getText().toString().trim();
+                String _user, _password;
 
-                if(!isPasswordValid(etPassword.getText()))
+                if(!isInputDataValid(etUser.getText(), false)){
+                    ilUser.setError("Username vuoto");
+                    etUser.setText(null);
+                    return;
+                }
+                ilUser.setError(null);
+                _user = etUser.getText().toString();
+
+                if(!isInputDataValid(etPassword.getText(),true)) {
                     ilPassword.setError("La password deve contere almeno 8 caratteri");
-                else
-                    ilPassword.setError(null);
+                    return;
+                }
+                ilPassword.setError(null);
+                _password = etPassword.getText().toString();
 
-        /* Parte intuile, usata solo per testare lo scanner*/
-//        Button bttToScanner = findViewById(R.id.bttToScanner);
-//        bttToScanner.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(LoginActivity.this, BarcodeScanner.class));
-//            }
-//        });
                 db = new DbManager(LoginActivity.this);
 
-                if (db.login(_user, _password)) {
+                try {
+                    db.login(_user, _password);
                     startActivity(new Intent(LoginActivity.this, Navigation_Activity.class));
-                } else {
-                    Toast.makeText(LoginActivity.this, "Login Failure!!!!!!!", Toast.LENGTH_SHORT).show();
-                    Log.i(TAG, "onClick: Login Failure!!!!!!");
                 }
+                catch (UserNotFoundException e){
+                    ilUser.setError("Utente non riconosciuto");
+                }
+                catch (InvalidPasswordException e){
+                    etPassword.setText(null);
+                    ilPassword.setError("Password sbagliata");
+                }
+
+/*                if (db.login(_user, _password)) {
+                    ilUser.setError(null);
+                }
+                else{
+                    ilUser.setError("Utente non riconosciuto");
+                }*/
 
             }
         });
 
     }
 
+    private void initComponents(){
+        ilUser      = findViewById(R.id.ilUser);
+        etUser      = findViewById(R.id.etUser);
 
+        ilPassword  = findViewById(R.id.ilPassword);
+        etPassword  = findViewById(R.id.etPassword);
 
-    private boolean isPasswordValid(@Nullable Editable text) {
-        return text != null && text.length() >= 8;
+        cvBioAccess = findViewById(R.id.cvBioAccess);
+        cvLogin     = findViewById(R.id.cvLogin);
+
+        tvRegister_page = findViewById(R.id.tvRegister_page);
+    }
+
+    private boolean isInputDataValid(@Nullable Editable text, boolean isPassword) {
+        if(text == null)
+            return false;
+        if(isPassword && text.length() <= 8)
+            return false;
+        return text.toString().trim().length() != 0;
     }
 
 

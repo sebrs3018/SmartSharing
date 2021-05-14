@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
+import com.sebrs3018.SmartSharing.Exceptions.InvalidPasswordException;
+import com.sebrs3018.SmartSharing.Exceptions.UserNotFoundException;
+
 import static com.sebrs3018.SmartSharing.DB.DatabaseStrings.FIELD_ID;
 
 public class DbManager
@@ -51,30 +54,43 @@ public class DbManager
         return true;
     }
 
-    public boolean login(String email, String password)
+    public boolean login(String email, String password) throws UserNotFoundException, InvalidPasswordException
     {
-        boolean success = true;
-
-        String queryString = String.format("SELECT " + FIELD_ID + " FROM " + DatabaseStrings.TBL_NAME + " WHERE " + DatabaseStrings.FIELD_EMAIL + " = '%s' AND " +  DatabaseStrings.FIELD_PASSWORD + " = '%s'",
-                            email,  DBUtils.md5(password));
-
+/*        String queryString = String.format("SELECT " + FIELD_ID + " FROM " + DatabaseStrings.TBL_NAME + " WHERE " + DatabaseStrings.FIELD_EMAIL + " = '%s' AND " +  DatabaseStrings.FIELD_PASSWORD + " = '%s'",
+                            email,  DBUtils.md5(password));*/
+        String queryString = String.format("SELECT " + FIELD_ID + " FROM " + DatabaseStrings.TBL_NAME +
+                                            " WHERE " + DatabaseStrings.FIELD_EMAIL + " = '%s'", email);
         SQLiteDatabase db = null;
         try{
             db = dbhelper.getReadableDatabase();
+            Cursor cursor = db.rawQuery(queryString, null);
+
+            if(!cursor.moveToFirst())   //se non c'è nessun utente...
+               throw new UserNotFoundException();
+
+            int id = cursor.getInt(0);   //mi prendo l'id appena trovato
+            cursor.close();
+
+            queryString = String.format("SELECT " + FIELD_ID + " FROM " + DatabaseStrings.TBL_NAME +
+                                        " WHERE " + FIELD_ID + " = " + id + " AND " + DatabaseStrings.FIELD_PASSWORD + " = '%s'", DBUtils.md5(password));
+
+            cursor = db.rawQuery(queryString, null);
+            if(!cursor.moveToFirst())
+                throw new InvalidPasswordException();
+
+            cursor.close();
+            db.close();
         }
         catch (SQLiteException e){
             Log.i("DBHelper", e.getMessage());
         }
 
-        Cursor cursor = db.rawQuery(queryString, null);
-        if(!cursor.moveToFirst())   //mi prendo l'unica entry
-            success = false;
-
-        db.close();
-        cursor.close();
-
-        return success;
+        return true;
     }
+
+
+
+
 
     public boolean delete(long id)
     {
