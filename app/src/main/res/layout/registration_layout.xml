@@ -40,123 +40,116 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- TextInput layout username -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/ilRegUser"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
 
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="32dp"
-        android:hint="@string/username"
-        app:layout_constraintBottom_toTopOf="@+id/cardView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.0"
-        app:startIconDrawable="@drawable/ic_action_user">
-
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etRegUser"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#11000000"
-            android:inputType="text"
-            android:maxLines="1"
-            android:textSize="14sp" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!-- TextInput layout address -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/ilRegAddress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="8dp"
-        android:hint="@string/inserisci_indirizzo"
-        app:layout_constraintBottom_toTopOf="@+id/ilRegPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ilRegUser"
-        app:layout_constraintVertical_bias="0.0"
-        app:startIconDrawable="@drawable/ic_action_user">
-
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etRegAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#11000000"
-            android:inputType="text"
-            android:maxLines="1"
-            android:textSize="14sp" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!-- TextInput layout password -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/ilRegPassword"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="70dp"
-        android:layout_marginEnd="32dp"
-        android:hint="@string/password"
-        app:layout_constraintBottom_toTopOf="@+id/cardView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ilRegUser"
-        app:layout_constraintVertical_bias="0.0"
-        app:startIconDrawable="@drawable/ic_action_pass"
+        android:layout_marginTop="16dp"
 
-        >
-
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etRegPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#11000000"
-            android:inputType="textPassword"
-            android:maxLines="1"
-            android:textSize="14sp" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!-- TextInput layout confirm password -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/ilRegCPassword"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:hint="@string/confirm_password"
-        app:layout_constraintBottom_toTopOf="@+id/cvRegister"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ilRegPassword"
-        app:layout_constraintVertical_bias="0.0"
-        app:startIconDrawable="@drawable/ic_action_pass">
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.100000024">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etRegCPassword"
-            android:layout_width="match_parent"
+        <!-- TextInput layout username -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/ilRegUser"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:background="#11000000"
-            android:inputType="textPassword"
-            android:maxLines="1"
-            android:textSize="14sp" />
+            android:layout_gravity="center"
+            android:layout_marginTop="24dp"
+            android:hint="@string/username"
+            android:maxWidth="488dp"
+            android:minWidth="88dp"
+            app:startIconDrawable="@drawable/ic_baseline_person_24"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            >
 
-    </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etRegUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textSize="14sp"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- TextInput layout address -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/ilRegAddress"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:hint="@string/inserisci_indirizzo"
+            app:startIconDrawable="@drawable/ic_baseline_home_24"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etRegAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textSize="14sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- TextInput layout password -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/ilRegPassword"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:hint="@string/password"
+            app:startIconDrawable="@drawable/ic_action_pass"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            >
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etRegPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:textSize="14sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- TextInput layout confirm password -->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/ilRegCPassword"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="24dp"
+            android:hint="@string/confirm_password"
+            app:startIconDrawable="@drawable/ic_action_pass"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etRegCPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:textSize="14sp"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
 
 
     <androidx.cardview.widget.CardView
@@ -168,12 +161,12 @@
         app:cardBackgroundColor="#038EFF"
         app:cardCornerRadius="25dp"
         app:cardElevation="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tvLogin_page"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.76">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintVertical_bias="0.32">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -197,14 +190,14 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/linearLayout"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"
         android:text="Accedi"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView"
-        app:layout_constraintVertical_bias="0.866" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintVertical_bias="1.0" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -218,7 +211,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
         app:layout_constraintVertical_bias="1.0">
 
         <ImageView
@@ -241,5 +234,8 @@
             android:layout_marginLeft="15dp"
             app:srcCompat="@drawable/facebook" />
     </LinearLayout>
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -37,21 +37,23 @@
             android:textSize="16sp" />
 
         <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/ilUser"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        android:hint="@string/username">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etUser"
+            android:id="@+id/ilUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#11000000"
-            android:inputType="text"
-            android:maxLines="1"
-            android:drawableLeft="@drawable/ic_action_user"
-            android:textSize="16dp" />
+            android:layout_margin="4dp"
+            android:hint="@string/username"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:startIconDrawable="@drawable/ic_baseline_person_24"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLines="1"
+
+                android:textSize="16sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -60,17 +62,16 @@
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
         android:hint="@string/password"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:startIconDrawable="@drawable/ic_action_pass"
         app:errorEnabled="true">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:background="#11000000"
-            android:maxLines="1"
-            android:drawableLeft="@drawable/ic_action_user"
-            android:textSize="16dp" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:textSize="16sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.cardview.widget.CardView
