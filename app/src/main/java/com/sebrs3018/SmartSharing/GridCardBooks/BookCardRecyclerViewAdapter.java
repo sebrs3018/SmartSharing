@@ -46,9 +46,6 @@ public class BookCardRecyclerViewAdapter  extends RecyclerView.Adapter<BookCardV
     public BookCardViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_card, parent, false);
 
-/*        BookCardViewHolder bookCardViewHolder = new BookCardViewHolder(layoutView);
-        bookCardViewHolder.boo*/
-
         return new BookCardViewHolder(layoutView, onTouchedItemListener);
     }
 

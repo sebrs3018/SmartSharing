@@ -47,8 +47,6 @@ public class Navigation_Activity extends AppCompatActivity {
         binding = ActivityNavigationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-/*        bottomNavigationView = findViewById(R.id.bn_view);
-        bottomNavigationView.setOnNavigationItemSelectedListener(navListener);*/
 
         /* Setting up the bottomNavigationView */
         binding.bnView.setOnNavigationItemSelectedListener(navListener);

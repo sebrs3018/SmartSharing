@@ -20,4 +20,5 @@
     <string name="inserisci_indirizzo">Inserisci Indirizzo</string>
     <string name="registrati">Registrati!</string>
     <string name="immagine_profilo">Immagine Profilo</string>
+    <string name="titolo">Titolo</string>
 </resources>
