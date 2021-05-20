@@ -69,7 +69,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".BCScanner">
+        <activity android:name=".barcode.BCScanner">
             <intent-filter>
                 <action android:name="com.sebrs3018.SmartSharing.BCScanner"/>
                 <category android:name="android.intent.category.DEFAULT"/>
