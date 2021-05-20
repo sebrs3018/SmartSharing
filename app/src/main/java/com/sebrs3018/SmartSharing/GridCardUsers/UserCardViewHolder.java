@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sebrs3018.SmartSharing.R;
-import com.sebrs3018.SmartSharing.TouchCardListener.OnUserListener;
+import com.sebrs3018.SmartSharing.TouchCardListener.OnTouchedItemListener;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -15,12 +15,12 @@ public class UserCardViewHolder extends RecyclerView.ViewHolder implements View.
 
 
     public TextView username;
-    OnUserListener onUserListener;
+    OnTouchedItemListener onTouchedItemListener;
 
-    public UserCardViewHolder(@NonNull @NotNull View itemView, OnUserListener _onUserListener) {
+    public UserCardViewHolder(@NonNull @NotNull View itemView, OnTouchedItemListener _onTouchedItemListener) {
         super(itemView);
         username = itemView.findViewById(R.id.registeredUsername);
-        onUserListener = _onUserListener;
+        onTouchedItemListener = _onTouchedItemListener;
 
         itemView.setOnClickListener(this);
     }
@@ -28,6 +28,6 @@ public class UserCardViewHolder extends RecyclerView.ViewHolder implements View.
     @Override
     public void onClick(View v) {
         //E' qua che passo la posizione dell'elemento (View holder) appena toccato
-        onUserListener.onUserClick(getBindingAdapterPosition());
+        onTouchedItemListener.onItemTouched(getBindingAdapterPosition());
     }
 }

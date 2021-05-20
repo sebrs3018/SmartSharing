@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sebrs3018.SmartSharing.R;
+import com.sebrs3018.SmartSharing.TouchCardListener.OnTouchedItemListener;
 import com.sebrs3018.SmartSharing.network.BookEntry;
 import com.sebrs3018.SmartSharing.network.ImageRequester;
 
@@ -26,14 +27,16 @@ public class BookCardRecyclerViewAdapter  extends RecyclerView.Adapter<BookCardV
     private List<BookEntry> bookList;       //Questa lista sarà modificata dal filtraggio
     private List<BookEntry> bookListAll;    //Questa lista terrà traccia della lista originale
     private ImageRequester imageRequester;
+    private OnTouchedItemListener onTouchedItemListener;
     private final String TAG = "BCRViewAdapter";
 
 
-    public BookCardRecyclerViewAdapter(List<BookEntry> bookList) {
+    public BookCardRecyclerViewAdapter(List<BookEntry> bookList, OnTouchedItemListener _onTouchedItemListener) {
         this.bookList = bookList;
         bookListAll = new ArrayList<>(bookList);
         /* Nel caso iniziale, se non c'è nessun filtraggio, allora la lista di filtraggio risulta uguale a quella di dati*/
         imageRequester = ImageRequester.getInstance();
+        onTouchedItemListener = _onTouchedItemListener;
     }
 
 
@@ -42,7 +45,11 @@ public class BookCardRecyclerViewAdapter  extends RecyclerView.Adapter<BookCardV
     @Override
     public BookCardViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_card, parent, false);
-        return new BookCardViewHolder(layoutView);
+
+/*        BookCardViewHolder bookCardViewHolder = new BookCardViewHolder(layoutView);
+        bookCardViewHolder.boo*/
+
+        return new BookCardViewHolder(layoutView, onTouchedItemListener);
     }
 
     /*  Questo metodo mi dice cosa ogni vista fa col suo contenuto  */

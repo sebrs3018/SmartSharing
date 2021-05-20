@@ -30,6 +30,7 @@ import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
 
+
     private final String FullPathLog = "/data/user/0/com.sebrs3018.login/files/SmartSharing/Logs.txt";
     private final String TAG = "LoginActivity";
     private TextView tvRegister_page = null; // tvLogin è il bottone per loggare.
@@ -132,6 +133,5 @@ public class LoginActivity extends AppCompatActivity {
             return false;
         return text.toString().trim().length() != 0;
     }
-
 
 }

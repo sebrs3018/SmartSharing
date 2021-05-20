@@ -8,7 +8,6 @@
     tools:context=".Navigation_Activity">
 
     <!-- Bottom Navbar  -->
-    <!--TODO: ragionare a come aggiustare la dimensione del fragment - secondario -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bn_view"
         android:layout_width="match_parent"

@@ -12,8 +12,8 @@
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_navigation_home_to_searchableActivity"
-            app:destination="@id/searchableActivity" />
+            android:id="@+id/action_navigation_home_to_bookInfo"
+            app:destination="@id/bookInfo" />
     </fragment>
 
     <!-- Nested Graph -->
@@ -29,10 +29,18 @@
         android:name="com.sebrs3018.SmartSharing.ui.search.SearchFragment"
         android:label="@string/title_search"
         tools:layout="@layout/fragment_search" />
-
-    <activity
-        android:id="@+id/searchableActivity"
-        android:name="com.sebrs3018.SmartSharing.SearchableActivity"
-        android:label="SearchableActivity" />
+    <fragment
+        android:id="@+id/bookInfo"
+        android:name="com.sebrs3018.SmartSharing.BookInfo"
+        android:label="fragment_book_info"
+        tools:layout="@layout/fragment_book_info" >
+        <argument android:name="message"
+            app:argType="string"
+            android:defaultValue="default" />
+        <argument
+            android:name="BookEntry"
+            app:argType="com.sebrs3018.SmartSharing.network.BookEntry"
+            app:nullable="true" />
+    </fragment>
 
 </navigation>

@@ -2,36 +2,20 @@ package com.sebrs3018.SmartSharing;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.sebrs3018.SmartSharing.GridCardBooks.BookCardRecyclerViewAdapter;
-import com.sebrs3018.SmartSharing.GridCardBooks.BookGridItemDecoration;
 import com.sebrs3018.SmartSharing.GridCardUsers.User;
 import com.sebrs3018.SmartSharing.GridCardUsers.UserCardRecyclerViewAdapter;
 import com.sebrs3018.SmartSharing.GridCardUsers.UserGridItemDecoration;
-import com.sebrs3018.SmartSharing.TouchCardListener.OnUserListener;
-import com.sebrs3018.SmartSharing.network.BookEntry;
+import com.sebrs3018.SmartSharing.TouchCardListener.OnTouchedItemListener;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.List;
 
-public class RegisteredUsers extends AppCompatActivity implements OnUserListener {
+public class RegisteredUsers extends AppCompatActivity implements OnTouchedItemListener {
 
     private final String TAG = "RegisteredUsers";
     private List<User> registeredUsers;
@@ -57,7 +41,7 @@ public class RegisteredUsers extends AppCompatActivity implements OnUserListener
 
     @Override //Se volessi navigare su una nuova activity associata all'utente appena premuto passerei da qui
     //E' questo metodo che attiva il processo di individuazione e gestione del click!
-    public void onUserClick(int position) {
+    public void onItemTouched(int position) {
         /*Intent intent = new Intent(this, NewActivity.class);
         * startActivity(intent);
         * */

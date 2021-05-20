@@ -24,6 +24,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.google.android.material.navigation.NavigationBarView;
 import com.sebrs3018.SmartSharing.databinding.ActivityNavigationBinding;
 import com.sebrs3018.SmartSharing.ui.dashboard.DashboardFragment;
 import com.sebrs3018.SmartSharing.ui.home.HomeFragment;
@@ -46,21 +47,21 @@ public class Navigation_Activity extends AppCompatActivity {
         binding = ActivityNavigationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-//        bottomNavigationView = findViewById(R.id.bn_view);
-//        bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
+/*        bottomNavigationView = findViewById(R.id.bn_view);
+        bottomNavigationView.setOnNavigationItemSelectedListener(navListener);*/
 
         /* Setting up the bottomNavigationView */
         binding.bnView.setOnNavigationItemSelectedListener(navListener);
-
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_search)
                                                      .build();
 
-/*        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_navigation);
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_navigation);
         NavController navController = navHostFragment.getNavController();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);*/
+        /* Setto NavigationUI con la bottomNavBar */
+        NavigationUI.setupWithNavController(binding.bnView, navController);
 
     }
 
@@ -84,6 +85,7 @@ public class Navigation_Activity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }*/
 
+
     /* Dichiarazione metodo privato listener */
     private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -95,8 +97,6 @@ public class Navigation_Activity extends AppCompatActivity {
                     selectedFragment = new HomeFragment();
                     break;
                 case R.id.navigation_search:
-//                    Intent intent = new Intent("com.sebrs3018.SmartSharing.SearchableActivity");
-//                    startActivity(intent);
                     selectedFragment = new SearchFragment();
                     break;
                 case R.id.navigation_dashboard:

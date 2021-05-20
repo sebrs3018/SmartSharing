@@ -7,10 +7,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.sebrs3018.SmartSharing.GridCardBooks.BookCardViewHolder;
 import com.sebrs3018.SmartSharing.R;
-import com.sebrs3018.SmartSharing.TouchCardListener.OnUserListener;
-import com.sebrs3018.SmartSharing.network.BookEntry;
+import com.sebrs3018.SmartSharing.TouchCardListener.OnTouchedItemListener;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -20,11 +18,11 @@ import java.util.List;
 public class UserCardRecyclerViewAdapter extends RecyclerView.Adapter<UserCardViewHolder>{
 
     private List<User> registeredUserList;       //Questa lista sarà modificata dal filtraggio
-    private OnUserListener onUserListener;
+    private OnTouchedItemListener onTouchedItemListener;
 
-    public UserCardRecyclerViewAdapter(List<User> _registeredUserList, OnUserListener _onUserListener){
+    public UserCardRecyclerViewAdapter(List<User> _registeredUserList, OnTouchedItemListener _onTouchedItemListener){
         registeredUserList = _registeredUserList;
-        onUserListener = _onUserListener;
+        onTouchedItemListener = _onTouchedItemListener;
     }
 
 
@@ -33,7 +31,7 @@ public class UserCardRecyclerViewAdapter extends RecyclerView.Adapter<UserCardVi
     @Override
     public UserCardViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_card, parent, false);
-        return new UserCardViewHolder(layoutView, onUserListener);
+        return new UserCardViewHolder(layoutView, onTouchedItemListener);
     }
 
     @Override

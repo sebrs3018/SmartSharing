@@ -3,6 +3,8 @@ package com.sebrs3018.SmartSharing.network;
 
 import android.content.res.Resources;
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -23,7 +25,7 @@ import java.util.List;
 /**
  * A product entry in the list of products.
  */
-public class BookEntry {
+public class BookEntry implements Parcelable {
     private static final String TAG = BookEntry.class.getSimpleName();
 
     public final String title;
@@ -40,6 +42,26 @@ public class BookEntry {
         this.price = price;
         this.description = description;
     }
+
+    protected BookEntry(Parcel in) {
+        title = in.readString();
+        dynamicUrl = in.readParcelable(Uri.class.getClassLoader());
+        url = in.readString();
+        price = in.readString();
+        description = in.readString();
+    }
+
+    public static final Creator<BookEntry> CREATOR = new Creator<BookEntry>() {
+        @Override
+        public BookEntry createFromParcel(Parcel in) {
+            return new BookEntry(in);
+        }
+
+        @Override
+        public BookEntry[] newArray(int size) {
+            return new BookEntry[size];
+        }
+    };
 
     /**
      * Loads a raw JSON at R.raw.products and converts it into a list of ProductEntry objects
@@ -70,7 +92,6 @@ public class BookEntry {
         return gson.fromJson(jsonProductsString, productListType);
     }
 
-
     public String getTitle(){
         return title;
     }
@@ -80,4 +101,17 @@ public class BookEntry {
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeParcelable(dynamicUrl, flags);
+        dest.writeString(url);
+        dest.writeString(price);
+        dest.writeString(description);
+    }
 }

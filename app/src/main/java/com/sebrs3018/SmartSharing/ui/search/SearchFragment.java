@@ -30,14 +30,16 @@ import com.sebrs3018.SmartSharing.GridCardBooks.BookCardRecyclerViewAdapter;
 import com.sebrs3018.SmartSharing.GridCardBooks.BookGridItemDecoration;
 import com.sebrs3018.SmartSharing.R;
 import com.sebrs3018.SmartSharing.SearchableActivity;
+import com.sebrs3018.SmartSharing.TouchCardListener.OnTouchedItemListener;
 import com.sebrs3018.SmartSharing.databinding.FragmentSearchBinding;
 import com.sebrs3018.SmartSharing.network.BookEntry;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements OnTouchedItemListener {
 
     protected static final int RESULT_SPEECH = 1;
 
@@ -46,6 +48,7 @@ public class SearchFragment extends Fragment {
     private FragmentSearchBinding binding;
     private SearchView searchView;
     RecyclerView recyclerView;
+    private List<BookEntry> books ;
     private BookCardRecyclerViewAdapter adapter;
 
 
@@ -75,12 +78,12 @@ public class SearchFragment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false));
 
         /* Inizializzo adapter dei dati */
-        adapter = new BookCardRecyclerViewAdapter(BookEntry.initProductEntryList(getResources()) );
+        books = BookEntry.initProductEntryList(getResources());
+        adapter = new BookCardRecyclerViewAdapter( books, this);
         recyclerView.setAdapter(adapter);
         int largePadding = getResources().getDimensionPixelSize(R.dimen.book_product_grid_spacing);
         int smallPadding = getResources().getDimensionPixelSize(R.dimen.book_product_grid_spacing_small);
         recyclerView.addItemDecoration(new BookGridItemDecoration(largePadding, smallPadding));
-
 
         return root;
     }
@@ -186,4 +189,8 @@ public class SearchFragment extends Fragment {
     }
 
 
+    @Override
+    public void onItemTouched(int position) {
+        Log.i(TAG, "onUserClick: clicked " + books.get(position).getTitle());
+    }
 }

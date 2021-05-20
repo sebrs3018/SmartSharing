@@ -1,6 +1,7 @@
 package com.sebrs3018.SmartSharing.ui.home;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,13 +23,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.sebrs3018.SmartSharing.GridCardBooks.BookGridItemDecoration;
 import com.sebrs3018.SmartSharing.R;
 import com.sebrs3018.SmartSharing.GridCardBooks.BookCardRecyclerViewAdapter;
+import com.sebrs3018.SmartSharing.TouchCardListener.OnTouchedItemListener;
 import com.sebrs3018.SmartSharing.databinding.FragmentHomeBinding;
 import com.sebrs3018.SmartSharing.network.BookEntry;
 
-public class HomeFragment extends Fragment {
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+
+public class HomeFragment extends Fragment implements OnTouchedItemListener {
+
+
+    private static final String TAG = "HomeFragment";
 
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
+    private List<BookEntry> nuoviArrivi;
+    private List<BookEntry> consigliati;
 
 
     @Override
@@ -45,14 +58,13 @@ public class HomeFragment extends Fragment {
 
         ((AppCompatActivity) getActivity()).setSupportActionBar(binding.topAppBar);
 
-
-
         // Setting up the RecyclerView - Nuovi Arrivi
         binding.rvHorizontal.setHasFixedSize(true);
         binding.rvHorizontal.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         /* Inizializzo adapter dei dati */
-        BookCardRecyclerViewAdapter adapter = new BookCardRecyclerViewAdapter(BookEntry.initProductEntryList(getResources()) );
+        nuoviArrivi = BookEntry.initProductEntryList(getResources());
+        BookCardRecyclerViewAdapter adapter = new BookCardRecyclerViewAdapter(nuoviArrivi, this);
         binding.rvHorizontal.setAdapter(adapter);
         int largePadding = getResources().getDimensionPixelSize(R.dimen.book_product_grid_spacing);
         int smallPadding = getResources().getDimensionPixelSize(R.dimen.book_product_grid_spacing_small);
@@ -63,7 +75,8 @@ public class HomeFragment extends Fragment {
         binding.rvHorizontal2.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         /* Inizializzo adapter dei dati */
-        BookCardRecyclerViewAdapter cAdapter = new BookCardRecyclerViewAdapter(BookEntry.initProductEntryList(getResources()) );
+        consigliati = BookEntry.initProductEntryList(getResources());
+        BookCardRecyclerViewAdapter cAdapter = new BookCardRecyclerViewAdapter(consigliati, this);
         binding.rvHorizontal2.setAdapter(cAdapter);
         binding.rvHorizontal2.addItemDecoration(new BookGridItemDecoration(largePadding, smallPadding));
 
@@ -76,6 +89,21 @@ public class HomeFragment extends Fragment {
         binding = null;
     }
 
+    @Override
+    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
+    }
 
+    @Override
+    public void onItemTouched(int position) {
+        Log.i(TAG, "onUserClick: clicked " + consigliati.get(position).getTitle());
+
+        final NavController navController  = Navigation.findNavController(getView());
+        /* Passo valore al fragment...  */
+        HomeFragmentDirections.ActionNavigationHomeToBookInfo action = HomeFragmentDirections.actionNavigationHomeToBookInfo(consigliati.get(position));
+        action.setMessage("This is just another string field....");
+        navController.navigate(action);
+
+    }
 }
