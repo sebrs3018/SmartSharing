@@ -4,131 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BookInfo">
+    tools:context=".BookInfoStructure.BookInfo">
 
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView"
-        android:layout_width="match_parent"
-        android:layout_height="234dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-        app:layout_constraintVertical_bias="0.0">
+
+    <!-- Intestazione -->
 
 
-        <!-- Finire Layout! -->
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-
-            <!-- ISBN ... -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:paddingStart="20dp"
-                android:text="Book Cover"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-
-                />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/imageView6"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/l_1984" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tvISBN"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="ISBN"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
-
-                    <TextView
-                        android:id="@+id/tvISBNAnswer"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="isbn_answer" />
-
-
-                    <TextView
-                        android:id="@+id/tvPublisher"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Publisher"
-                        android:layout_marginTop="5dp"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
-
-
-                    <TextView
-                        android:id="@+id/tvPublisherAnswer"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Mondadori" />
-
-                    <TextView
-                        android:id="@+id/tvPublishDate"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Publish date"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
-
-                    <TextView
-                        android:id="@+id/tvPublishDateAnswer"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="1997" />
-
-                    <TextView
-                        android:id="@+id/tvPageCount"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Numero pagine" />
-
-                    <TextView
-                        android:id="@+id/tvPageCountAnswer"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="195" />
-
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-
-    </com.google.android.material.card.MaterialCardView>
-
+    <!-- Intestazione -->
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
@@ -174,6 +57,162 @@
             android:textColor="@color/colorPrimary" />
 
     </LinearLayout>
+
+    <!-- Tabs -->
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+        app:layout_constraintVertical_bias="0.0">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/dtTab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dove Trovarlo" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/infoTab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Info" />
+
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <!-- Questo sarà lo spazio di transizione dei vari fragment... -->
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vpSwappingPages"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </androidx.viewpager.widget.ViewPager>
+
+    <!-- Card -->
+   <!-- <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView"
+        android:layout_width="match_parent"
+        android:layout_height="234dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout"
+        app:layout_constraintVertical_bias="0.0">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            &lt;!&ndash; ISBN ... &ndash;&gt;
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:paddingStart="20dp"
+                android:text="Book Cover"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/l_1984" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvISBN"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="ISBN"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
+
+                    <TextView
+                        android:id="@+id/tvISBNAnswer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="isbn_answer" />
+
+
+                    <TextView
+                        android:id="@+id/tvPublisher"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Editore"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
+
+
+                    <TextView
+                        android:id="@+id/tvPublisherAnswer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Mondadori" />
+
+                    <TextView
+                        android:id="@+id/tvPublishDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Data di pubblicazione"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
+
+                    <TextView
+                        android:id="@+id/tvPublishDateAnswer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="1997" />
+
+                    <TextView
+                        android:id="@+id/tvPageCount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Numero di pagine"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
+
+                    <TextView
+                        android:id="@+id/tvPageCountAnswer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="195" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>-->
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

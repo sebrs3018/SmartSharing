@@ -31,7 +31,7 @@
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/bookInfo"
-        android:name="com.sebrs3018.SmartSharing.BookInfo"
+        android:name="com.sebrs3018.SmartSharing.BookInfoStructure.BookInfo"
         android:label="fragment_book_info"
         tools:layout="@layout/fragment_book_info" >
         <argument android:name="message"
