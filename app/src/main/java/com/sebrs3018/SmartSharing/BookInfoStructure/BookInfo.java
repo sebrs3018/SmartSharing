@@ -62,10 +62,6 @@ public class BookInfo extends Fragment {
 
 //        pagerAdapter =  new PageAdapter(getParentFragmentManager(), tabLayout.getTabCount());
 
-
-
-
-
 /*        viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -139,7 +135,6 @@ public class BookInfo extends Fragment {
             //Initilizing Bundle for communication between tabs...
 //            Bundle bundle = new Bundle();
             //Put info
-
 //           bundle.putString("title", tabNames.get(i)); //invio un unico messaggio ai miei tab (può essere customizzato)
 
             //adding fragment...
