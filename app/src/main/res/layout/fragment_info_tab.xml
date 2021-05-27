@@ -186,6 +186,7 @@
                         android:layout_marginRight="30dp"
                         android:layout_marginBottom="20dp"
                         android:fontFamily="sans-serif"
+                        android:justificationMode="inter_word"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                         android:textSize="14sp" />
                 </androidx.core.widget.NestedScrollView>
