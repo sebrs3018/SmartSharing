@@ -64,9 +64,6 @@ public class DoveTrovarloTab extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_dove_trovarlo_tab, container, false);
 
-
-
-
         return view;
     }
 }

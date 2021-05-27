@@ -27,17 +27,9 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
             android:text="1984"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             android:textColor="@color/colorPrimary" />
 
-        <TextView
-            android:id="@+id/tvSaga"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:text="Mondadori"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-            android:textColor="@color/colorPrimary" />
 
         <TextView
             android:id="@+id/tvAutori"
@@ -63,13 +55,11 @@
         app:layout_constraintVertical_bias="0.0">
 
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/dtTab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Dove Trovarlo" />
 
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/infoTab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Info" />

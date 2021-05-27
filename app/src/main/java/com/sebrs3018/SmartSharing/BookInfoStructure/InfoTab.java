@@ -1,7 +1,6 @@
 package com.sebrs3018.SmartSharing.BookInfoStructure;
 
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -10,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sebrs3018.SmartSharing.R;
+import com.sebrs3018.SmartSharing.databinding.FragmentInfoTabBinding;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,14 +21,16 @@ public class InfoTab extends Fragment {
 
     private static final String TAG = "InfoTab";
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
+    // the fragment initialization parameters, key values of bundle
+    private static final String BOOKINFO = "BookInfo";
     private static final String ARG_PARAM2 = "param2";
+    private static final int NUMOFVALUES = 5;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    // Argument Values
+    private String[] bookValues = new String[NUMOFVALUES];
+
+
+    private FragmentInfoTabBinding binding;
 
     public InfoTab() {
         // Required empty public constructor
@@ -38,16 +40,14 @@ public class InfoTab extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param _bookValues Values that will be show in the layout page.
      * @return A new instance of fragment InfoTab.
      */
-    // TODO: Rename and change types and number of parameters
-    public static InfoTab newInstance(String param1, String param2) {
+    public static InfoTab newInstance(String[] _bookValues) {
         InfoTab fragment = new InfoTab();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putStringArray("BookInfo", _bookValues);
+        //Setting argument
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,21 +55,37 @@ public class InfoTab extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            bookValues = getArguments().getStringArray(BOOKINFO);
         }
+
     }
 
-    //TODO: capire perchè non te lo ricrea!
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
+        // Initializing dataBinding... no need for findViewById!
+        binding = FragmentInfoTabBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
+        initBookInfo();
 
-        //Se volessi passare delle informazioni tramite bundle...
-//        String sTitle = getArguments().getString("Title");
+        for (int i = 0; i < NUMOFVALUES; i++) {
+            Log.i(TAG, "onCreateView - messaggio ricevuto: " + bookValues[i]);
+        }
 
-        return inflater.inflate(R.layout.fragment_info_tab, container, false);
+        return root;
     }
+
+
+    // [0] => isbn, [1] => editore, [2] => dataPubblicazione, [3] => numeroPagine, [4] => Descrizione
+    private void initBookInfo(){
+        binding.tvISBN.setText(bookValues[0]);
+        binding.tvPublisher.setText(bookValues[1]);
+        binding.tvPublishDate.setText(bookValues[2]);
+        binding.tvPageCount.setText(bookValues[3]);
+        binding.tvDescription.setText(getString(R.string.loremIpsum));
+    }
+
+
 }

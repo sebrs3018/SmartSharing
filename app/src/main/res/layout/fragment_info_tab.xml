@@ -10,6 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <!-- Primary Info Card -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cvBookInfo"
@@ -23,7 +24,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0">
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -75,21 +75,19 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/tvISBN"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="ISBN"
                             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
 
                         <TextView
-                            android:id="@+id/tvISBNAnswer"
+                            android:id="@+id/tvISBN"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="isbn_answer" />
 
 
                         <TextView
-                            android:id="@+id/tvPublisher"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -98,33 +96,31 @@
 
 
                         <TextView
-                            android:id="@+id/tvPublisherAnswer"
+                            android:id="@+id/tvPublisher"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Mondadori" />
 
                         <TextView
-                            android:id="@+id/tvPublishDate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Data di pubblicazione"
                             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
 
                         <TextView
-                            android:id="@+id/tvPublishDateAnswer"
+                            android:id="@+id/tvPublishDate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="1997" />
 
                         <TextView
-                            android:id="@+id/tvPageCount"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Numero di pagine"
                             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
 
                         <TextView
-                            android:id="@+id/tvPageCountAnswer"
+                            android:id="@+id/tvPageCount"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="195" />
@@ -182,6 +178,7 @@
                     android:layout_height="200dp">
 
                     <TextView
+                        android:id="@+id/tvDescription"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="30dp"
@@ -189,7 +186,6 @@
                         android:layout_marginRight="30dp"
                         android:layout_marginBottom="20dp"
                         android:fontFamily="sans-serif"
-                        android:text="@string/loremIpsum"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                         android:textSize="14sp" />
                 </androidx.core.widget.NestedScrollView>
