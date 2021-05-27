@@ -8,8 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.toolbox.NetworkImageView;
 import com.sebrs3018.SmartSharing.R;
 import com.sebrs3018.SmartSharing.databinding.FragmentInfoTabBinding;
+import com.sebrs3018.SmartSharing.network.ImageRequester;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,8 +30,6 @@ public class InfoTab extends Fragment {
 
     // Argument Values
     private String[] bookValues = new String[NUMOFVALUES];
-
-
     private FragmentInfoTabBinding binding;
 
     public InfoTab() {
@@ -52,6 +52,7 @@ public class InfoTab extends Fragment {
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +60,6 @@ public class InfoTab extends Fragment {
         if (getArguments() != null) {
             bookValues = getArguments().getStringArray(BOOKINFO);
         }
-
     }
 
     @Override
@@ -78,13 +78,17 @@ public class InfoTab extends Fragment {
     }
 
 
-    // [0] => isbn, [1] => editore, [2] => dataPubblicazione, [3] => numeroPagine, [4] => Descrizione
+    // [0] => isbn, [1] => editore, [2] => dataPubblicazione, [3] => numeroPagine, [4] => Descrizione, [5] => UrlImage
     private void initBookInfo(){
         binding.tvISBN.setText(bookValues[0]);
         binding.tvPublisher.setText(bookValues[1]);
         binding.tvPublishDate.setText(bookValues[2]);
         binding.tvPageCount.setText(bookValues[3]);
         binding.tvDescription.setText(getString(R.string.loremIpsum));
+        ImageRequester imageRequester = ImageRequester.getInstance();
+        imageRequester.setImageFromUrl(binding.nivBook, bookValues[5]);
+
+
     }
 
 

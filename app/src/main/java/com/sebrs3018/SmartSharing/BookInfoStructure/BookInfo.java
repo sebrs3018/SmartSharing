@@ -73,7 +73,7 @@ public class BookInfo extends Fragment {
                 BookEntry bookEntry = getMessageFromNavUI();
 
                 //TODO: Get info from book entry and pass the desired data
-                InfoTab infoTab = InfoTab.newInstance(new String[] {"isbn", "editore", "dataPubblicazione", "numeroPagine", "Descrizione"});
+                InfoTab infoTab = InfoTab.newInstance(new String[] {"isbn", "editore", "dataPubblicazione", "numeroPagine", "Descrizione", bookEntry.getUrlImage()});
                 pageAdapter.addFragment(infoTab, tabNames.get(i));
             }
             else if (i == 1){
@@ -82,7 +82,6 @@ public class BookInfo extends Fragment {
         }
 
         binding.vpSwappingPages.setAdapter(pageAdapter);
-
     }
 
 

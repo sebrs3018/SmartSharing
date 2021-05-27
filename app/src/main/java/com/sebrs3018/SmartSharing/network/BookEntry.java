@@ -30,7 +30,7 @@ public class BookEntry implements Parcelable {
 
     public final String title;
     public final Uri dynamicUrl;
-    public final String url;
+    public final String url;    //contiene url dell'immagine
     public final String price;
     public final String description;
 
@@ -98,6 +98,10 @@ public class BookEntry implements Parcelable {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getUrlImage() {
+        return url;
     }
 
 

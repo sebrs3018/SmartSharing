@@ -35,8 +35,8 @@ public class BookCardRecyclerViewAdapter  extends RecyclerView.Adapter<BookCardV
     public BookCardRecyclerViewAdapter(List<BookEntry> bookList, OnTouchedItemListener _onTouchedItemListener, String _from) {
         this.bookList = bookList;
         bookListAll = new ArrayList<>(bookList);
+
         /* Nel caso iniziale, se non c'è nessun filtraggio, allora la lista di filtraggio risulta uguale a quella di dati*/
-        imageRequester = ImageRequester.getInstance();
         onTouchedItemListener = _onTouchedItemListener;
         from = _from;
     }
@@ -48,6 +48,8 @@ public class BookCardRecyclerViewAdapter  extends RecyclerView.Adapter<BookCardV
     public BookCardViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_card, parent, false);
 
+        imageRequester = ImageRequester.getInstance();
+
         return new BookCardViewHolder(layoutView, onTouchedItemListener, from);
     }
 
@@ -56,8 +58,11 @@ public class BookCardRecyclerViewAdapter  extends RecyclerView.Adapter<BookCardV
     public void onBindViewHolder(@NonNull @NotNull BookCardViewHolder holder, int position) {
         if (bookList != null && position < bookList.size()) {
             BookEntry product = bookList.get(position);
+
             holder.bookTitle.setText(product.title);
             holder.bookPrice.setText(product.price);
+
+            //TODO url contiene url dell'immmagine
             imageRequester.setImageFromUrl(holder.productImage, product.url);
         }
     }
