@@ -33,8 +33,6 @@ public class BookInfo extends Fragment {
 
     private View myFragment;
 
-
-
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private TabItem infoTab, dtTab;

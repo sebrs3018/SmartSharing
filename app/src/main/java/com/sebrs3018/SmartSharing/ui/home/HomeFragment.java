@@ -99,17 +99,19 @@ public class HomeFragment extends Fragment implements OnTouchedItemListener {
 
     @Override
     public void onItemTouched(int position, String from) {
-        Log.i(TAG, "onUserClick: clicked " + consigliati.get(position).getTitle());
+
 
         final NavController navController  = Navigation.findNavController(getView());
         /* Passo valore al fragment...  */
         HomeFragmentDirections.ActionNavigationHomeToBookInfo action;
 
         if(from.equals(CONSIGLIATI)){
+            Log.i(TAG, "onUserClick: clicked consigliati");
             action = HomeFragmentDirections.actionNavigationHomeToBookInfo(consigliati.get(position));
             action.setMessage("This is just another string field for Consigliati ...");
             navController.navigate(action);
         } else if (from.equals(NUOVIARRIVI)){
+            Log.i(TAG, "onUserClick: clicked nuoviArrivi");
             action = HomeFragmentDirections.actionNavigationHomeToBookInfo(nuoviArrivi.get(position));
             action.setMessage("This is just another string field for NuoviArrivi ....");
             navController.navigate(action);
