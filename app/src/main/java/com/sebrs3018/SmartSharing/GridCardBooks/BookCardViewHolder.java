@@ -1,5 +1,6 @@
 package com.sebrs3018.SmartSharing.GridCardBooks;
 
+import android.nfc.Tag;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -22,13 +23,15 @@ public class BookCardViewHolder extends RecyclerView.ViewHolder implements View.
     public NetworkImageView productImage;
     public TextView bookTitle;
     public TextView bookPrice;
+    private String from;
 
-    public BookCardViewHolder(@NonNull View itemView, OnTouchedItemListener _onTouchedItemListener){
+    public BookCardViewHolder(@NonNull View itemView, OnTouchedItemListener _onTouchedItemListener, String _from){
         super(itemView);
         productImage = itemView.findViewById(R.id.product_image);
         bookTitle = itemView.findViewById(R.id.product_title);
         bookPrice = itemView.findViewById(R.id.product_price);
         onTouchedItemListener = _onTouchedItemListener;
+        from = _from;
 
         /* Assegno listener alla mia cardView */
         itemView.setOnClickListener(this);
@@ -38,6 +41,6 @@ public class BookCardViewHolder extends RecyclerView.ViewHolder implements View.
     @Override
     public void onClick(View v) {
         /* passo info sull'elemento appena toccato... */
-        onTouchedItemListener.onItemTouched(getBindingAdapterPosition());
+        onTouchedItemListener.onItemTouched(getBindingAdapterPosition(), from);
     }
 }

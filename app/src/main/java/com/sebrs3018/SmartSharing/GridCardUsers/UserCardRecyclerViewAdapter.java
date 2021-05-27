@@ -14,15 +14,16 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-//TODO: finire logica del grid!
 public class UserCardRecyclerViewAdapter extends RecyclerView.Adapter<UserCardViewHolder>{
 
     private List<User> registeredUserList;       //Questa lista sarà modificata dal filtraggio
     private OnTouchedItemListener onTouchedItemListener;
+    private String from;
 
-    public UserCardRecyclerViewAdapter(List<User> _registeredUserList, OnTouchedItemListener _onTouchedItemListener){
+    public UserCardRecyclerViewAdapter(List<User> _registeredUserList, OnTouchedItemListener _onTouchedItemListener, String _from){
         registeredUserList = _registeredUserList;
         onTouchedItemListener = _onTouchedItemListener;
+        from = _from;
     }
 
 
@@ -31,7 +32,7 @@ public class UserCardRecyclerViewAdapter extends RecyclerView.Adapter<UserCardVi
     @Override
     public UserCardViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_card, parent, false);
-        return new UserCardViewHolder(layoutView, onTouchedItemListener);
+        return new UserCardViewHolder(layoutView, onTouchedItemListener, from);
     }
 
     @Override

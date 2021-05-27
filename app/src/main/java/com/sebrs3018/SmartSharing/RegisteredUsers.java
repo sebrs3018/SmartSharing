@@ -32,7 +32,7 @@ public class RegisteredUsers extends AppCompatActivity implements OnTouchedItemL
 
         /* Inizializzo adapter dei dati */
         registeredUsers = User.initRegisteredUsers(getString(R.string.LogsPath));
-        UserCardRecyclerViewAdapter adapter = new UserCardRecyclerViewAdapter(registeredUsers, this);
+        UserCardRecyclerViewAdapter adapter = new UserCardRecyclerViewAdapter(registeredUsers, this, TAG);
         recyclerView.setAdapter(adapter);
         int smallPadding = getResources().getDimensionPixelSize(R.dimen.book_product_grid_spacing_small);
         recyclerView.addItemDecoration(new UserGridItemDecoration(smallPadding));
@@ -41,7 +41,7 @@ public class RegisteredUsers extends AppCompatActivity implements OnTouchedItemL
 
     @Override //Se volessi navigare su una nuova activity associata all'utente appena premuto passerei da qui
     //E' questo metodo che attiva il processo di individuazione e gestione del click!
-    public void onItemTouched(int position) {
+    public void onItemTouched(int position, String from) {
         /*Intent intent = new Intent(this, NewActivity.class);
         * startActivity(intent);
         * */

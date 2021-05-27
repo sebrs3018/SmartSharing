@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,9 @@ import com.sebrs3018.SmartSharing.R;
  * create an instance of this fragment.
  */
 public class InfoTab extends Fragment {
+
+
+    private static final String TAG = "InfoTab";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -57,15 +61,14 @@ public class InfoTab extends Fragment {
         }
     }
 
+    //TODO: capire perchè non te lo ricrea!
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
 
         //Se volessi passare delle informazioni tramite bundle...
 //        String sTitle = getArguments().getString("Title");
-
 
         return inflater.inflate(R.layout.fragment_info_tab, container, false);
     }

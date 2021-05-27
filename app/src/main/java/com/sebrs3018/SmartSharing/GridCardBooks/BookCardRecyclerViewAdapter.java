@@ -29,14 +29,16 @@ public class BookCardRecyclerViewAdapter  extends RecyclerView.Adapter<BookCardV
     private ImageRequester imageRequester;
     private OnTouchedItemListener onTouchedItemListener;
     private final String TAG = "BCRViewAdapter";
+    private String from;
 
 
-    public BookCardRecyclerViewAdapter(List<BookEntry> bookList, OnTouchedItemListener _onTouchedItemListener) {
+    public BookCardRecyclerViewAdapter(List<BookEntry> bookList, OnTouchedItemListener _onTouchedItemListener, String _from) {
         this.bookList = bookList;
         bookListAll = new ArrayList<>(bookList);
         /* Nel caso iniziale, se non c'è nessun filtraggio, allora la lista di filtraggio risulta uguale a quella di dati*/
         imageRequester = ImageRequester.getInstance();
         onTouchedItemListener = _onTouchedItemListener;
+        from = _from;
     }
 
 
@@ -46,7 +48,7 @@ public class BookCardRecyclerViewAdapter  extends RecyclerView.Adapter<BookCardV
     public BookCardViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_card, parent, false);
 
-        return new BookCardViewHolder(layoutView, onTouchedItemListener);
+        return new BookCardViewHolder(layoutView, onTouchedItemListener, from);
     }
 
     /*  Questo metodo mi dice cosa ogni vista fa col suo contenuto  */

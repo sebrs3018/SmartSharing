@@ -35,6 +35,8 @@ public class HomeFragment extends Fragment implements OnTouchedItemListener {
 
 
     private static final String TAG = "HomeFragment";
+    private static final String NUOVIARRIVI = "NuoviArrivi";
+    private static final String CONSIGLIATI = "Consigliati";
 
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
@@ -64,7 +66,7 @@ public class HomeFragment extends Fragment implements OnTouchedItemListener {
 
         /* Inizializzo adapter dei dati */
         nuoviArrivi = BookEntry.initProductEntryList(getResources());
-        BookCardRecyclerViewAdapter adapter = new BookCardRecyclerViewAdapter(nuoviArrivi, this);
+        BookCardRecyclerViewAdapter adapter = new BookCardRecyclerViewAdapter(nuoviArrivi, this, NUOVIARRIVI);
         binding.rvHorizontal.setAdapter(adapter);
         int largePadding = getResources().getDimensionPixelSize(R.dimen.book_product_grid_spacing);
         int smallPadding = getResources().getDimensionPixelSize(R.dimen.book_product_grid_spacing_small);
@@ -76,7 +78,7 @@ public class HomeFragment extends Fragment implements OnTouchedItemListener {
 
         /* Inizializzo adapter dei dati */
         consigliati = BookEntry.initProductEntryList(getResources());
-        BookCardRecyclerViewAdapter cAdapter = new BookCardRecyclerViewAdapter(consigliati, this);
+        BookCardRecyclerViewAdapter cAdapter = new BookCardRecyclerViewAdapter(consigliati, this, CONSIGLIATI);
         binding.rvHorizontal2.setAdapter(cAdapter);
         binding.rvHorizontal2.addItemDecoration(new BookGridItemDecoration(largePadding, smallPadding));
 
@@ -96,14 +98,22 @@ public class HomeFragment extends Fragment implements OnTouchedItemListener {
     }
 
     @Override
-    public void onItemTouched(int position) {
+    public void onItemTouched(int position, String from) {
         Log.i(TAG, "onUserClick: clicked " + consigliati.get(position).getTitle());
 
         final NavController navController  = Navigation.findNavController(getView());
         /* Passo valore al fragment...  */
-        HomeFragmentDirections.ActionNavigationHomeToBookInfo action = HomeFragmentDirections.actionNavigationHomeToBookInfo(consigliati.get(position));
-        action.setMessage("This is just another string field....");
-        navController.navigate(action);
+        HomeFragmentDirections.ActionNavigationHomeToBookInfo action;
+
+        if(from.equals(CONSIGLIATI)){
+            action = HomeFragmentDirections.actionNavigationHomeToBookInfo(consigliati.get(position));
+            action.setMessage("This is just another string field for Consigliati ...");
+            navController.navigate(action);
+        } else if (from.equals(NUOVIARRIVI)){
+            action = HomeFragmentDirections.actionNavigationHomeToBookInfo(nuoviArrivi.get(position));
+            action.setMessage("This is just another string field for NuoviArrivi ....");
+            navController.navigate(action);
+        }
 
     }
 }

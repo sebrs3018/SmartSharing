@@ -79,7 +79,7 @@ public class SearchFragment extends Fragment implements OnTouchedItemListener {
 
         /* Inizializzo adapter dei dati */
         books = BookEntry.initProductEntryList(getResources());
-        adapter = new BookCardRecyclerViewAdapter( books, this);
+        adapter = new BookCardRecyclerViewAdapter( books, this, TAG);
         recyclerView.setAdapter(adapter);
         int largePadding = getResources().getDimensionPixelSize(R.dimen.book_product_grid_spacing);
         int smallPadding = getResources().getDimensionPixelSize(R.dimen.book_product_grid_spacing_small);
@@ -190,7 +190,7 @@ public class SearchFragment extends Fragment implements OnTouchedItemListener {
 
 
     @Override
-    public void onItemTouched(int position) {
+    public void onItemTouched(int position, String from) {
         Log.i(TAG, "onUserClick: clicked " + books.get(position).getTitle());
     }
 }
