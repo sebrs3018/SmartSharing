@@ -1,9 +1,11 @@
 package com.sebrs3018.SmartSharing;
 
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -12,9 +14,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.ResolvableApiException;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
@@ -36,7 +49,6 @@ public class Navigation_Activity extends AppCompatActivity {
 
     private ActivityNavigationBinding binding;
 //    private Toolbar toolbar;
-    private BottomNavigationView bottomNavigationView;
     private final String TAG = "Navigation_Activity";
     AppBarConfiguration appBarConfiguration;
 
@@ -46,6 +58,8 @@ public class Navigation_Activity extends AppCompatActivity {
 
         binding = ActivityNavigationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+;
+
 
 
         /* Setting up the bottomNavigationView */
@@ -110,11 +124,15 @@ public class Navigation_Activity extends AppCompatActivity {
         }
     };
 
-    //TODO: da valutare se rimuoverlo o meno
+
+/*
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
+*/
+
+
 
 
 }

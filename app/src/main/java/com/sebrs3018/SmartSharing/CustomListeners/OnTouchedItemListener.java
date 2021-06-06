@@ -1,4 +1,4 @@
-package com.sebrs3018.SmartSharing.TouchCardListener;
+package com.sebrs3018.SmartSharing.CustomListeners;
 
 public interface OnTouchedItemListener {
 

@@ -1,6 +1,9 @@
 package com.sebrs3018.SmartSharing.BookInfoStructure.Tabs;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -12,13 +15,20 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -26,6 +36,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.maps.DirectionsApiRequest;
 import com.google.maps.GeoApiContext;
@@ -42,6 +53,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+import java.util.concurrent.TimeUnit;
 
 import static com.sebrs3018.SmartSharing.Constants.MAPVIEW_BUNDLE_KEY;
 
@@ -55,21 +69,15 @@ public class DoveTrovarloTab extends Fragment implements OnMapReadyCallback {
     private FusedLocationProviderClient mfusedLocaltionClient;
 
     private GoogleMap mGoogleMap;
-    private LatLngBounds mMapBoundary;
     private UserLocation mUserPosition;
-
-
-
     private GeoApiContext mGeoApiContext = null;
-    private ClusterManager<ClusterItem> mClusterManager; //questo cluster manager mi permette di marcare più utenti...
-
+    private boolean isCurrentPositionAvailable = false;
 
     private static final String TAG = "DoveTrovarloTab";
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Nullable
@@ -81,41 +89,39 @@ public class DoveTrovarloTab extends Fragment implements OnMapReadyCallback {
 
         mfusedLocaltionClient = LocationServices.getFusedLocationProviderClient(getContext());
         initGoogleMap(savedInstanceState);
-        /* da notare che si prende la locazione solo dopo aver inizializzato la mappa! */
-        getLastKnownLocation();
+
 
         return root;
     }
 
-    /* This function founds your current location ! */
-    //TODO: aggiungere permessi!
+    /* This function founds your current location - if GPS is recently activated, the result may be null */
     private void getLastKnownLocation() {
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
         }
 
-        mfusedLocaltionClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+
+        LocationServices.getFusedLocationProviderClient(getContext()).getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
-            public void onComplete(@NonNull @NotNull Task<Location> task) {
-                if (task.isSuccessful()) {
-                    Location location = task.getResult();
-                    Log.d(TAG, "onComplete: latitude " + location.getLatitude() + "\tlongitude: " + location.getLongitude());
+            public void onSuccess(Location location) {
+                if(location == null) return;
 
-                    LatLng myLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                LatLng myLocation = new LatLng(location.getLatitude(), location.getLongitude());
 
-                    mUserPosition = new UserLocation(null, myLocation, null);
-                    mGoogleMap.addMarker(new MarkerOptions().position(mUserPosition.getGeo_point()).title("It's me!"));
-//                    setCameraView();
-                    addMapMarkers();
+                mUserPosition = new UserLocation(null, myLocation, null);
+                mGoogleMap.addMarker(new MarkerOptions().position(mUserPosition.getGeo_point()).title("It's me!"));
+                isCurrentPositionAvailable = true;
+                    }
+                });
+        }
 
-/*                  mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation));*/
-                }
-            }
-        });
-    }
 
     private void initGoogleMap(Bundle savedInstanceState) {
         Bundle mapViewBundle = null;
+
+
         if (savedInstanceState != null) {
             mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
         }
@@ -150,6 +156,22 @@ public class DoveTrovarloTab extends Fragment implements OnMapReadyCallback {
                 mGoogleMap.addMarker(new MarkerOptions().position(bookerLatlng).title("The Booker"));
                 mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(bookerLatlng, 10));
 
+                /* Poichè la locazione attuale è quella che può ritardare, lo si inserisce dopo... */
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                    CompletableFuture.runAsync(() -> {
+                        try {
+                            if(!isCurrentPositionAvailable){
+                                Log.i(TAG, "addMapMarkers: la posizione non è ancora disponibile... waiting!");
+                                TimeUnit.SECONDS.sleep(2);  //dopo all'incirca due secondi si ha il risultato del GPS
+                            }
+                            Log.i(TAG, "addMapMarkers: la posizione dovrebbe essere disponibile!!");
+                            getLastKnownLocation();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                }
+
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -164,12 +186,6 @@ public class DoveTrovarloTab extends Fragment implements OnMapReadyCallback {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-/*        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-
-        if (mapFragment != null) {
-            mapFragment.getMapAsync(callback);
-        }*/
-
     }
 
     /* Aggiungo MapView al lifecycle... */
@@ -241,35 +257,17 @@ public class DoveTrovarloTab extends Fragment implements OnMapReadyCallback {
         }
 
         mGoogleMap = googleMap;
+        /* da notare che si prende la locazione solo dopo aver inizializzato la mappa! */
+        addMapMarkers();
     }
 
 
-    /**
-     * Determines the view boundary then sets the camera
-     * Sets the view
-     */
-    private void setCameraView() {
-
-        // Set a boundary to start (a rectangle view! 0.2 * 0.2)
-
-        double bottomBoundary = mUserPosition.getGeo_point().latitude - .1;
-        double leftBoundary = mUserPosition.getGeo_point().longitude - .1;
-        double topBoundary = mUserPosition.getGeo_point().latitude + .1;
-        double rightBoundary = mUserPosition.getGeo_point().longitude + .1;
-
-                mMapBoundary = new LatLngBounds(
-                new LatLng(bottomBoundary, leftBoundary),
-                new LatLng(topBoundary, rightBoundary)
-        );
-
-        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(mMapBoundary, 0));
-
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
+        if(requestCode == 44){
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                getLastKnownLocation();
+            }
+        }
     }
-
-
-
-
-
-
-
 }

@@ -12,16 +12,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,8 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.sebrs3018.SmartSharing.GridCardBooks.BookCardRecyclerViewAdapter;
 import com.sebrs3018.SmartSharing.GridCardBooks.BookGridItemDecoration;
 import com.sebrs3018.SmartSharing.R;
-import com.sebrs3018.SmartSharing.SearchableActivity;
-import com.sebrs3018.SmartSharing.TouchCardListener.OnTouchedItemListener;
+import com.sebrs3018.SmartSharing.CustomListeners.OnTouchedItemListener;
 import com.sebrs3018.SmartSharing.databinding.FragmentSearchBinding;
 import com.sebrs3018.SmartSharing.network.BookEntry;
 

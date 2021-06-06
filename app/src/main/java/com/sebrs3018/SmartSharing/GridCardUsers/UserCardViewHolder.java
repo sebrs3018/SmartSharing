@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sebrs3018.SmartSharing.R;
-import com.sebrs3018.SmartSharing.TouchCardListener.OnTouchedItemListener;
+import com.sebrs3018.SmartSharing.CustomListeners.OnTouchedItemListener;
 
 import org.jetbrains.annotations.NotNull;
 

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.sebrs3018.SmartSharing.GridCardUsers.User;
 import com.sebrs3018.SmartSharing.GridCardUsers.UserCardRecyclerViewAdapter;
 import com.sebrs3018.SmartSharing.GridCardUsers.UserGridItemDecoration;
-import com.sebrs3018.SmartSharing.TouchCardListener.OnTouchedItemListener;
+import com.sebrs3018.SmartSharing.CustomListeners.OnTouchedItemListener;
 
 import java.util.List;
 

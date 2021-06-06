@@ -1,7 +1,5 @@
 package com.sebrs3018.SmartSharing.GridCardBooks;
 
-import android.nfc.Tag;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -10,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.sebrs3018.SmartSharing.R;
-import com.sebrs3018.SmartSharing.TouchCardListener.OnTouchedItemListener;
+import com.sebrs3018.SmartSharing.CustomListeners.OnTouchedItemListener;
 
 public class BookCardViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
