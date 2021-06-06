@@ -1,5 +1,7 @@
 package com.sebrs3018.SmartSharing.GridCardUsers;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -10,7 +12,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class User implements Parcelable {
 
     private final String TAG = "User";
     public final String username;
@@ -59,5 +61,14 @@ public class User {
         return usernames;
     }
 
+//TODO: usare parcelable
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+    }
 }

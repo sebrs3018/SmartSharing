@@ -8,6 +8,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.sebrs3018.SmartSharing.BookInfoStructure.Tabs.DoveTrovarloTab;
+import com.sebrs3018.SmartSharing.BookInfoStructure.Tabs.InfoTab;
 import com.sebrs3018.SmartSharing.databinding.FragmentBookInfoBinding;
 import com.sebrs3018.SmartSharing.network.BookEntry;
 import org.jetbrains.annotations.NotNull;

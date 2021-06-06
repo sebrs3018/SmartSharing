@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BookInfoStructure.Tabs.InfoTab">
+    tools:context=".BookInfoStructure.Tabs.DoveTrovarloTab">
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+  <!--  <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="100"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <!-- Primary Info Card -->
+
+        &lt;!&ndash; Informazioni utente prestito&ndash;&gt;
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cvBookInfo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="30"
             android:layout_marginStart="8dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="8dp"
@@ -30,14 +38,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <!-- Book Cover -->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
                     android:paddingStart="20dp"
-                    android:text="Book Cover"
+                    android:text="Offerto da"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
 
                     />
@@ -57,13 +64,15 @@
                     android:layout_marginRight="8dp"
                     android:orientation="horizontal">
 
-                    <com.android.volley.toolbox.NetworkImageView
+                    <ImageView
                         android:id="@+id/nivBook"
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="20dp"
+                        android:src="@drawable/ic_action_user"
+                        android:background="@color/colorPrimary"
                         />
 
                     <LinearLayout
@@ -77,21 +86,21 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="ISBN"
+                            android:text="Nome utente"
                             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
 
                         <TextView
                             android:id="@+id/tvISBN"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="isbn_answer" />
+                            android:text="NomeUtente" />
 
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="Editore"
+                            android:text="Indirizzo di raccolta"
                             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
 
 
@@ -99,31 +108,19 @@
                             android:id="@+id/tvPublisher"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Mondadori" />
+                            android:text="indirizzoDaModificare" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Data di pubblicazione"
+                            android:text="E-mail"
                             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
 
                         <TextView
                             android:id="@+id/tvPublishDate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="1997" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Numero di pagine"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
-
-                        <TextView
-                            android:id="@+id/tvPageCount"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="195" />
+                            android:text="emailDaPescare" />
 
 
                     </LinearLayout>
@@ -135,70 +132,36 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Description -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cvBookDescription"
+        &lt;!&ndash; Mappa localizzazione utente &ndash;&gt;
+        <RelativeLayout
+            android:id="@+id/map_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cvBookInfo"
-            app:layout_constraintVertical_bias="0.0">
+            android:layout_height="0dp"
+            android:layout_weight="70"
+            >
 
-
-            <LinearLayout
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="match_parent" />
 
-                <!-- Book Cover -->
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:paddingStart="20dp"
-                    android:text="Descrizione"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="10dp"
+                <ImageButton
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/ic_baseline_fullscreen_24"
+                    android:background="@color/white"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
-                    android:background="#EAEAEA" />
+                    android:layout_marginEnd="10dp"
+                    android:id="@+id/btn_full_screen_map"
+                />
 
-                <androidx.core.widget.NestedScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp">
+        </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/tvDescription"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="30dp"
-                        android:layout_marginBottom="20dp"
-                        android:fontFamily="sans-serif"
-                        android:justificationMode="inter_word"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                        android:textSize="14sp" />
-                </androidx.core.widget.NestedScrollView>
+    </LinearLayout>-->
 
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-            </LinearLayout>
-
-
-        </com.google.android.material.card.MaterialCardView>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-</ScrollView>

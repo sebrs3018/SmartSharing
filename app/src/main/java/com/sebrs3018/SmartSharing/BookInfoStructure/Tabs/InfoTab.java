@@ -1,4 +1,4 @@
-package com.sebrs3018.SmartSharing.BookInfoStructure;
+package com.sebrs3018.SmartSharing.BookInfoStructure.Tabs;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.volley.toolbox.NetworkImageView;
 import com.sebrs3018.SmartSharing.R;
 import com.sebrs3018.SmartSharing.databinding.FragmentInfoTabBinding;
 import com.sebrs3018.SmartSharing.network.ImageRequester;
