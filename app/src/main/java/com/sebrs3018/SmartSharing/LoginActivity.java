@@ -159,7 +159,7 @@ public class LoginActivity extends AppCompatActivity {
         return text.toString().trim().length() != 0;
     }
 
-
+    //Method to force current location for GPS
     public void getLocationUpdate() {
         LocationRequest mLocationRequest = LocationRequest.create();
         mLocationRequest.setInterval(10000);
@@ -170,10 +170,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onLocationResult(LocationResult locationResult) {
                 if (locationResult == null) {
                     return;
-
                 }
 
-                Log.i(TAG, "onLocationResult: " + locationResult.getLocations().get(0).getLatitude());
+               // Log.i(TAG, "onLocationResult: " + locationResult.getLocations().get(0).getLatitude());
 
                 /* Idea: dopo aver trovato la prima posizione attuale, aumento l'intervallo... */
                 mLocationRequest.setInterval(60000);

@@ -136,21 +136,8 @@ public class FingerprintDetector  {
                 e.printStackTrace();
             }
             biometricPrompt.authenticate(promptInfo, new BiometricPrompt.CryptoObject(cipher));
-//        });
         return success;
     }
-
-/*    @RequiresApi(api = Build.VERSION_CODES.M)
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fingerprint_detector);
-
-        //Recupero la email dell'utente
-        Intent i = getIntent();
-        USERNAMEKEY = i.getStringExtra(getString(R.string.username));
-    }*/
-
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -159,9 +146,7 @@ public class FingerprintDetector  {
         try {
             keyGenerator = KeyGenerator.getInstance(
                     KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (NoSuchProviderException e) {
+        } catch (NoSuchAlgorithmException | NoSuchProviderException e) {
             e.printStackTrace();
         }
         try {
@@ -187,11 +172,7 @@ public class FingerprintDetector  {
         // Before the keystore can be accessed, it must be loaded.
         try {
             keyStore.load(null);
-        } catch (CertificateException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        } catch (CertificateException | NoSuchAlgorithmException | IOException e) {
             e.printStackTrace();
         }
 
@@ -200,11 +181,7 @@ public class FingerprintDetector  {
         try {
             //Prendo key dato username
             secretKey = ((SecretKey)keyStore.getKey(USERNAMEKEY, null));   //Questa chiave è associata alla password (più registrazioni potrebbero comportare dei problemi)
-        } catch (KeyStoreException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (UnrecoverableKeyException e) {
+        } catch (KeyStoreException | NoSuchAlgorithmException | UnrecoverableKeyException e) {
             e.printStackTrace();
         }
         return secretKey;
@@ -216,9 +193,7 @@ public class FingerprintDetector  {
             c =  Cipher.getInstance(KeyProperties.KEY_ALGORITHM_AES + "/"
                     + KeyProperties.BLOCK_MODE_CBC + "/"
                     + KeyProperties.ENCRYPTION_PADDING_PKCS7);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (NoSuchPaddingException e) {
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
             e.printStackTrace();
         }
         return c;

@@ -97,21 +97,6 @@ public class SearchFragment extends Fragment implements OnTouchedItemListener {
         menu.clear();
         menuInflater.inflate(R.menu.top_nav_menu, menu);
 
-/*        MenuItem.OnActionExpandListener onActionExpandListener = new MenuItem.OnActionExpandListener() {
-            @Override
-            public boolean onMenuItemActionExpand(MenuItem item) {
-//                Toast.makeText(SearchableActivity.this, "Search is expanded", Toast.LENGTH_SHORT).show();
-                return true;
-            }
-
-            @Override
-            public boolean onMenuItemActionCollapse(MenuItem item) {
-//                Toast.makeText(SearchableActivity.this, "Search is collapsed", Toast.LENGTH_SHORT).show();
-                return true;
-            }
-        };
-        menu.findItem(R.id.search).setOnActionExpandListener(onActionExpandListener);*/
-
 
         searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setQueryHint("Cerca dei libri interessanti");

@@ -39,7 +39,6 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationBarView;
 import com.sebrs3018.SmartSharing.databinding.ActivityNavigationBinding;
-import com.sebrs3018.SmartSharing.ui.dashboard.DashboardFragment;
 import com.sebrs3018.SmartSharing.ui.home.HomeFragment;
 import com.sebrs3018.SmartSharing.ui.search.SearchFragment;
 
@@ -48,6 +47,7 @@ import org.jetbrains.annotations.NotNull;
 public class Navigation_Activity extends AppCompatActivity {
 
     private ActivityNavigationBinding binding;
+
 //    private Toolbar toolbar;
     private final String TAG = "Navigation_Activity";
     AppBarConfiguration appBarConfiguration;
@@ -58,9 +58,6 @@ public class Navigation_Activity extends AppCompatActivity {
 
         binding = ActivityNavigationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-;
-
-
 
         /* Setting up the bottomNavigationView */
         binding.bnView.setOnNavigationItemSelectedListener(navListener);
@@ -110,9 +107,6 @@ public class Navigation_Activity extends AppCompatActivity {
                     break;
                 case R.id.navigation_search:
                     selectedFragment = new SearchFragment();
-                    break;
-                case R.id.navigation_dashboard:
-                    selectedFragment = new DashboardFragment();
                     break;
             }
 

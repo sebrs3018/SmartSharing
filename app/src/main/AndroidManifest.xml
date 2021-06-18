@@ -55,17 +55,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".SearchableActivity">
-            <intent-filter>
-                <action android:name="com.sebrs3018.SmartSharing.SearchableActivity" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value=".SearchableActivity" />
-        </activity>
         <activity android:name=".RegistrationActivity">
             <intent-filter>
                 <action android:name="com.sebrs3018.SmartSharing.RegistrationActivity" />

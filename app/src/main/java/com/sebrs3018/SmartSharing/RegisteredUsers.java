@@ -42,12 +42,6 @@ public class RegisteredUsers extends AppCompatActivity implements OnTouchedItemL
     @Override //Se volessi navigare su una nuova activity associata all'utente appena premuto passerei da qui
     //E' questo metodo che attiva il processo di individuazione e gestione del click!
     public void onItemTouched(int position, String from) {
-        /*Intent intent = new Intent(this, NewActivity.class);
-        * startActivity(intent);
-        * */
-
-//        registeredUsers.get(position);
-
         Log.i(TAG, "onUserClick: clicked " + registeredUsers.get(position).username);
         FingerprintDetector fingerprintDetector = new FingerprintDetector(registeredUsers.get(position).username, RegisteredUsers.this);
         fingerprintDetector.startFingerPrintDetection(false);
