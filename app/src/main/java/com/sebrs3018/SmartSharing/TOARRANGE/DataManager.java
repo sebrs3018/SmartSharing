@@ -18,10 +18,10 @@ public class DataManager {
     }
 
 
-    /** TODO:
-     *      This class contain only the methods to add data
-     *      to the DB, to get data the query has to be made before
-     *      the visualization in UI.
+    /**
+     *   This class contain only the methods to add data
+     *   to the DB, to get data the query has to be made before
+     *   the visualization in UI.
      * */
 
 
