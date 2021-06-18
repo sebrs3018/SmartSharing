@@ -82,6 +82,11 @@ dependencies {
     //ML kit For barcode scanner (Bundled model)
     implementation 'com.google.mlkit:barcode-scanning:16.1.1'
 
+    /*
+    implementation platform('com.google.firebase:firebase-bom:28.0.1')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-database'*/
+
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     implementation 'androidx.navigation:navigation-fragment:2.3.0'
