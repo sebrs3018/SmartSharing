@@ -8,38 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:907173880152:android:18064fe51c9c52f3bd852d",
+        "mobilesdk_app_id": "1:907173880152:android:249c777b13b30983bd852d",
         "android_client_info": {
-          "package_name": "com.example.databasemanager"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "907173880152-dj9dclh4cuvbk4eqc8g9vdl8b0qaenuc.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBQxAVQRkr-9AU7TwUNQQfsm2gOCiXhbNg"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "907173880152-dj9dclh4cuvbk4eqc8g9vdl8b0qaenuc.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:907173880152:android:d31b82506f66aa0abd852d",
-        "android_client_info": {
-          "package_name": "com.sebrs3018.SmartSharing"
+          "package_name": "com.sebrs3018.login"
         }
       },
       "oauth_client": [
