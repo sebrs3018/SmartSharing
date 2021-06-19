@@ -9,14 +9,19 @@ import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.sebrs3018.SmartSharing.DB.DBUtils;
 import com.sebrs3018.SmartSharing.Entities.Book;
 import com.sebrs3018.SmartSharing.GridCardUsers.User;
 import com.sebrs3018.SmartSharing.Login.LoginActivity;
 import com.sebrs3018.SmartSharing.Login.SessionManager;
 import com.sebrs3018.SmartSharing.Navigation_Activity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.sebrs3018.SmartSharing.Constants.*;
 
@@ -144,6 +149,39 @@ public class DataManager {
 
     public void addBookLender(Book bookToAdd){
         bookRoot.child(bookToAdd.getISBN()).setValue(bookToAdd);
+    }
+
+    public List<Book> getBooksAvailable() {
+
+        List<Book> bookList = new ArrayList<>();
+
+        bookRoot.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    Book book = ds.getValue(Book.class);
+
+                    if (book != null) {
+                        Log.i(TAG, "onDataChange: *************************************Book fetched**************************************************************");
+                        Log.i(TAG, "onDataChange: " + book.getISBN());
+                        Log.i(TAG, "onDataChange: " + book.getTitolo());
+                        Log.i(TAG, "onDataChange: " + book.getLender());
+                        Log.i(TAG, "onDataChange: " + book.getEditore());
+                        Log.i(TAG, "onDataChange: " + book.getDescrizione());
+                        Log.i(TAG, "onDataChange: " + book.getUrlImage());
+                        bookList.add(new Book(book.getISBN(), book.getTitolo(), book.getAutore(), book.getEditore(), book.getDataPubblicazione(), book.getNroPagine(), book.getDescrizione(), book.getUrlImage(), book.getLender()));
+                        Log.i(TAG, "onDataChange: ***************************************************************************************************************");
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // TODO show error message
+            }
+        });
+
+        return bookList;
     }
 
 

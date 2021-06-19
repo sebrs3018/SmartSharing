@@ -11,7 +11,7 @@ public class Constants {
     public static final String USERS = "Users";
     public static final String BOOKS = "Books";
 
-    /* Session Constans */
+    /* Session Constants */
 
     // creating constant keys for shared preferences.
     public static final String SHARED_PREFS = "shared_prefs";

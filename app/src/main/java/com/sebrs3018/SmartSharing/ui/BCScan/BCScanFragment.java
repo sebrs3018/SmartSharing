@@ -131,7 +131,6 @@ public class BCScanFragment extends Fragment {
                                             if (bc.getValueType() == Barcode.TYPE_ISBN){
                                                 Log.i(TAG, "onSuccess: Barcode found ==> " + bc.getRawValue());
                                                 new BarcodeLookup(Navigation.findNavController(getView()), getContext()).execute(bc.getRawValue());   //lookingUp for the book just scanned
-                                                break;          //as soon i get the sesssion, then is no needed to continue scanning
                                             }
                                             else
                                                 Log.i(TAG, "Wrong barcode found " );

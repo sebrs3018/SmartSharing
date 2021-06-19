@@ -3,6 +3,8 @@ package com.sebrs3018.SmartSharing.barcode;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +20,8 @@ import com.sebrs3018.SmartSharing.databinding.FragmentBookInfoBinding;
 import com.sebrs3018.SmartSharing.databinding.FragmentCheckBookFieldsBinding;
 import com.sebrs3018.SmartSharing.network.BookEntry;
 import com.sebrs3018.SmartSharing.network.ImageRequester;
+import com.sebrs3018.SmartSharing.ui.BCScan.BCScanFragmentDirections;
+
 import static com.sebrs3018.SmartSharing.Constants.*;
 
 public class CheckBookFields extends Fragment {
@@ -53,8 +57,6 @@ public class CheckBookFields extends Fragment {
         Book bookToCheck = getBookToCheckFromNavUI();
         initForm(bookToCheck);
 
-        /*TODO: rendere permanenti eventuali cambiamenti effettuati dall'utente!*/
-
         binding.tvConfermaDati.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,10 +73,10 @@ public class CheckBookFields extends Fragment {
                 DataManager dm = new DataManager(BOOKS);
                 dm.addBookLender(bookToCheck);
 
+                NavController navController = Navigation.findNavController(getView());
+                navController.navigate(CheckBookFieldsDirections.actionCheckBookFieldsToNavigationHome());
             }
         });
-
-
         return myFragment;
     }
 

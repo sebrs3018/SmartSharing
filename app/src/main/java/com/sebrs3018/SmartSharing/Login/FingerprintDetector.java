@@ -1,4 +1,4 @@
-package com.sebrs3018.SmartSharing;
+package com.sebrs3018.SmartSharing.Login;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import com.sebrs3018.SmartSharing.Login.LoginActivity;
+import com.sebrs3018.SmartSharing.Navigation_Activity;
 
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;

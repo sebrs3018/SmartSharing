@@ -4,6 +4,8 @@ package com.sebrs3018.SmartSharing.Entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 public class Book implements Parcelable {
 
     private String ISBN;
@@ -24,7 +26,6 @@ public class Book implements Parcelable {
      * @param _ISBN book to search in the DB
      * @param _lender the guy who lent the book
     * */
-
     public Book( String _ISBN, String _titolo, String _autore, String _editore, String _dataPubblicazione, String _nroPagine, String _descrizione, String _urlImage, String _lender ){
         ISBN = _ISBN;
         titolo = _titolo;
@@ -37,7 +38,6 @@ public class Book implements Parcelable {
         lender = _lender;
     }
 
-
     protected Book(Parcel in) {
         ISBN = in.readString();
         titolo = in.readString();
@@ -49,6 +49,17 @@ public class Book implements Parcelable {
         urlImage = in.readString();
         lender = in.readString();
     }
+
+
+    public static List<Book> initBookList(){
+
+
+        return null;
+    }
+
+
+
+
 
     public static final Creator<Book> CREATOR = new Creator<Book>() {
         @Override

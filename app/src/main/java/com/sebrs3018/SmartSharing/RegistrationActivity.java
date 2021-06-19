@@ -19,6 +19,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.sebrs3018.SmartSharing.DB.DBUtils;
 import com.sebrs3018.SmartSharing.DB.DbManager;
+import com.sebrs3018.SmartSharing.Login.FingerprintDetector;
 import com.sebrs3018.SmartSharing.Login.LoginActivity;
 import com.sebrs3018.SmartSharing.TOARRANGE.DataManager;
 

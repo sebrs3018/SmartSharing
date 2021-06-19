@@ -58,6 +58,9 @@
         <argument
             android:name="BookToCheck"
             app:argType="com.sebrs3018.SmartSharing.Entities.Book" />
+        <action
+            android:id="@+id/action_checkBookFields_to_navigation_home"
+            app:destination="@id/navigation_home" />
     </fragment>
 
 

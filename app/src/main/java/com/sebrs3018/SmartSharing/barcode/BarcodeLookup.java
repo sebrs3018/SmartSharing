@@ -69,9 +69,6 @@ public class BarcodeLookup extends AsyncTask<String, Void, Book> {
     }
 
 
-
-
-
     /* look for the barcode in the API DB */
     private Book lookUp(String _barcode) {
         try {

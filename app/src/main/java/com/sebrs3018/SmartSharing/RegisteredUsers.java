@@ -12,6 +12,7 @@ import com.sebrs3018.SmartSharing.GridCardUsers.User;
 import com.sebrs3018.SmartSharing.GridCardUsers.UserCardRecyclerViewAdapter;
 import com.sebrs3018.SmartSharing.GridCardUsers.UserGridItemDecoration;
 import com.sebrs3018.SmartSharing.CustomListeners.OnTouchedItemListener;
+import com.sebrs3018.SmartSharing.Login.FingerprintDetector;
 
 import java.util.List;
 

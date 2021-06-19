@@ -19,12 +19,15 @@ import com.sebrs3018.SmartSharing.GridCardBooks.BookGridItemDecoration;
 import com.sebrs3018.SmartSharing.R;
 import com.sebrs3018.SmartSharing.GridCardBooks.BookCardRecyclerViewAdapter;
 import com.sebrs3018.SmartSharing.CustomListeners.OnTouchedItemListener;
+import com.sebrs3018.SmartSharing.TOARRANGE.DataManager;
 import com.sebrs3018.SmartSharing.databinding.FragmentHomeBinding;
 import com.sebrs3018.SmartSharing.network.BookEntry;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+
+import static com.sebrs3018.SmartSharing.Constants.BOOKS;
 
 public class HomeFragment extends Fragment implements OnTouchedItemListener {
 
@@ -37,6 +40,7 @@ public class HomeFragment extends Fragment implements OnTouchedItemListener {
     private FragmentHomeBinding binding;
     private List<BookEntry> nuoviArrivi;
     private List<BookEntry> consigliati;
+
 
 
     @Override
@@ -60,6 +64,9 @@ public class HomeFragment extends Fragment implements OnTouchedItemListener {
         binding.rvHorizontal.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         /* Inizializzo adapter dei dati */
+        new DataManager(BOOKS).getBooksAvailable();
+
+
         nuoviArrivi = BookEntry.initProductEntryList(getResources());
         BookCardRecyclerViewAdapter adapter = new BookCardRecyclerViewAdapter(nuoviArrivi, this, NUOVIARRIVI);
         binding.rvHorizontal.setAdapter(adapter);
