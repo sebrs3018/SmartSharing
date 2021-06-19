@@ -54,6 +54,7 @@ public class SearchFragment extends Fragment implements OnTouchedItemListener {
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        Log.i(TAG, "Search Fragment Created: ");
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -39,7 +39,7 @@ public class UserCardRecyclerViewAdapter extends RecyclerView.Adapter<UserCardVi
     public void onBindViewHolder(@NonNull @NotNull UserCardViewHolder holder, int position) {
         if (registeredUserList != null && position < registeredUserList.size()) {
             User registeredUser = registeredUserList.get(position);
-            holder.username.setText(registeredUser.username);
+            holder.username.setText(registeredUser.getUsername());
         }
     }
 

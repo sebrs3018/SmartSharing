@@ -98,7 +98,6 @@ public class BookInfo extends Fragment {
         initLayoutBookInfoArgs(bookEntry.getTitle(), "George Orwell");
 
         return bookEntry;
-
     }
 
     private void initLayoutBookInfoArgs(String titolo, String autore){

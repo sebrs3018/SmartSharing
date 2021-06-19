@@ -1,4 +1,4 @@
-package com.sebrs3018.SmartSharing;
+package com.sebrs3018.SmartSharing.Login;
 
 import android.Manifest;
 import android.app.Activity;
@@ -40,12 +40,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.sebrs3018.SmartSharing.DB.DbManager;
-import com.sebrs3018.SmartSharing.Exceptions.InvalidPasswordException;
-import com.sebrs3018.SmartSharing.Exceptions.UserNotFoundException;
+import com.sebrs3018.SmartSharing.R;
+import com.sebrs3018.SmartSharing.RegisteredUsers;
+import com.sebrs3018.SmartSharing.RegistrationActivity;
+import com.sebrs3018.SmartSharing.TOARRANGE.DataManager;
 
 import static com.sebrs3018.SmartSharing.Constants.ERROR_DIALOG_REQUEST;
 import static com.sebrs3018.SmartSharing.Constants.PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION;
 import static com.sebrs3018.SmartSharing.Constants.PERMISSIONS_REQUEST_ENABLE_GPS;
+import static com.sebrs3018.SmartSharing.Constants.USERS;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -58,8 +61,6 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputEditText etUser = null, etPassword = null;
     private boolean mLocationPermissionGranted = false;
 
-
-    private DbManager db = null;
     private CardView cvBioAccess = null, cvLogin = null;
 
     @Override
@@ -109,29 +110,25 @@ public class LoginActivity extends AppCompatActivity {
                 ilPassword.setError(null);
                 _password = etPassword.getText().toString();
 
-                db = new DbManager(LoginActivity.this);
-
-                try {
-                    db.login(_user, _password);
-                    startActivity(new Intent(LoginActivity.this, Navigation_Activity.class));
-                } catch (UserNotFoundException e) {
-                    ilUser.setError("Utente non riconosciuto");
-                } catch (InvalidPasswordException e) {
-                    etPassword.setText(null);
-                    ilPassword.setError("Password sbagliata");
-                }
-
-/*                if (db.login(_user, _password)) {
-                    ilUser.setError(null);
-                }
-                else{
-                    ilUser.setError("Utente non riconosciuto");
-                }*/
+                SessionManager sm = new SessionManager(LoginActivity.this);
+                DataManager dm = new DataManager(USERS, LoginActivity.this, sm);
+                dm.login(_user, _password);
 
             }
         });
 
     }
+
+    public void setPasswdError(){
+        etPassword.setText(null);
+        ilPassword.setError("Password sbagliata");
+    }
+
+    public void setUserError(){
+        etUser.setText(null);
+        ilUser.setError("Utente non trovato");
+    }
+
 
     @Override
     protected void onStart() {
@@ -184,18 +181,6 @@ public class LoginActivity extends AppCompatActivity {
         }
         LocationServices.getFusedLocationProviderClient(getApplicationContext()).requestLocationUpdates(mLocationRequest, mLocationCallback, null);
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -360,5 +345,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
 
 }

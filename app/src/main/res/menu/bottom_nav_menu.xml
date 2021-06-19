@@ -13,4 +13,10 @@
         android:icon="@drawable/ic_search"
         android:title="@string/title_search" />
 
+    <item
+        android:id="@+id/navigation_scan"
+        android:icon="@drawable/ic_barcode_scan"
+        android:title="BCSanner"
+        />
+
 </menu>

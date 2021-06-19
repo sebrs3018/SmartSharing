@@ -8,5 +8,6 @@ public class Product {
     public String brand;
     public String author;
     public String description;
+    public String release_date;
     public String[] images;
 }

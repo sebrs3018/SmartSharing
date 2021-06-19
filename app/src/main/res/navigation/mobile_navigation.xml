@@ -16,12 +16,6 @@
             app:destination="@id/bookInfo" />
     </fragment>
 
-    <!-- Nested Graph -->
-    <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.sebrs3018.SmartSharing.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
 
     <!-- Nested Graph -->
     <fragment
@@ -29,6 +23,20 @@
         android:name="com.sebrs3018.SmartSharing.ui.search.SearchFragment"
         android:label="@string/title_search"
         tools:layout="@layout/fragment_search" />
+
+    <!-- Nested Graph -->
+    <fragment
+        android:id="@+id/navigation_scan"
+        android:name="com.sebrs3018.SmartSharing.ui.BCScan.BCScanFragment"
+        android:label="fragment_b_c_scan"
+        tools:layout="@layout/fragment_b_c_scan" >
+        <action
+            android:id="@+id/action_navigation_scan_to_checkBookFields"
+            app:destination="@id/checkBookFields" />
+    </fragment>
+
+
+
     <fragment
         android:id="@+id/bookInfo"
         android:name="com.sebrs3018.SmartSharing.BookInfoStructure.BookInfo"
@@ -42,5 +50,15 @@
             app:argType="com.sebrs3018.SmartSharing.network.BookEntry"
             app:nullable="true" />
     </fragment>
+    <fragment
+        android:id="@+id/checkBookFields"
+        android:name="com.sebrs3018.SmartSharing.barcode.CheckBookFields"
+        android:label="fragment_check_book_fields"
+        tools:layout="@layout/fragment_check_book_fields" >
+        <argument
+            android:name="BookToCheck"
+            app:argType="com.sebrs3018.SmartSharing.Entities.Book" />
+    </fragment>
+
 
 </navigation>

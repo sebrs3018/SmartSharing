@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText etMail = null;
     private EditText etPassword = null;
     private EditText etUser = null;
-
+/*
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         DataManager dm = new DataManager();
 
-        /** add one user */
+        // add one user
         bttInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /** show all users */
+        // show all users
         bttShowUsers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,11 +77,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        /** show one user */
+        // show one user
         bttShowUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dm.getUserRoot().orderByChild("username").equalTo(etUser.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+                dm.getUserRoot().orderByChild("username")
+                .equalTo(etUser.getText().toString())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         etUser.setText("");
@@ -106,4 +108,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    */
 }

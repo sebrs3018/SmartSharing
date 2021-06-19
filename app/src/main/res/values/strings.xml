@@ -35,4 +35,6 @@
 
 
     </string>
+    <string name="isbn">ISBN</string>
+    <string name="autore">Autore</string>
 </resources>

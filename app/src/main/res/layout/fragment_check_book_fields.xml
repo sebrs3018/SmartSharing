@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".barcode.CheckBookFields">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- NetworkImageView mi permette di caricare immagini da Internet -->
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/book_image"
+            android:layout_width="match_parent"
+            android:layout_marginTop="30dp"
+            android:layout_height="200dp"
+            android:background="@color/white"
+            android:scaleType="centerInside"
+            />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250dp"
+        >
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+
+            <!-- TextInput layout titolo -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ilTitolo"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:hint="Inserisci titolo"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etTitolo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textSize="14sp"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <!-- TextInput layout autore -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ilAutore"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:hint="Inserisci autore"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etAutore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:textSize="14sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- TextInput layout editore -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ilEditore"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:hint="Inserisci editore"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etEditore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:textSize="14sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- TextInput layout dataPubblicazione -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ildataPubblicazione"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:hint="Inserisci data di pubblicazione"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etdataPubblicazione"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textSize="14sp"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- TextInput layout nroPagine -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ilNroPagine"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="24dp"
+                android:hint="Inserisci numero di pagine"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etNroPagine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textSize="14sp"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvRegister"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                app:cardBackgroundColor="#038EFF"
+                app:cardCornerRadius="25dp"
+                app:cardElevation="10dp"
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="center"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/tvConfermaDati"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="Conferma Dati"
+                        android:textColor="#fff"
+                        android:textSize="20sp" />
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+
+</FrameLayout>

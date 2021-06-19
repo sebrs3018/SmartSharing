@@ -1,17 +1,13 @@
 package com.sebrs3018.SmartSharing;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.CursorAdapter;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,10 +19,13 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.sebrs3018.SmartSharing.DB.DBUtils;
 import com.sebrs3018.SmartSharing.DB.DbManager;
+import com.sebrs3018.SmartSharing.Login.LoginActivity;
+import com.sebrs3018.SmartSharing.TOARRANGE.DataManager;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import static com.sebrs3018.SmartSharing.Constants.*;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -102,8 +101,9 @@ public class RegistrationActivity extends AppCompatActivity {
                 }
                 ilPassword.setError(null);
 
-                db = new DbManager(RegistrationActivity.this);
-                if(db.insertUser(_user, DBUtils.md5(_password))) {    //salvo in DB password cifrata
+                DataManager dm = new DataManager(USERS);
+
+                if(dm.addUser(_user, DBUtils.md5(_password), _address)) {    //salvo in DB password cifrata
                     /* finestrella pop-up per inserimento impronta */
                     registerFingerPrint(_user);
                 }

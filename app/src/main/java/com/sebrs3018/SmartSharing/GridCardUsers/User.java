@@ -14,23 +14,50 @@ import java.util.List;
 
 public class User implements Parcelable {
 
-    private final String TAG = "User";
-    public final String username;
-    public final String address;
+    private String TAG = "User";
+    public String username;
+    public String address;
+    public String password;
 
+    public User(){ }
 
     public User(String _username){
         username = _username;
-        address = "Via";
+        address = "";
+        password = "";
     }
 
-    public User(String _username, String _address){
+
+    public User(String _username,String _password, String _address){
         username = _username;
-        address  = _address;
+        password = _password;
+        address = _address;
     }
+
+    protected User(Parcel in) {
+        TAG = in.readString();
+        username = in.readString();
+        address = in.readString();
+        password = in.readString();
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
     public String getAddress() {
         return address;
+    }
+    public String getPassword(){
+        return password;
     }
 
     public String getUsername() {
@@ -38,7 +65,7 @@ public class User implements Parcelable {
     }
 
 
-    //restituisce lista di utenti registrati
+    //restituisce lista di utenti registrati che vengono salvati in memoria locale del telefono!
     public static List<User> initRegisteredUsers(String _filePath) {
 
         ArrayList<User> usernames = new ArrayList<>();
@@ -61,7 +88,6 @@ public class User implements Parcelable {
         return usernames;
     }
 
-//TODO: usare parcelable
     @Override
     public int describeContents() {
         return 0;
@@ -69,6 +95,9 @@ public class User implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-
+        dest.writeString(TAG);
+        dest.writeString(username);
+        dest.writeString(address);
+        dest.writeString(password);
     }
 }

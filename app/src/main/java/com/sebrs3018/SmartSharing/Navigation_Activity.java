@@ -39,6 +39,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationBarView;
 import com.sebrs3018.SmartSharing.databinding.ActivityNavigationBinding;
+import com.sebrs3018.SmartSharing.ui.BCScan.BCScanFragment;
 import com.sebrs3018.SmartSharing.ui.home.HomeFragment;
 import com.sebrs3018.SmartSharing.ui.search.SearchFragment;
 
@@ -64,7 +65,7 @@ public class Navigation_Activity extends AppCompatActivity {
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_search)
+        appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_home,  R.id.navigation_search, R.id.navigation_scan)
                                                      .build();
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_navigation);
@@ -101,12 +102,17 @@ public class Navigation_Activity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
             Fragment selectedFragment = null;
 
+
+
             switch (item.getItemId()){
                 case R.id.navigation_home:
                     selectedFragment = new HomeFragment();
                     break;
                 case R.id.navigation_search:
-                    selectedFragment = new SearchFragment();
+                    selectedFragment = new  SearchFragment();
+                    break;
+                case R.id.navigation_scan:
+                    selectedFragment = new BCScanFragment();
                     break;
             }
 

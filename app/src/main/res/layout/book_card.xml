@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:layout_width="175dp"
     android:layout_height="wrap_content"
     app:cardBackgroundColor="@android:color/white"
     app:cardElevation="2dp"
@@ -16,29 +16,33 @@
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/product_image"
             android:layout_width="match_parent"
-            android:layout_height="108dp"
-            android:background="?attr/colorPrimaryDark"
-            android:scaleType="centerCrop" />
+            android:layout_height="160dp"
+            android:background="@color/colorPrimary"
+            android:scaleType="centerInside"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="5dp"
+            >
 
             <TextView
                 android:id="@+id/product_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Titolo"
-                android:textAppearance="?attr/textAppearanceHeadline6" />
+                android:gravity="center"
+                android:text="L'insostenibile leggerezza dell'essere"
+                android:textAppearance="?attr/textAppearanceListItem" />
 
             <TextView
                 android:id="@+id/product_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="Descrizione"
-                android:textAppearance="?attr/textAppearanceBody2" />
+                android:textAppearance="?attr/textAppearanceListItemSmall" />
         </LinearLayout>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
