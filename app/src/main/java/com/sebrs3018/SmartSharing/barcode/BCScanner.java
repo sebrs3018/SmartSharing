@@ -19,7 +19,10 @@ import com.google.mlkit.vision.barcode.Barcode;
 import com.google.mlkit.vision.barcode.BarcodeScanner;
 import com.google.mlkit.vision.barcode.BarcodeScanning;
 import com.google.mlkit.vision.common.InputImage;
+import com.sebrs3018.SmartSharing.BookInfoStructure.BookInfoArgs;
+import com.sebrs3018.SmartSharing.FBRealtimeDB.Entities.Book;
 import com.sebrs3018.SmartSharing.R;
+import com.sebrs3018.SmartSharing.ui.BCScan.BCScanFragmentArgs;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -39,12 +42,14 @@ public class BCScanner extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.barcode_scanner);
         cameraKV = findViewById(R.id.cameraKV);
-
         bttScan = findViewById(R.id.bttScan);
 
         bttScan.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+
+                Log.i(TAG, "onClick: touched BCScanning");
+
                 cameraKV.captureImage(new CameraKitView.ImageCallback() {
                     @Override
                     public void onImage(CameraKitView cameraKitView, final byte[] capturedImage) {
@@ -53,32 +58,42 @@ public class BCScanner extends AppCompatActivity {
                         bitmap = Bitmap.createScaledBitmap(bitmap,cameraKitView.getWidth(),cameraKitView.getHeight(),false);
 
                         InputImage inputImage = InputImage.fromBitmap(bitmap, (int) cameraKitView.getRotation());
-                        BarcodeScanner scanner = BarcodeScanning.getClient();
+                        performBCScanning(inputImage);
 
-                        Task<List<Barcode>> result = scanner.process(inputImage)
-                                .addOnSuccessListener(new OnSuccessListener<List<Barcode>>() {
-                                    @Override
-                                    public void onSuccess(List<Barcode> barcodes) {
-                                        for (Barcode bc : barcodes) {
-                                            if (bc.getValueType() == Barcode.TYPE_ISBN)
-                                                Toast.makeText(BCScanner.this,"Barcode found: " + bc.getRawValue(),Toast.LENGTH_SHORT).show();
-                                            else
-                                                Toast.makeText(BCScanner.this,"Wrong barcode type found",Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(BCScanner.this,"Barcode detection failed.",Toast.LENGTH_SHORT).show();
-                                        Log.e(TAG,e.getMessage());
-                                    }
-                                });
+
+
                     }
                 });
             }
         });
     }
+
+
+
+    private void performBCScanning(InputImage inputImage){
+        BarcodeScanner scanner = BarcodeScanning.getClient();
+        Task<List<Barcode>> result = scanner.process(inputImage)
+                .addOnSuccessListener(new OnSuccessListener<List<Barcode>>() {
+                    @Override
+                    public void onSuccess(List<Barcode> barcodes) {
+                        for (Barcode bc : barcodes) {
+                            if (bc.getValueType() == Barcode.TYPE_ISBN)
+                                Toast.makeText(BCScanner.this,"Barcode found: " + bc.getRawValue(),Toast.LENGTH_SHORT).show();
+                            else
+                                Toast.makeText(BCScanner.this,"Wrong barcode type found",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(BCScanner.this,"Barcode detection failed.",Toast.LENGTH_SHORT).show();
+                        Log.e(TAG,e.getMessage());
+                    }
+                });
+    }
+
+
 
     @Override
     protected void onStart() {

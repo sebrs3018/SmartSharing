@@ -1,4 +1,4 @@
-package com.sebrs3018.SmartSharing.Entities;
+package com.sebrs3018.SmartSharing.FBRealtimeDB.Entities;
 
 
 import android.os.Parcel;
@@ -8,6 +8,7 @@ import java.util.List;
 
 public class Book implements Parcelable {
 
+    private long idlogicalClock;
     private String ISBN;
     private String titolo;
     private String autore;
@@ -49,16 +50,6 @@ public class Book implements Parcelable {
         urlImage = in.readString();
         lender = in.readString();
     }
-
-
-    public static List<Book> initBookList(){
-
-
-        return null;
-    }
-
-
-
 
 
     public static final Creator<Book> CREATOR = new Creator<Book>() {
@@ -162,4 +153,13 @@ public class Book implements Parcelable {
         dest.writeString(urlImage);
         dest.writeString(lender);
     }
+
+    public long getIDlogicalClock() {
+        return idlogicalClock;
+    }
+
+    public void setIDlogicalClock(long IDlogicalClock) {
+        this.idlogicalClock = IDlogicalClock;
+    }
+
 }

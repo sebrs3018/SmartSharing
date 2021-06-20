@@ -1,9 +1,9 @@
-package com.sebrs3018.SmartSharing.DB;
+package com.sebrs3018.SmartSharing;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class DBUtils {
+public class Utils {
 
     public static final String md5(final String s) {
         final String MD5 = "MD5";

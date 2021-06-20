@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.sebrs3018.SmartSharing.FBRealtimeDB.Entities.User;
 import com.sebrs3018.SmartSharing.R;
 import com.sebrs3018.SmartSharing.CustomListeners.OnTouchedItemListener;
 

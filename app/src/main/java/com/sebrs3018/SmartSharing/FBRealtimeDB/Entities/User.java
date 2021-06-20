@@ -1,8 +1,7 @@
-package com.sebrs3018.SmartSharing.GridCardUsers;
+package com.sebrs3018.SmartSharing.FBRealtimeDB.Entities;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -18,21 +17,24 @@ public class User implements Parcelable {
     public String username;
     public String address;
     public String password;
+    private String email;
 
     public User(){ }
 
     public User(String _username){
-        username = _username;
-        address = "";
-        password = "";
+       this(_username, "", "", "");
     }
 
 
-    public User(String _username,String _password, String _address){
+    public User(String _username,String _password, String _address, String _email){
         username = _username;
         password = _password;
         address = _address;
+        email = _email;
     }
+
+
+
 
     protected User(Parcel in) {
         TAG = in.readString();
@@ -100,4 +102,9 @@ public class User implements Parcelable {
         dest.writeString(address);
         dest.writeString(password);
     }
+
+    public String getEmail() {
+        return email;
+    }
+
 }

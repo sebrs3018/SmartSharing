@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.sebrs3018.SmartSharing.GridCardUsers.User;
+import com.sebrs3018.SmartSharing.FBRealtimeDB.Entities.User;
 import com.sebrs3018.SmartSharing.GridCardUsers.UserCardRecyclerViewAdapter;
 import com.sebrs3018.SmartSharing.GridCardUsers.UserGridItemDecoration;
 import com.sebrs3018.SmartSharing.CustomListeners.OnTouchedItemListener;

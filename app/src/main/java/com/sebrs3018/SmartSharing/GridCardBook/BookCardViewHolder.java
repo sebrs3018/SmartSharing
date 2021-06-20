@@ -1,4 +1,4 @@
-package com.sebrs3018.SmartSharing.GridCardBooks;
+package com.sebrs3018.SmartSharing.GridCardBook;
 
 import android.view.View;
 import android.widget.TextView;
@@ -7,8 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.toolbox.NetworkImageView;
-import com.sebrs3018.SmartSharing.R;
 import com.sebrs3018.SmartSharing.CustomListeners.OnTouchedItemListener;
+import com.sebrs3018.SmartSharing.R;
 
 public class BookCardViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -18,16 +18,16 @@ public class BookCardViewHolder extends RecyclerView.ViewHolder implements View.
     OnTouchedItemListener onTouchedItemListener;
 
     /* Contiene informazioni sul libro */
-    public NetworkImageView productImage;
-    public TextView bookTitle;
-    public TextView bookPrice;
+    private NetworkImageView productImage;
+    private TextView bookTitle;
+    private TextView bookEditor;
     private String from;
 
     public BookCardViewHolder(@NonNull View itemView, OnTouchedItemListener _onTouchedItemListener, String _from){
         super(itemView);
         productImage = itemView.findViewById(R.id.product_image);
         bookTitle = itemView.findViewById(R.id.product_title);
-        bookPrice = itemView.findViewById(R.id.product_price);
+        bookEditor = itemView.findViewById(R.id.product_editor);
         onTouchedItemListener = _onTouchedItemListener;
         from = _from;
 
@@ -40,5 +40,17 @@ public class BookCardViewHolder extends RecyclerView.ViewHolder implements View.
     public void onClick(View v) {
         /* passo info sull'elemento appena toccato... */
         onTouchedItemListener.onItemTouched(getBindingAdapterPosition(), from);
+    }
+
+    public TextView getBookTitle() {
+        return bookTitle;
+    }
+
+    public TextView getBookEditor() {
+        return bookEditor;
+    }
+
+    public NetworkImageView getProductImage() {
+        return productImage;
     }
 }

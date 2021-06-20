@@ -4,23 +4,17 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 
 import com.google.gson.Gson;
-import com.sebrs3018.SmartSharing.Entities.Book;
+import com.sebrs3018.SmartSharing.FBRealtimeDB.Entities.Book;
 import com.sebrs3018.SmartSharing.Login.SessionManager;
-import com.sebrs3018.SmartSharing.TOARRANGE.DataManager;
 import com.sebrs3018.SmartSharing.ui.BCScan.BCScanFragmentDirections;
-import com.sebrs3018.SmartSharing.ui.home.HomeFragmentDirections;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
-
-import static com.sebrs3018.SmartSharing.Constants.BOOKS;
 
 
 /*
@@ -69,7 +63,8 @@ public class BarcodeLookup extends AsyncTask<String, Void, Book> {
     }
 
 
-    /* look for the barcode in the API DB */
+    /**
+     * @param _barcode to look for in the Barcode API DB  */
     private Book lookUp(String _barcode) {
         try {
             URL url = new URL(initial_url + _barcode + key);
@@ -86,15 +81,8 @@ public class BarcodeLookup extends AsyncTask<String, Void, Book> {
             ProductObject response = gson.fromJson(data, ProductObject.class);
 
             if (response != null) {
-                /*  public Book( String _ISBN, String _titolo, String _autore, String _editore, String _dataPubblicazione, String _nroPagine, String _descrizione, String _urlImage, String _lender ) */
-
+                /* tengo in considerazione solo un prodotto */
                 productFound = response.products[0];
-                Log.i(TAG, "lookUp: " + productFound.author );
-                Log.i(TAG, "lookUp: " + productFound.brand );
-                Log.i(TAG, "lookUp: " + productFound.release_date );
-                /*TODO: verificare se effettivamente description c'è sempre*/
-                Log.i(TAG, "lookUp: " + productFound.description );
-                Log.i(TAG, "lookUp: " + productFound.images[0] );
                 return new Book(_barcode, productFound.title, productFound.author, productFound.brand, productFound.release_date, "", productFound.description, productFound.images[0], getLenderUsername());
             }
 
@@ -107,10 +95,7 @@ public class BarcodeLookup extends AsyncTask<String, Void, Book> {
 
     private String getLenderUsername(){
         SessionManager sm = new SessionManager(context);
-//        DataManager dm = new DataManager(BOOKS, context);
         return sm.getUserSession()[0];
-//        dm.addBookLender(ISBN, sm.getUserSession()[0]);
-
     }
 
 

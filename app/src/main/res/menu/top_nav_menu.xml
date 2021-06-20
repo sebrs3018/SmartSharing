@@ -9,18 +9,22 @@
         android:title="looking for something?"
 
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="ifRoom|collapseActionView" />
+        app:showAsAction="always|collapseActionView" />
 
 
     <item
         android:id="@+id/microphone"
         android:icon="@drawable/ic_baseline_mic_24"
         android:title="ActivateSpeechRecognition"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         />
 
 
-    <item android:title="Help"
+    <item
+        android:id="@+id/BCSearch"
+        android:icon="@drawable/ic_barcode_scan"
+        android:title="BarcodeScanning"
+        app:showAsAction="always"
         />
 
 

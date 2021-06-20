@@ -5,8 +5,7 @@ import android.os.Parcelable;
 
 
 import com.google.android.gms.maps.model.LatLng;
-import com.google.mlkit.vision.barcode.Barcode;
-import com.sebrs3018.SmartSharing.GridCardUsers.User;
+import com.sebrs3018.SmartSharing.FBRealtimeDB.Entities.User;
 
 import java.util.Date;
 

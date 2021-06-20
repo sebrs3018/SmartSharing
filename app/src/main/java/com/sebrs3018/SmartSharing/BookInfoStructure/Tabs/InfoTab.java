@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.sebrs3018.SmartSharing.R;
 import com.sebrs3018.SmartSharing.databinding.FragmentInfoTabBinding;
 import com.sebrs3018.SmartSharing.network.ImageRequester;
 
@@ -24,7 +23,6 @@ public class InfoTab extends Fragment {
 
     // the fragment initialization parameters, key values of bundle
     private static final String BOOKINFO = "BookInfo";
-    private static final String ARG_PARAM2 = "param2";
     private static final int NUMOFVALUES = 5;
 
     // Argument Values
@@ -64,7 +62,6 @@ public class InfoTab extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        // Initializing dataBinding... no need for findViewById!
         binding = FragmentInfoTabBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         initBookInfo();
@@ -83,12 +80,14 @@ public class InfoTab extends Fragment {
         binding.tvPublisher.setText(bookValues[1]);
         binding.tvPublishDate.setText(bookValues[2]);
         binding.tvPageCount.setText(bookValues[3]);
-        binding.tvDescription.setText(getString(R.string.loremIpsum));
+        binding.tvDescription.setText(bookValues[4]);
+
         ImageRequester imageRequester = ImageRequester.getInstance();
         imageRequester.setImageFromUrl(binding.nivBook, bookValues[5]);
 
 
     }
+
 
 
 }

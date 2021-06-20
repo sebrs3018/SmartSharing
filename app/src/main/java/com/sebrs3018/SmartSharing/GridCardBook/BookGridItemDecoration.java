@@ -1,4 +1,4 @@
-package com.sebrs3018.SmartSharing.GridCardBooks;
+package com.sebrs3018.SmartSharing.GridCardBook;
 
 import android.graphics.Rect;
 import android.view.View;
@@ -6,8 +6,8 @@ import android.view.View;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
- * Custom item decoration for a vertical recyclerView. Adds a
- * small amount of padding to the left of grid items, and a large amount of padding to the right.
+ * Custom item decoration for a vertical recyclerView.
+ * Adds a small amount of padding to the left and right of grid items, and a large amount of padding to the top.
  */
 public class BookGridItemDecoration extends RecyclerView.ItemDecoration {
     private int largePadding;

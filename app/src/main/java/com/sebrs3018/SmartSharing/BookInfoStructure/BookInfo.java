@@ -5,16 +5,25 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
 import com.sebrs3018.SmartSharing.BookInfoStructure.Tabs.DoveTrovarloTab;
 import com.sebrs3018.SmartSharing.BookInfoStructure.Tabs.InfoTab;
+import com.sebrs3018.SmartSharing.FBRealtimeDB.Entities.Book;
+import com.sebrs3018.SmartSharing.FBRealtimeDB.Entities.User;
+import com.sebrs3018.SmartSharing.FBRealtimeDB.Database.DataManager;
 import com.sebrs3018.SmartSharing.databinding.FragmentBookInfoBinding;
-import com.sebrs3018.SmartSharing.network.BookEntry;
+
 import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
+
+import static com.sebrs3018.SmartSharing.Constants.USERS;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +34,7 @@ public class BookInfo extends Fragment {
 
     private View myFragment;
     private FragmentBookInfoBinding binding;
+    private PageAdapter pageAdapter;
 
     public BookInfo() {
         // Required empty public constructor
@@ -68,36 +78,53 @@ public class BookInfo extends Fragment {
 
 
     private void prepareViewPager(ArrayList<String> tabNames) {
-        PageAdapter pageAdapter = new PageAdapter(getChildFragmentManager());
+        pageAdapter = new PageAdapter(getChildFragmentManager());
+        Book bookEntry = getMessageFromNavUI();
+
         //initializing main fragment...
         for(int i = 0; i<tabNames.size(); i++){
             //adding fragment...
             if(i == 0){
-                BookEntry bookEntry = getMessageFromNavUI();
-
-                //TODO: Get info from book entry and pass the desired data
-                InfoTab infoTab = InfoTab.newInstance(new String[] {"isbn", "editore", "dataPubblicazione", "numeroPagine", "Descrizione", bookEntry.getUrlImage()});
+                InfoTab infoTab = InfoTab.newInstance(new String[] {bookEntry.getISBN(), bookEntry.getEditore(), bookEntry.getDataPubblicazione(), bookEntry.getNroPagine(), bookEntry.getDescrizione(), bookEntry.getUrlImage()});
                 pageAdapter.addFragment(infoTab, tabNames.get(i));
             }
             else if (i == 1){
-                pageAdapter.addFragment(new DoveTrovarloTab(), tabNames.get(i));
+                DoveTrovarloTab doveTrovarloTab = new DoveTrovarloTab();
+                pageAdapter.addFragment(doveTrovarloTab, tabNames.get(i));
+                getLenderInfo(bookEntry.getLender(), doveTrovarloTab);
             }
+            binding.vpSwappingPages.setAdapter(pageAdapter);
         }
 
-        binding.vpSwappingPages.setAdapter(pageAdapter);
     }
 
 
-    private BookEntry getMessageFromNavUI(){
+    private User getLenderInfo(String lenderUsername, DoveTrovarloTab doveTrovarloTab){
+        DataManager dm = new DataManager(USERS);
+        dm.getUserRoot().child(lenderUsername).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<DataSnapshot> task) {
+
+                User u = task.getResult().getValue(User.class);
+                if(u!= null){
+                    doveTrovarloTab.setUserInfo(u);
+                }
+            }
+        });
+        return null;
+    }
+
+
+    private Book getMessageFromNavUI(){
         if(getArguments() == null)
             throw new IllegalArgumentException();
 
         BookInfoArgs args = BookInfoArgs.fromBundle(getArguments());
 
-        BookEntry bookEntry = args.getBookEntry();
-        initLayoutBookInfoArgs(bookEntry.getTitle(), "George Orwell");
+        Book book = args.getBookEntry();
+        initLayoutBookInfoArgs(book.getTitolo(), book.getAutore());
 
-        return bookEntry;
+        return book;
     }
 
     private void initLayoutBookInfoArgs(String titolo, String autore){

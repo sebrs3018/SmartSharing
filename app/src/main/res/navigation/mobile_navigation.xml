@@ -22,7 +22,19 @@
         android:id="@+id/navigation_search"
         android:name="com.sebrs3018.SmartSharing.ui.search.SearchFragment"
         android:label="@string/title_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_navigation_search_to_bookInfo"
+            app:destination="@id/bookInfo" />
+        <action
+            android:id="@+id/action_navigation_search_to_navigation_scan"
+            app:destination="@id/navigation_scan" />
+        <argument
+            android:name="ISBNresult"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="firstTime" />
+    </fragment>
 
     <!-- Nested Graph -->
     <fragment
@@ -33,6 +45,13 @@
         <action
             android:id="@+id/action_navigation_scan_to_checkBookFields"
             app:destination="@id/checkBookFields" />
+        <argument
+            android:name="searchBrScanning"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <action
+            android:id="@+id/action_navigation_scan_to_navigation_search"
+            app:destination="@id/navigation_search" />
     </fragment>
 
 
@@ -47,7 +66,7 @@
             android:defaultValue="default" />
         <argument
             android:name="BookEntry"
-            app:argType="com.sebrs3018.SmartSharing.network.BookEntry"
+            app:argType="com.sebrs3018.SmartSharing.FBRealtimeDB.Entities.Book"
             app:nullable="true" />
     </fragment>
     <fragment
@@ -57,7 +76,7 @@
         tools:layout="@layout/fragment_check_book_fields" >
         <argument
             android:name="BookToCheck"
-            app:argType="com.sebrs3018.SmartSharing.Entities.Book" />
+            app:argType="com.sebrs3018.SmartSharing.FBRealtimeDB.Entities.Book" />
         <action
             android:id="@+id/action_checkBookFields_to_navigation_home"
             app:destination="@id/navigation_home" />

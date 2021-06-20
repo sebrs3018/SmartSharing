@@ -39,11 +39,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.sebrs3018.SmartSharing.DB.DbManager;
 import com.sebrs3018.SmartSharing.R;
 import com.sebrs3018.SmartSharing.RegisteredUsers;
 import com.sebrs3018.SmartSharing.RegistrationActivity;
-import com.sebrs3018.SmartSharing.TOARRANGE.DataManager;
+import com.sebrs3018.SmartSharing.FBRealtimeDB.Database.DataManager;
 
 import static com.sebrs3018.SmartSharing.Constants.ERROR_DIALOG_REQUEST;
 import static com.sebrs3018.SmartSharing.Constants.PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION;

@@ -1,4 +1,4 @@
-package com.sebrs3018.SmartSharing.GridCardBooks;
+package com.sebrs3018.SmartSharing.GridCardBook;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,13 +10,12 @@ import android.widget.Filterable;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.sebrs3018.SmartSharing.R;
 import com.sebrs3018.SmartSharing.CustomListeners.OnTouchedItemListener;
-import com.sebrs3018.SmartSharing.network.BookEntry;
+import com.sebrs3018.SmartSharing.FBRealtimeDB.Entities.Book;
+import com.sebrs3018.SmartSharing.R;
 import com.sebrs3018.SmartSharing.network.ImageRequester;
 
 import org.jetbrains.annotations.NotNull;
-
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,15 +23,15 @@ import java.util.List;
 
 public class BookCardRecyclerViewAdapter  extends RecyclerView.Adapter<BookCardViewHolder> implements Filterable {
 
-    private List<BookEntry> bookList;       //Questa lista sarà modificata dal filtraggio
-    private List<BookEntry> bookListAll;    //Questa lista terrà traccia della lista originale
+    private List<Book> bookListAll;    //Questa lista terrà traccia della lista originale
+    private List<Book> bookList;       //Questa lista sarà modificata dal filtraggio
     private ImageRequester imageRequester;
     private OnTouchedItemListener onTouchedItemListener;
     private final String TAG = "BCRViewAdapter";
     private String from;
 
 
-    public BookCardRecyclerViewAdapter(List<BookEntry> bookList, OnTouchedItemListener _onTouchedItemListener, String _from) {
+    public BookCardRecyclerViewAdapter(List<Book> bookList, OnTouchedItemListener _onTouchedItemListener, String _from) {
         this.bookList = bookList;
         bookListAll = new ArrayList<>(bookList);
 
@@ -57,13 +56,12 @@ public class BookCardRecyclerViewAdapter  extends RecyclerView.Adapter<BookCardV
     @Override
     public void onBindViewHolder(@NonNull @NotNull BookCardViewHolder holder, int position) {
         if (bookList != null && position < bookList.size()) {
-            BookEntry product = bookList.get(position);
+            Book book = bookList.get(position);
 
-            holder.bookTitle.setText(product.title);
-            holder.bookPrice.setText(product.price);
+            holder.getBookTitle().setText(book.getTitolo());
+            holder.getBookEditor().setText(book.getEditore());
+            imageRequester.setImageFromUrl(holder.getProductImage(), book.getUrlImage());
 
-            //TODO url contiene url dell'immmagine
-            imageRequester.setImageFromUrl(holder.productImage, product.url);
         }
     }
 
@@ -82,7 +80,7 @@ public class BookCardRecyclerViewAdapter  extends RecyclerView.Adapter<BookCardV
         @Override
         /* Questo processo di filtering viene eseguito su un altro thread */
         protected FilterResults performFiltering(CharSequence charSequence) {
-            List<BookEntry> filteredList = new ArrayList<>();
+            List<Book> filteredList = new ArrayList<>();
 
             if(charSequence == null || charSequence.length() == 0){
                 //Se la chiave è vuota restituisco la lista di valori già presente in DB
@@ -90,9 +88,11 @@ public class BookCardRecyclerViewAdapter  extends RecyclerView.Adapter<BookCardV
             }
             else{
                 String key = charSequence.toString().toLowerCase().trim();
-                for (BookEntry row : bookListAll){
-                    if(row.getTitle().toLowerCase().contains(key)){
-                        Log.i(TAG, "performFiltering: GOT IT!!!");
+                for (Book row : bookListAll){
+                    if(row.getTitolo().toLowerCase().contains(key)){
+                        filteredList.add(row);
+                    }
+                    else if(row.getISBN().contains(key)){
                         filteredList.add(row);
                     }
                 }
@@ -108,7 +108,7 @@ public class BookCardRecyclerViewAdapter  extends RecyclerView.Adapter<BookCardV
         protected void publishResults(CharSequence constraint, FilterResults results) {
             /* elimino gli item che non mi interessano dalla mia lista filtrata */
             bookList.clear();
-            bookList.addAll((Collection<? extends BookEntry>) results.values);
+            bookList.addAll((Collection<? extends Book>) results.values);
             /* Comunico all'adapter di aggionrare la propria lista */
             notifyDataSetChanged();
         }

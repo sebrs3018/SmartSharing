@@ -11,16 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.sebrs3018.SmartSharing.BookInfoStructure.BookInfoArgs;
-import com.sebrs3018.SmartSharing.Entities.Book;
-import com.sebrs3018.SmartSharing.R;
-import com.sebrs3018.SmartSharing.TOARRANGE.DataManager;
-import com.sebrs3018.SmartSharing.databinding.FragmentBCScanBinding;
-import com.sebrs3018.SmartSharing.databinding.FragmentBookInfoBinding;
+import com.sebrs3018.SmartSharing.FBRealtimeDB.Entities.Book;
+import com.sebrs3018.SmartSharing.FBRealtimeDB.Database.DataManager;
 import com.sebrs3018.SmartSharing.databinding.FragmentCheckBookFieldsBinding;
-import com.sebrs3018.SmartSharing.network.BookEntry;
 import com.sebrs3018.SmartSharing.network.ImageRequester;
-import com.sebrs3018.SmartSharing.ui.BCScan.BCScanFragmentDirections;
 
 import static com.sebrs3018.SmartSharing.Constants.*;
 
@@ -29,12 +23,6 @@ public class CheckBookFields extends Fragment {
     private static final String TAG = "CheckBookFields";
     private View myFragment;
     private FragmentCheckBookFieldsBinding binding;
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
 
     public CheckBookFields() {
         // Required empty public constructor
@@ -53,6 +41,9 @@ public class CheckBookFields extends Fragment {
         binding = FragmentCheckBookFieldsBinding.inflate(inflater, container, false);
         myFragment = binding.getRoot();
 
+        /*  creating a new DBInstance */
+        DataManager dm = new DataManager(BOOKS);
+
         /* Precompilazione del form con i dati attuali */
         Book bookToCheck = getBookToCheckFromNavUI();
         initForm(bookToCheck);
@@ -70,7 +61,6 @@ public class CheckBookFields extends Fragment {
                 bookToCheck.setNroPagine(binding.etNroPagine.getText().toString());
 
                 /* inserting bookToCheck to DB*/
-                DataManager dm = new DataManager(BOOKS);
                 dm.addBookLender(bookToCheck);
 
                 NavController navController = Navigation.findNavController(getView());

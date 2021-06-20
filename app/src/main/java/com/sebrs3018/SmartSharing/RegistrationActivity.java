@@ -17,11 +17,9 @@ import androidx.cardview.widget.CardView;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.sebrs3018.SmartSharing.DB.DBUtils;
-import com.sebrs3018.SmartSharing.DB.DbManager;
 import com.sebrs3018.SmartSharing.Login.FingerprintDetector;
 import com.sebrs3018.SmartSharing.Login.LoginActivity;
-import com.sebrs3018.SmartSharing.TOARRANGE.DataManager;
+import com.sebrs3018.SmartSharing.FBRealtimeDB.Database.DataManager;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -32,10 +30,9 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private final String TAG = "RegistrationActivity";
     private TextView tvLogin_page = null;                       // tvRegister è il bottone per registrarsi.
-    private TextInputEditText etUser = null, etPassword = null, etCPassword = null, etAddress = null; // campi di input per user e password
-    private TextInputLayout ilPassword, ilCPassword, ilUser, ilAddress;
+    private TextInputEditText etUser = null, etPassword = null, etCPassword = null, etAddress = null, etEmail = null; // campi di input per user e password
+    private TextInputLayout ilPassword, ilCPassword, ilUser, ilAddress, ilEmail;
     private CardView cvRegister = null;
-    private DbManager db = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,6 +40,8 @@ public class RegistrationActivity extends AppCompatActivity {
         setContentView(R.layout.registration_layout);
 
         initRegistrationFields();
+        DataManager dm = new DataManager(USERS);
+
 
         /* Inizializzo pulsanti per registrazione */
         cvRegister = findViewById(R.id.cvRegister);
@@ -60,7 +59,7 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String _user, _password, _cPassword, _address;
+                String _user, _email ,_password, _cPassword, _address;
 
                 if(!isInputDataValid(etUser.getText(), false)){
                     ilUser.setError("Il nome utente non può essere vuoto!");
@@ -69,6 +68,15 @@ public class RegistrationActivity extends AppCompatActivity {
                 }
                 _user = etUser.getText().toString();
                 ilUser.setError(null);
+
+                if(!isInputDataValid(etEmail.getText(), false)){
+                    ilEmail.setError("Email non valida");
+                    etEmail.setText(null);
+                    return;
+                }
+
+                _email = etEmail.getText().toString();
+                ilEmail.setError(null);
 
                 if(!isInputDataValid(etAddress.getText(), false)){
                     ilAddress.setError("L'indirizzo non può essere vuoto!");
@@ -102,9 +110,8 @@ public class RegistrationActivity extends AppCompatActivity {
                 }
                 ilPassword.setError(null);
 
-                DataManager dm = new DataManager(USERS);
 
-                if(dm.addUser(_user, DBUtils.md5(_password), _address)) {    //salvo in DB password cifrata
+                if(dm.addUser(_user, Utils.md5(_password), _address, _email)) {    //salvo in DB password cifrata
                     /* finestrella pop-up per inserimento impronta */
                     registerFingerPrint(_user);
                 }
@@ -151,6 +158,9 @@ public class RegistrationActivity extends AppCompatActivity {
     private void initRegistrationFields(){
         ilUser = findViewById(R.id.ilRegUser);
         etUser = findViewById(R.id.etRegUser);
+
+        ilEmail = findViewById(R.id.ilEmail);
+        etEmail = findViewById(R.id.etEmail);
 
         ilAddress = findViewById(R.id.ilRegAddress);
         etAddress = findViewById(R.id.etRegAddress);

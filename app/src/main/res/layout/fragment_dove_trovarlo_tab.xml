@@ -24,7 +24,11 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="35"
-            android:layout_marginStart="2dp"
+
+            android:layout_margin="5dp"
+            app:cardElevation="2dp"
+            app:cardPreventCornerOverlap="true"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -88,7 +92,7 @@
                             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
 
                         <TextView
-                            android:id="@+id/tvISBN"
+                            android:id="@+id/tvUtente"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="NomeUtente" />
@@ -103,7 +107,7 @@
 
 
                         <TextView
-                            android:id="@+id/tvPublisher"
+                            android:id="@+id/tvIndirizzoUtente"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="indirizzoDaModificare" />
@@ -115,7 +119,7 @@
                             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
 
                         <TextView
-                            android:id="@+id/tvPublishDate"
+                            android:id="@+id/tvEmail"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="emailDaPescare" />

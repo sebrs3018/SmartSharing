@@ -1,9 +1,6 @@
 package com.sebrs3018.SmartSharing.BookInfoStructure.Tabs;
 
 import android.Manifest;
-import android.app.Activity;
-import android.content.Intent;
-import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -15,37 +12,22 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResponse;
-import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.maps.DirectionsApiRequest;
 import com.google.maps.GeoApiContext;
-import com.google.maps.PendingResult;
-import com.google.maps.android.clustering.ClusterItem;
-import com.google.maps.android.clustering.ClusterManager;
-import com.google.maps.model.DirectionsResult;
-import com.google.mlkit.vision.barcode.Barcode;
 import com.sebrs3018.SmartSharing.BookInfoStructure.GeoLocalization.UserLocation;
+import com.sebrs3018.SmartSharing.FBRealtimeDB.Entities.User;
 import com.sebrs3018.SmartSharing.R;
 import com.sebrs3018.SmartSharing.databinding.FragmentDoveTrovarloTabBinding;
 
@@ -54,7 +36,6 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 
 import static com.sebrs3018.SmartSharing.Constants.MAPVIEW_BUNDLE_KEY;
@@ -75,8 +56,9 @@ public class DoveTrovarloTab extends Fragment implements OnMapReadyCallback {
 
     private static final String TAG = "DoveTrovarloTab";
 
+
     @Override
-    public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
@@ -93,6 +75,7 @@ public class DoveTrovarloTab extends Fragment implements OnMapReadyCallback {
 
         return root;
     }
+
 
     /* This function founds your current location - if GPS is recently activated, the result may be null */
     private void getLastKnownLocation() {
@@ -140,11 +123,13 @@ public class DoveTrovarloTab extends Fragment implements OnMapReadyCallback {
     private void addMapMarkers() {
         if (mGoogleMap != null) {
 
-
             Geocoder coder = new Geocoder(getActivity().getApplicationContext());
 
-            //TODO: questo sarà l'indirizzo dell'utente TO (da pescare dal DB)
+            //TODO: questo sarà l'indirizzo dell'utente TO (da pescare dal DB) ==> si trova due righe sotto :)
             String bookerAddress = "Via della torre 7, 11013 Courmayeur";
+
+            Log.i(TAG, "addMapMarkers: " + binding.tvIndirizzoUtente.getText());
+
             try {
                 List<Address> address = coder.getFromLocationName(bookerAddress, 5);
 
@@ -171,17 +156,24 @@ public class DoveTrovarloTab extends Fragment implements OnMapReadyCallback {
                         }
                     });
                 }
-
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-
         }
-
-
     }
+
+    /**
+     * This function allows a deferred update of user info
+     *
+     * @param lender contains the info of the lender.
+     * */
+    public void setUserInfo(User lender){
+        binding.tvUtente.setText(lender.getUsername());
+        binding.tvIndirizzoUtente.setText(lender.getAddress());
+        binding.tvEmail.setText(lender.getEmail());
+    }
+
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

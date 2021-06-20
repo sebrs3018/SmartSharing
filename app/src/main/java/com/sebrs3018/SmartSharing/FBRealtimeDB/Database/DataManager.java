@@ -1,4 +1,4 @@
-package com.sebrs3018.SmartSharing.TOARRANGE;
+package com.sebrs3018.SmartSharing.FBRealtimeDB.Database;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,13 +12,16 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.sebrs3018.SmartSharing.DB.DBUtils;
-import com.sebrs3018.SmartSharing.Entities.Book;
-import com.sebrs3018.SmartSharing.GridCardUsers.User;
+import com.sebrs3018.SmartSharing.Utils;
+import com.sebrs3018.SmartSharing.FBRealtimeDB.Entities.Book;
+import com.sebrs3018.SmartSharing.FBRealtimeDB.Entities.User;
 import com.sebrs3018.SmartSharing.Login.LoginActivity;
 import com.sebrs3018.SmartSharing.Login.SessionManager;
 import com.sebrs3018.SmartSharing.Navigation_Activity;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,8 +39,9 @@ public class DataManager {
     private SessionManager sessionManager;
     private Context c;
 
+    private long progessiveID = 0;
+
     private boolean isUserInDb = true;
-    private boolean isPasswordCorrect = true;
 
     public DataManager() {
         db = FirebaseDatabase.getInstance();
@@ -67,10 +71,30 @@ public class DataManager {
 
 
     private void setRoot(String rootRef) {
-        if (rootRef.equals(USERS))
+        if (rootRef.equals(USERS)){
             userRoot = db.getReference().child(USERS);
-        else if (rootRef.equals(BOOKS))
+        }
+        else if (rootRef.equals(BOOKS)){
             bookRoot = db.getReference().child(BOOKS);
+
+
+            /*incremento variabile*/
+            bookRoot.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                    if(snapshot.exists()){
+                        progessiveID = (snapshot.getChildrenCount() + 1);
+                        Log.i(TAG, "onDataChange: nroChildren ===> " + progessiveID);
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                }
+            });
+        }
     }
 
     /**
@@ -92,12 +116,10 @@ public class DataManager {
      * Add a user on the DB
      * @param _username is the key for the user
      */
-    public boolean addUser(String _username, String _password, String _address) {
-
-        User user = new User(_username, _password, _address);
+    public boolean addUser(String _username, String _password, String _address, String _email) {
+        User user = new User(_username, _password, _address, _email);
         userRoot.child(_username).setValue(user);
         return true;
-
     }
 
 
@@ -117,7 +139,7 @@ public class DataManager {
                             }
                             else{
 
-                                if(!u.getPassword().equals(DBUtils.md5(_password))){
+                                if(!u.getPassword().equals(Utils.md5(_password))){
                                     ((LoginActivity) c).setPasswdError();
                                     Log.i(TAG, "onComplete: Password non corretta!" + _password + "\t!=\t" + u.getPassword());
                                     return; }
@@ -147,14 +169,18 @@ public class DataManager {
         bookRoot.child(_ISBN).setValue(new Book(_ISBN, _titolo, _autore, _editore, _dataPubblicazione, _nroPagine, _descrizione, _urlImage, _lender));
     }
 
+    /**
+     * The key for this entity is both identifier and logical clock for the most recent inserted book
+     * @param bookToAdd in DB
+     * */
     public void addBookLender(Book bookToAdd){
-        bookRoot.child(bookToAdd.getISBN()).setValue(bookToAdd);
+        bookToAdd.setIDlogicalClock(progessiveID);
+        bookRoot.child(String.valueOf(progessiveID)).setValue(bookToAdd);
     }
 
     public List<Book> getBooksAvailable() {
 
         List<Book> bookList = new ArrayList<>();
-
         bookRoot.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -162,15 +188,7 @@ public class DataManager {
                     Book book = ds.getValue(Book.class);
 
                     if (book != null) {
-                        Log.i(TAG, "onDataChange: *************************************Book fetched**************************************************************");
-                        Log.i(TAG, "onDataChange: " + book.getISBN());
-                        Log.i(TAG, "onDataChange: " + book.getTitolo());
-                        Log.i(TAG, "onDataChange: " + book.getLender());
-                        Log.i(TAG, "onDataChange: " + book.getEditore());
-                        Log.i(TAG, "onDataChange: " + book.getDescrizione());
-                        Log.i(TAG, "onDataChange: " + book.getUrlImage());
                         bookList.add(new Book(book.getISBN(), book.getTitolo(), book.getAutore(), book.getEditore(), book.getDataPubblicazione(), book.getNroPagine(), book.getDescrizione(), book.getUrlImage(), book.getLender()));
-                        Log.i(TAG, "onDataChange: ***************************************************************************************************************");
                     }
                 }
             }
@@ -180,8 +198,8 @@ public class DataManager {
                 // TODO show error message
             }
         });
-
         return bookList;
+
     }
 
 
