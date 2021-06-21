@@ -1,11 +1,13 @@
 package com.sebrs3018.SmartSharing.GridCardBook;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +31,7 @@ public class BookCardRecyclerViewAdapter  extends RecyclerView.Adapter<BookCardV
     private OnTouchedItemListener onTouchedItemListener;
     private final String TAG = "BCRViewAdapter";
     private String from;
+    private Context context;
 
 
     public BookCardRecyclerViewAdapter(List<Book> bookList, OnTouchedItemListener _onTouchedItemListener, String _from) {
@@ -39,6 +42,13 @@ public class BookCardRecyclerViewAdapter  extends RecyclerView.Adapter<BookCardV
         onTouchedItemListener = _onTouchedItemListener;
         from = _from;
     }
+
+
+    public BookCardRecyclerViewAdapter(List<Book> bookList, OnTouchedItemListener _onTouchedItemListener, String _from, Context _context) {
+        this(bookList, _onTouchedItemListener, _from);
+        context = _context;
+    }
+
 
 
     @NonNull
@@ -106,9 +116,14 @@ public class BookCardRecyclerViewAdapter  extends RecyclerView.Adapter<BookCardV
         @Override
         /* Una volta eseguito il filtraggio, il risultato viene preso da questo metodo  - UI thread */
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            /* elimino gli item che non mi interessano dalla mia lista filtrata */
+
+            Collection<? extends Book> resultList = (Collection<? extends Book>) results.values;
+
+            if(resultList.size() <= 0)
+                Toast.makeText(context, "Non è stato trovato nessun risultato", Toast.LENGTH_SHORT).show();
+                /* elimino gli item che non mi interessano dalla mia lista filtrata */
             bookList.clear();
-            bookList.addAll((Collection<? extends Book>) results.values);
+            bookList.addAll(resultList);
             /* Comunico all'adapter di aggionrare la propria lista */
             notifyDataSetChanged();
         }

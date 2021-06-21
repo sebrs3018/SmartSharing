@@ -125,10 +125,8 @@ public class DoveTrovarloTab extends Fragment implements OnMapReadyCallback {
 
             Geocoder coder = new Geocoder(getActivity().getApplicationContext());
 
-            //TODO: questo sarà l'indirizzo dell'utente TO (da pescare dal DB) ==> si trova due righe sotto :)
-            String bookerAddress = "Via della torre 7, 11013 Courmayeur";
-
             Log.i(TAG, "addMapMarkers: " + binding.tvIndirizzoUtente.getText());
+            String bookerAddress = binding.tvIndirizzoUtente.getText().toString();
 
             try {
                 List<Address> address = coder.getFromLocationName(bookerAddress, 5);
@@ -170,6 +168,7 @@ public class DoveTrovarloTab extends Fragment implements OnMapReadyCallback {
     public void setUserInfo(User lender){
         binding.tvUtente.setText(lender.getUsername());
         binding.tvIndirizzoUtente.setText(lender.getAddress());
+        Log.i(TAG, "setUserInfo: email utente ==>" + lender.getEmail());
         binding.tvEmail.setText(lender.getEmail());
     }
 

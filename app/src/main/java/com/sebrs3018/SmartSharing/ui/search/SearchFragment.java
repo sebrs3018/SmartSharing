@@ -100,7 +100,7 @@ public class SearchFragment extends Fragment implements OnTouchedItemListener {
                         books.add(new Book(book.getISBN(), book.getTitolo(), book.getAutore(), book.getEditore(), book.getDataPubblicazione(), book.getNroPagine(), book.getDescrizione(), book.getUrlImage(), book.getLender()));
                     }
                 }
-                adapter = new BookCardRecyclerViewAdapter(books, SearchFragment.this, "");
+                adapter = new BookCardRecyclerViewAdapter(books, SearchFragment.this, "", getContext());
                 binding.myRecyclerView.setAdapter(adapter);
                 binding.myRecyclerView.addItemDecoration(new BookGridItemDecoration(TBPadding, LRpadding));
 
@@ -147,7 +147,12 @@ public class SearchFragment extends Fragment implements OnTouchedItemListener {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-               Toast.makeText(getContext(), "onQueryTextSubmit: " + query, Toast.LENGTH_SHORT).show();
+//               Toast.makeText(getContext(), "onQueryTextSubmit: " + query, Toast.LENGTH_SHORT).show();
+                if(adapter != null){    //nel caso in cui si ottenga la query a partire da BCScanning, l'adapter potrebbe essere nullo... (comportamento deferred)
+                    Log.i(TAG, "onQueryTextSubmit:  " + query);
+
+//                    adapter.getFilter().filter(query);
+                }
                 return true;
             }
 
@@ -161,6 +166,7 @@ public class SearchFragment extends Fragment implements OnTouchedItemListener {
                 return false;
             }
         });
+
 
 
 

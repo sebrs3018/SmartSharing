@@ -52,7 +52,15 @@ import static com.sebrs3018.SmartSharing.Constants.USERS;
 public class LoginActivity extends AppCompatActivity {
 
 
-    private final String FullPathLog = "/data/user/0/com.sebrs3018.login/files/SmartSharing/Logs.txt";
+    private int REQUEST_CODE_PERMISSIONS = 101;
+    private final String[] REQUIRED_PERMISSIONS = new String[]{
+            "android.permission.CAMERA",
+            "android.permission.WRITE_EXTERNAL_STORAGE",
+            "android.permission.READ_EXTERNAL_STORAGE"
+    };
+
+
+//    private final String FullPathLog = "/data/user/0/com.sebrs3018.login/files/SmartSharing/Logs.txt";
     private final String TAG = "LoginActivity";
     private TextView tvRegister_page = null; // tvLogin è il bottone per loggare.
 
@@ -66,6 +74,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
+
+        if(!allPermissionsGranted()){
+            ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
+        }
 
         askToTurnOnGps();
         getLocationUpdate();
@@ -256,8 +268,6 @@ public class LoginActivity extends AppCompatActivity {
         return false;
     }
 
-
-
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String permissions[],
@@ -298,7 +308,6 @@ public class LoginActivity extends AppCompatActivity {
         }
 
     }
-
 
     private void askToTurnOnGps(){
         LocationRequest locationRequest = LocationRequest.create();
@@ -345,7 +354,13 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-
+    private boolean allPermissionsGranted(){
+        for(String permission : REQUIRED_PERMISSIONS){
+            if(ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED)
+                return false;
+        }
+        return false;
+    }
 
 
 }

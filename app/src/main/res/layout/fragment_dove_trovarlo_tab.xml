@@ -37,7 +37,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <TextView
@@ -60,7 +60,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="8dp"
@@ -79,10 +79,11 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="40dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
+                        android:layout_gravity="center"
                         android:orientation="vertical">
 
                         <TextView
@@ -96,6 +97,20 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="NomeUtente" />
+
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="E-mail"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
+
+                        <TextView
+                            android:id="@+id/tvEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="emailDaPescare" />
 
 
                         <TextView
@@ -112,17 +127,6 @@
                             android:layout_height="wrap_content"
                             android:text="indirizzoDaModificare" />
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="E-mail"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
-
-                        <TextView
-                            android:id="@+id/tvEmail"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="emailDaPescare" />
 
 
                     </LinearLayout>

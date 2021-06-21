@@ -48,6 +48,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".Navigation_Activity">
             <intent-filter>
                 <action android:name="com.sebrs3018.SmartSharing.Navigation_Activity" />
@@ -55,6 +56,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity android:name=".RegistrationActivity">
             <intent-filter>
                 <action android:name="com.sebrs3018.SmartSharing.RegistrationActivity" />
@@ -62,6 +64,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity android:name=".RegisteredUsers">
             <intent-filter>
                 <action android:name="com.sebrs3018.SmartSharing.RegisteredUsers" />
@@ -69,13 +72,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".barcode.BCScanner">
-            <intent-filter>
-                <action android:name="com.sebrs3018.SmartSharing.BCScanner" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>

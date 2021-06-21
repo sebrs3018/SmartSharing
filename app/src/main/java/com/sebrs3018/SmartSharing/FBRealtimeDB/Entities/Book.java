@@ -39,7 +39,9 @@ public class Book implements Parcelable {
         lender = _lender;
     }
 
+
     protected Book(Parcel in) {
+        idlogicalClock = in.readLong();
         ISBN = in.readString();
         titolo = in.readString();
         autore = in.readString();
@@ -51,6 +53,24 @@ public class Book implements Parcelable {
         lender = in.readString();
     }
 
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(idlogicalClock);
+        dest.writeString(ISBN);
+        dest.writeString(titolo);
+        dest.writeString(autore);
+        dest.writeString(editore);
+        dest.writeString(dataPubblicazione);
+        dest.writeString(nroPagine);
+        dest.writeString(descrizione);
+        dest.writeString(urlImage);
+        dest.writeString(lender);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
     public static final Creator<Book> CREATOR = new Creator<Book>() {
         @Override
@@ -134,24 +154,6 @@ public class Book implements Parcelable {
 
     public void setLender(String lender) {
         this.lender = lender;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(ISBN);
-        dest.writeString(titolo);
-        dest.writeString(autore);
-        dest.writeString(editore);
-        dest.writeString(dataPubblicazione);
-        dest.writeString(nroPagine);
-        dest.writeString(descrizione);
-        dest.writeString(urlImage);
-        dest.writeString(lender);
     }
 
     public long getIDlogicalClock() {
