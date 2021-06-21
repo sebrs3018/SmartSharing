@@ -38,6 +38,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationBarView;
+import com.sebrs3018.SmartSharing.Login.LoginActivity;
+import com.sebrs3018.SmartSharing.Login.SessionManager;
 import com.sebrs3018.SmartSharing.databinding.ActivityNavigationBinding;
 import com.sebrs3018.SmartSharing.ui.BCScan.BCScanFragment;
 import com.sebrs3018.SmartSharing.ui.home.HomeFragment;
@@ -95,6 +97,18 @@ public class Navigation_Activity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }*/
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.Logout:
+                SessionManager sm = new SessionManager(getApplicationContext());
+                sm.logout();
+                startActivity(new Intent(Navigation_Activity.this, LoginActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     /* Dichiarazione metodo privato listener */
     private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {

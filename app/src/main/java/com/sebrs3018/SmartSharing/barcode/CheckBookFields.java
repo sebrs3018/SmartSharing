@@ -84,7 +84,10 @@ public class CheckBookFields extends Fragment {
     private void initForm(Book bookToCheck){
 
         ImageRequester imageRequester = ImageRequester.getInstance();
-        imageRequester.setImageFromUrl(binding.bookImage, bookToCheck.getUrlImage());
+        if (bookToCheck.getUrlImage() == "")
+            imageRequester.setImageFromUrl(binding.bookImage, "https://fakeimg.pl/480x700/?text=Book"); // Placeholder image
+        else
+            imageRequester.setImageFromUrl(binding.bookImage, bookToCheck.getUrlImage());
 
         binding.etTitolo.setText(bookToCheck.getTitolo());
         binding.etAutore.setText(bookToCheck.getAutore());

@@ -9,15 +9,15 @@ import java.util.List;
 public class Book implements Parcelable {
 
     private long idlogicalClock;
-    private String ISBN;
-    private String titolo;
-    private String autore;
-    private String editore;
-    private String dataPubblicazione;
-    private String nroPagine;
-    private String descrizione;
-    private String urlImage;
-    private String lender;
+    private String ISBN = "";
+    private String titolo = "";
+    private String autore = "";
+    private String editore = "";
+    private String dataPubblicazione = "";
+    private String nroPagine = "";
+    private String descrizione = "";
+    private String urlImage = "";
+    private String lender = "";
 
     public Book(){
         /* Default constructor required by Firebase */

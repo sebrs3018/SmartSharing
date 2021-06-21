@@ -32,6 +32,12 @@ public class SessionManager {
         // to save our data with key and value.
         editor.apply();
     }
+    
+    public void logout(){
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.clear();
+        editor.apply();
+    }
 
     //userValues[0] ==> username;   userValues[1] ==> address
     public String[] getUserSession(){

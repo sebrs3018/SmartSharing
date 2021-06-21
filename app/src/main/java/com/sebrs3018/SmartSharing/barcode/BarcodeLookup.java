@@ -89,8 +89,8 @@ public class BarcodeLookup extends AsyncTask<String, Void, Book> {
         } catch (IOException urlException){
             Log.e(TAG, urlException.getMessage());
         }
-
-        return null;
+        /** Se non trova il libro va comunque nel form per farlo aggiungere a mano all'utente */
+        return new Book();
     }
 
     private String getLenderUsername(){

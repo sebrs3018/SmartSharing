@@ -30,6 +30,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.sebrs3018.SmartSharing.FBRealtimeDB.Entities.Book;
 import com.sebrs3018.SmartSharing.GridCardBook.BookCardRecyclerViewAdapter;
 import com.sebrs3018.SmartSharing.GridCardBook.BookGridItemDecoration;
+import com.sebrs3018.SmartSharing.Login.LoginActivity;
+import com.sebrs3018.SmartSharing.Login.SessionManager;
 import com.sebrs3018.SmartSharing.R;
 import com.sebrs3018.SmartSharing.CustomListeners.OnTouchedItemListener;
 import com.sebrs3018.SmartSharing.FBRealtimeDB.Database.DataManager;
@@ -186,6 +188,11 @@ public class SearchFragment extends Fragment implements OnTouchedItemListener {
                 return true;
             case R.id.BCSearch:
                 performBrScanning();
+                return true;
+            case R.id.Logout:
+                SessionManager sm = new SessionManager(getContext());
+                sm.logout();
+                startActivity(new Intent(getContext(), LoginActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
