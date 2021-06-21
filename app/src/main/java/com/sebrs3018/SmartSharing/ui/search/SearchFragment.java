@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.sebrs3018.SmartSharing.CustomListeners.OnEmptyQueryResultListener;
 import com.sebrs3018.SmartSharing.FBRealtimeDB.Entities.Book;
 import com.sebrs3018.SmartSharing.GridCardBook.BookCardRecyclerViewAdapter;
 import com.sebrs3018.SmartSharing.GridCardBook.BookGridItemDecoration;
@@ -43,7 +44,7 @@ import java.util.List;
 import static android.app.Activity.RESULT_OK;
 import static com.sebrs3018.SmartSharing.Constants.BOOKS;
 
-public class SearchFragment extends Fragment implements OnTouchedItemListener {
+public class SearchFragment extends Fragment implements OnTouchedItemListener, OnEmptyQueryResultListener {
 
     protected static final int RESULT_SPEECH = 1;
 
@@ -52,8 +53,9 @@ public class SearchFragment extends Fragment implements OnTouchedItemListener {
     private FragmentSearchBinding binding;
     private SearchView searchView;
     private BookCardRecyclerViewAdapter adapter;
+    private boolean isRegularSearch;
     private final static String FIRSTTIME = "firstTime";
-    private List<Book> books = new ArrayList<>();
+    private List<Book> books;
 
     public SearchFragment(){}
 
@@ -93,6 +95,7 @@ public class SearchFragment extends Fragment implements OnTouchedItemListener {
     private void initRecyclerView(int LRpadding, int TBPadding){
         /* Inizializzo adapter dei dati */
         DataManager dm = new DataManager(BOOKS);
+        books = new ArrayList<>();
         dm.getBookRoot().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -102,7 +105,7 @@ public class SearchFragment extends Fragment implements OnTouchedItemListener {
                         books.add(new Book(book.getISBN(), book.getTitolo(), book.getAutore(), book.getEditore(), book.getDataPubblicazione(), book.getNroPagine(), book.getDescrizione(), book.getUrlImage(), book.getLender()));
                     }
                 }
-                adapter = new BookCardRecyclerViewAdapter(books, SearchFragment.this, "", getContext());
+                adapter = new BookCardRecyclerViewAdapter(books, SearchFragment.this, "", (OnEmptyQueryResultListener)SearchFragment.this);
                 binding.myRecyclerView.setAdapter(adapter);
                 binding.myRecyclerView.addItemDecoration(new BookGridItemDecoration(TBPadding, LRpadding));
 
@@ -143,17 +146,14 @@ public class SearchFragment extends Fragment implements OnTouchedItemListener {
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
         
         
-
-
         //Filtraggio tramite parole appena inserite
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-//               Toast.makeText(getContext(), "onQueryTextSubmit: " + query, Toast.LENGTH_SHORT).show();
                 if(adapter != null){    //nel caso in cui si ottenga la query a partire da BCScanning, l'adapter potrebbe essere nullo... (comportamento deferred)
-                    Log.i(TAG, "onQueryTextSubmit:  " + query);
+                    Log.i(TAG, "onQueryTextSubmit:  " + query + "\t" + adapter.getIsEmpty());
 
-//                    adapter.getFilter().filter(query);
+
                 }
                 return true;
             }
@@ -164,15 +164,9 @@ public class SearchFragment extends Fragment implements OnTouchedItemListener {
                     Log.i(TAG, "onQueryTextChange:  " + newText);
                     adapter.getFilter().filter(newText);
                 }
-
                 return false;
             }
         });
-
-
-
-
-
         super.onCreateOptionsMenu(menu, menuInflater);
     }
 
@@ -183,10 +177,13 @@ public class SearchFragment extends Fragment implements OnTouchedItemListener {
         switch (item.getItemId()) {
             case R.id.microphone:
                 getVoiceInput();
+                isRegularSearch = false;
                 return true;
             case R.id.search:
+                isRegularSearch = true;
                 return true;
             case R.id.BCSearch:
+                isRegularSearch = false;
                 performBrScanning();
                 return true;
             case R.id.Logout:
@@ -199,7 +196,6 @@ public class SearchFragment extends Fragment implements OnTouchedItemListener {
 
         }
     }
-
 
     private void getVoiceInput(){
         try{
@@ -214,7 +210,6 @@ public class SearchFragment extends Fragment implements OnTouchedItemListener {
             e.printStackTrace();
         }
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -251,5 +246,13 @@ public class SearchFragment extends Fragment implements OnTouchedItemListener {
 
         navController.navigate(action);
 
+    }
+
+    @Override
+    public void OnEmptyQueryResult(boolean isEmpty) {
+        if(isEmpty && !isRegularSearch){
+            Log.i(TAG, "OnEmptyQueryResult: is reaaaallly empty");
+            Toast.makeText(getContext(), "Non è stato trovato nessun riscontro ", Toast.LENGTH_SHORT).show();
+        }
     }
 }

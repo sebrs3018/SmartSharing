@@ -68,28 +68,6 @@ public class BCScanFragment extends Fragment {
 
         binding.imgCapture.bringToFront();
         startCamera();
-  /*      binding.imgCapture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Log.i(TAG, "onClick: bttScanning touched!");
-                *//* Nota: captureImage di cameraKit non ha il 100% di probabilità di successo... *//*
-                cameraKitView.captureImage(new CameraKitView.ImageCallback() {
-                    @Override
-                    public void onImage(CameraKitView cameraKitView, final byte[] capturedImage) {
-
-                        Log.i(TAG, "onImage: Image captured");
-                        Bitmap bitmap = BitmapFactory.decodeByteArray(capturedImage,0,capturedImage.length);
-                        bitmap = Bitmap.createScaledBitmap(bitmap,cameraKitView.getWidth(),cameraKitView.getHeight(),false);
-
-                        InputImage inputImage = InputImage.fromBitmap(bitmap, (int) cameraKitView.getRotation());
-                        performBCScanning(inputImage);
-
-                    }
-                });
-            }
-        });*/
-
         return myFragment;
     }
 
@@ -261,35 +239,5 @@ public class BCScanFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
-
-    @Override
-    public void onStart() {
-        super.onStart();
-//        cameraKitView.onStart();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-//        cameraKitView.onResume();
-    }
-
-    @Override
-    public void onPause() {
-//        cameraKitView.onPause();
-        super.onPause();
-    }
-
-    @Override
-    public void onStop() {
-//        cameraKitView.onStop();
-        super.onStop();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//        cameraKitView.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
 
 }

@@ -24,8 +24,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="35"
+            android:layout_margin="10dp"
 
-            android:layout_margin="5dp"
             app:cardElevation="2dp"
             app:cardPreventCornerOverlap="true"
 
@@ -62,77 +62,76 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginTop="10dp"
                     android:layout_marginRight="8dp"
+                    android:layout_marginBottom="8dp"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/nivBook"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="20dp"
+                        android:layout_gravity="center"
                         android:src="@drawable/ic_baseline_person_24"
                         android:background="@color/colorPrimary"
                         />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+
+                    <ScrollView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
                         android:layout_gravity="center"
-                        android:orientation="vertical">
+                        android:layout_marginStart="30dp"
+                        >
 
-                        <TextView
-                            android:layout_width="match_parent"
+                        <LinearLayout
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Nome utente"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
+                            android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/tvUtente"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="NomeUtente" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Nome utente"
+                                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
 
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="E-mail"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
-
-                        <TextView
-                            android:id="@+id/tvEmail"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="emailDaPescare" />
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="Indirizzo di raccolta"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
-
-
-                        <TextView
-                            android:id="@+id/tvIndirizzoUtente"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="indirizzoDaModificare" />
+                            <TextView
+                                android:id="@+id/tvUtente"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="NomeUtente" />
 
 
 
-                    </LinearLayout>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="E-mail"
+                                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
 
+                            <TextView
+                                android:id="@+id/tvEmail"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="emailDaPescare" />
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="Indirizzo di raccolta"
+                                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
+
+
+                            <TextView
+                                android:id="@+id/tvIndirizzoUtente"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="indirizzoDaModificare" />
+                        </LinearLayout>
+                    </ScrollView>
                 </LinearLayout>
-
             </LinearLayout>
 
 

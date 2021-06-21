@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -23,11 +24,13 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.maps.GeoApiContext;
 import com.sebrs3018.SmartSharing.BookInfoStructure.GeoLocalization.UserLocation;
 import com.sebrs3018.SmartSharing.FBRealtimeDB.Entities.User;
+import com.sebrs3018.SmartSharing.Login.LoginActivity;
 import com.sebrs3018.SmartSharing.R;
 import com.sebrs3018.SmartSharing.databinding.FragmentDoveTrovarloTabBinding;
 
@@ -53,6 +56,7 @@ public class DoveTrovarloTab extends Fragment implements OnMapReadyCallback {
     private UserLocation mUserPosition;
     private GeoApiContext mGeoApiContext = null;
     private boolean isCurrentPositionAvailable = false;
+    private boolean isLenderAddressAvailable = true;
 
     private static final String TAG = "DoveTrovarloTab";
 
@@ -71,7 +75,6 @@ public class DoveTrovarloTab extends Fragment implements OnMapReadyCallback {
 
         mfusedLocaltionClient = LocationServices.getFusedLocationProviderClient(getContext());
         initGoogleMap(savedInstanceState);
-
 
         return root;
     }
@@ -96,6 +99,8 @@ public class DoveTrovarloTab extends Fragment implements OnMapReadyCallback {
                 mUserPosition = new UserLocation(null, myLocation, null);
                 mGoogleMap.addMarker(new MarkerOptions().position(mUserPosition.getGeo_point()).title("It's me!"));
                 isCurrentPositionAvailable = true;
+                if(!isLenderAddressAvailable)
+                    mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 10));
                     }
                 });
         }
@@ -124,47 +129,70 @@ public class DoveTrovarloTab extends Fragment implements OnMapReadyCallback {
         if (mGoogleMap != null) {
 
             Geocoder coder = new Geocoder(getActivity().getApplicationContext());
-
-            Log.i(TAG, "addMapMarkers: " + binding.tvIndirizzoUtente.getText());
             String bookerAddress = binding.tvIndirizzoUtente.getText().toString();
 
-            try {
-                List<Address> address = coder.getFromLocationName(bookerAddress, 5);
-
-                double longitude = address.get(0).getLongitude();
-                double latitude = address.get(0).getLatitude();
-                LatLng bookerLatlng = new LatLng(latitude, longitude);
-
-                /*nel caso in cui ci fossero altri utenti, sarebbe necessario aggiungere altri marker da qua! */
-                mGoogleMap.addMarker(new MarkerOptions().position(bookerLatlng).title("The Booker"));
-                mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(bookerLatlng, 10));
-
                 /* Poichè la locazione attuale è quella che può ritardare, lo si inserisce dopo... */
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                    CompletableFuture.runAsync(() -> {
-                        try {
-                            if(!isCurrentPositionAvailable){
-                                Log.i(TAG, "addMapMarkers: la posizione non è ancora disponibile... waiting!");
-                                TimeUnit.SECONDS.sleep(2);  //dopo all'incirca due secondi si ha il risultato del GPS
-                            }
-                            Log.i(TAG, "addMapMarkers: la posizione dovrebbe essere disponibile!!");
-                            getLastKnownLocation();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    });
+
+                List<Address> address = null;
+                try {
+                    address = coder.getFromLocationName(bookerAddress, 5);
+
+                    if (address == null || address.size() == 0) {
+                        Log.i(TAG, "addMapMarkers: adress results ==> " + address);
+                        Log.e(TAG, "addMapMarkers: Indirizzo utente non trovato");
+                        isLenderAddressAvailable = false;
+                        getCurrentPosition();
+                        return;
+                    }
+
+                    Log.i(TAG, "******** OK: addMapMarkers: address results ==> " + address);
+                    isLenderAddressAvailable = true;
+                    double longitude = address.get(0).getLongitude();
+                    double latitude = address.get(0).getLatitude();
+                    LatLng bookerLatlng = new LatLng(latitude, longitude);
+
+
+                    /*nel caso in cui ci fossero altri utenti, sarebbe necessario aggiungere altri marker da qua! */
+                    MarkerOptions mo = new MarkerOptions().position(bookerLatlng).title("The Booker");
+                    Log.i(TAG, "addMapMarkers: Marker options ==> " + mo);
+                    Marker m =  mGoogleMap.addMarker(mo);
+                    Log.i(TAG, "*** addMapMarkers: created marker ==> " + m);
+                    mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(bookerLatlng, 10));
+
+                    getCurrentPosition();
+
+                } catch (IOException e) {
+                    Log.e(TAG, "addMapMarkers: ", e.fillInStackTrace());
+
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
+
             }
         }
-    }
+
+    private void getCurrentPosition(){
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+
+            CompletableFuture.runAsync(() -> {
+                try {
+                    if (!isCurrentPositionAvailable) {
+                        Log.i(TAG, "addMapMarkers: la posizione non è ancora disponibile... waiting!");
+                        TimeUnit.SECONDS.sleep(3);  //dopo all'incirca due secondi si ha il risultato del GPS
+                    }
+
+                    Log.i(TAG, "addMapMarkers: la posizione dovrebbe essere disponibile!!");
+                    getLastKnownLocation();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+
+        }
+}
 
     /**
      * This function allows a deferred update of user info
-     *
      * @param lender contains the info of the lender.
-     * */
+     */
     public void setUserInfo(User lender){
         binding.tvUtente.setText(lender.getUsername());
         binding.tvIndirizzoUtente.setText(lender.getAddress());

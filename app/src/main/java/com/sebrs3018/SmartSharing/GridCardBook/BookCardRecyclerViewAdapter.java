@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.sebrs3018.SmartSharing.CustomListeners.OnEmptyQueryResultListener;
 import com.sebrs3018.SmartSharing.CustomListeners.OnTouchedItemListener;
 import com.sebrs3018.SmartSharing.FBRealtimeDB.Entities.Book;
 import com.sebrs3018.SmartSharing.R;
@@ -31,7 +32,8 @@ public class BookCardRecyclerViewAdapter  extends RecyclerView.Adapter<BookCardV
     private OnTouchedItemListener onTouchedItemListener;
     private final String TAG = "BCRViewAdapter";
     private String from;
-    private Context context;
+    private boolean isEmpty = false;
+    private OnEmptyQueryResultListener listener;
 
 
     public BookCardRecyclerViewAdapter(List<Book> bookList, OnTouchedItemListener _onTouchedItemListener, String _from) {
@@ -44,9 +46,9 @@ public class BookCardRecyclerViewAdapter  extends RecyclerView.Adapter<BookCardV
     }
 
 
-    public BookCardRecyclerViewAdapter(List<Book> bookList, OnTouchedItemListener _onTouchedItemListener, String _from, Context _context) {
+    public BookCardRecyclerViewAdapter(List<Book> bookList, OnTouchedItemListener _onTouchedItemListener, String _from, OnEmptyQueryResultListener _listener) {
         this(bookList, _onTouchedItemListener, _from);
-        context = _context;
+        listener = _listener;
     }
 
 
@@ -119,9 +121,11 @@ public class BookCardRecyclerViewAdapter  extends RecyclerView.Adapter<BookCardV
 
             Collection<? extends Book> resultList = (Collection<? extends Book>) results.values;
 
-            if(resultList.size() <= 0)
-                Toast.makeText(context, "Non è stato trovato nessun risultato", Toast.LENGTH_SHORT).show();
-                /* elimino gli item che non mi interessano dalla mia lista filtrata */
+            //Questo messaggio è significativo solo per lo scanning e ricerca vocale
+            Log.i(TAG, "publishResults: dimension of listResult ==> " + resultList.size() + "\t" + isEmpty);
+            listener.OnEmptyQueryResult(resultList.size() <= 0);
+
+            /* elimino gli item che non mi interessano dalla mia lista filtrata */
             bookList.clear();
             bookList.addAll(resultList);
             /* Comunico all'adapter di aggionrare la propria lista */
@@ -129,5 +133,8 @@ public class BookCardRecyclerViewAdapter  extends RecyclerView.Adapter<BookCardV
         }
     };
 
+    public boolean getIsEmpty(){
+        return isEmpty;
+    }
 
 }
