@@ -26,7 +26,6 @@ public class Navigation_Activity extends AppCompatActivity {
 
     private ActivityNavigationBinding binding;
 
-//    private Toolbar toolbar;
     private final String TAG = "Navigation_Activity";
     AppBarConfiguration appBarConfiguration;
 
@@ -63,14 +62,6 @@ public class Navigation_Activity extends AppCompatActivity {
         return true;
     }
 
-/*    @Override
-    public boolean onSupportNavigateUp() {
-        NavHostFragment navHostFragment =
-                (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_navigation);
-        NavController navController = navHostFragment.getNavController();
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
-    }*/
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -112,16 +103,6 @@ public class Navigation_Activity extends AppCompatActivity {
             return true;
         }
     };
-
-
-/*
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-*/
-
-
 
 
 }
