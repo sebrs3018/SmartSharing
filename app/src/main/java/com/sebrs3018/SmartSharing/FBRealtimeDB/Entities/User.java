@@ -2,6 +2,7 @@ package com.sebrs3018.SmartSharing.FBRealtimeDB.Entities;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,7 +14,7 @@ import java.util.List;
 
 public class User implements Parcelable {
 
-    private String TAG = "User";
+    private static String TAG = "User";
     public String username;
     public String address;
     public String password;
@@ -21,8 +22,8 @@ public class User implements Parcelable {
 
     public User(){ }
 
-    public User(String _username){
-       this(_username, "", "", "");
+    public User(String _username, String _address){
+       this(_username, "", _address, "");
     }
 
 
@@ -61,7 +62,6 @@ public class User implements Parcelable {
     public String getPassword(){
         return password;
     }
-
     public String getUsername() {
         return username;
     }
@@ -80,7 +80,10 @@ public class User implements Parcelable {
             String line;
 
             while ((line = br.readLine()) != null) {
-                usernames.add(new User(line));    //aggiungo utente registrato
+                Log.i(TAG, "initRegisteredUsers: line ==> " + line);
+                String[] userInfo = line.split("-");
+                Log.i(TAG, "initRegisteredUsers: user info ==> username: " + userInfo[0] + "\taddress: " + userInfo[1]);
+                usernames.add(new User(userInfo[0], userInfo[1]));    //aggiungo utente registrato
                 resultStringBuilder.append(line).append("\n");
             }
         } catch (IOException e) {

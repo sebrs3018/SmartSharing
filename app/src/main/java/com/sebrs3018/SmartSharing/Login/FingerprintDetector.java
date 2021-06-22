@@ -13,6 +13,7 @@ import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import com.sebrs3018.SmartSharing.FBRealtimeDB.Entities.User;
 import com.sebrs3018.SmartSharing.Login.LoginActivity;
 import com.sebrs3018.SmartSharing.Navigation_Activity;
 
@@ -39,11 +40,10 @@ public class FingerprintDetector  {
     private BiometricPrompt.PromptInfo promptInfo;
     private Context context;
     private boolean success;
+    private User user;
 
-    private String USERNAMEKEY;  //l'username' mi servirà come chiave!
-
-    public FingerprintDetector(String _usernameKey, Context _context){
-        USERNAMEKEY = _usernameKey;
+    public FingerprintDetector(User _user, Context _context){
+        user = _user;
         context = _context;
         createKey();
         initPromp();
@@ -60,7 +60,7 @@ public class FingerprintDetector  {
         /* Creating a key */
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             generateSecretKey(new KeyGenParameterSpec.Builder(
-                    USERNAMEKEY,
+                    user.getUsername(),
                     KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
                     .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
                     .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_PKCS7)
@@ -99,7 +99,12 @@ public class FingerprintDetector  {
                     context.startActivity(new Intent(context, LoginActivity.class));
                 }
                 else{
-                    Toast.makeText(context, "Benvenuto " + USERNAMEKEY , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Benvenuto " + user.getUsername() , Toast.LENGTH_SHORT).show();
+                    SessionManager sm = new SessionManager(context);
+                    sm.setUserSession(user.getUsername(), user.getAddress());
+
+//                    sm.setUserSession();
+
                     context.startActivity(new Intent(context, Navigation_Activity.class));
                 }
             }
@@ -174,7 +179,7 @@ public class FingerprintDetector  {
         SecretKey secretKey = null;
         try {
             //Prendo key dato username
-            secretKey = ((SecretKey)keyStore.getKey(USERNAMEKEY, null));   //Questa chiave è associata alla password (più registrazioni potrebbero comportare dei problemi)
+            secretKey = ((SecretKey)keyStore.getKey(user.getUsername(), null));   //Questa chiave è associata alla password (più registrazioni potrebbero comportare dei problemi)
         } catch (KeyStoreException | NoSuchAlgorithmException | UnrecoverableKeyException e) {
             e.printStackTrace();
         }

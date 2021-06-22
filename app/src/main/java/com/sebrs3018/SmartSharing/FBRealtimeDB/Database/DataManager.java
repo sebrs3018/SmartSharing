@@ -150,6 +150,7 @@ public class DataManager {
 
                                 //Salvo il nome e l'indirizzo in sessione
                                 sessionManager.setUserSession(u.getUsername(), u.getAddress());
+
                                 //Una volta eseguito il login, posso proseguire!
                                 c.startActivity(new Intent(c, Navigation_Activity.class));
                             }

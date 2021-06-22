@@ -50,7 +50,6 @@ public class BCScanFragment extends Fragment {
     private static final String TAG = "BCScanFragment";
     private View myFragment;
     private FragmentBCScanBinding binding;
-    private CameraKitView cameraKitView;
 
     public BCScanFragment() {
         // Required empty public constructor
@@ -64,7 +63,6 @@ public class BCScanFragment extends Fragment {
 
         binding = FragmentBCScanBinding.inflate(inflater, container, false);
         myFragment = binding.getRoot();
-//        cameraKitView = binding.cameraKV;
 
         binding.imgCapture.bringToFront();
         startCamera();
@@ -153,12 +151,10 @@ public class BCScanFragment extends Fragment {
         binding.imgCapture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                File file = new File(Environment.getExternalStorageDirectory() + "/" + System.currentTimeMillis() + ".jpg");
                 /* catturo immagine... */
                 imgCap.takePicture(new ImageCapture.OnImageCapturedListener() {
                     @Override
                     public void onCaptureSuccess(ImageProxy image, int rotationDegrees) {
-//                        Toast.makeText(getContext(), "Foto effettuata! rotation degrees ==> " + rotationDegrees,Toast.LENGTH_SHORT).show();
                         InputImage inputImage = InputImage.fromBitmap(imageProxyToBitmap(image), rotationDegrees);
                         performBCScanning(inputImage);
                         super.onCaptureSuccess(image, rotationDegrees);

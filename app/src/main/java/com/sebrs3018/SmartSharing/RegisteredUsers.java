@@ -44,7 +44,7 @@ public class RegisteredUsers extends AppCompatActivity implements OnTouchedItemL
     //E' questo metodo che attiva il processo di individuazione e gestione del click!
     public void onItemTouched(int position, String from) {
         Log.i(TAG, "onUserClick: clicked " + registeredUsers.get(position).getUsername());
-        FingerprintDetector fingerprintDetector = new FingerprintDetector(registeredUsers.get(position).getUsername(), RegisteredUsers.this);
+        FingerprintDetector fingerprintDetector = new FingerprintDetector(registeredUsers.get(position), RegisteredUsers.this);
         fingerprintDetector.startFingerPrintDetection(false);
         
     }

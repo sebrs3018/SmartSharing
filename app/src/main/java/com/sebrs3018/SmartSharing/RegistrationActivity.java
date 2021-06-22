@@ -17,6 +17,7 @@ import androidx.cardview.widget.CardView;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.sebrs3018.SmartSharing.FBRealtimeDB.Entities.User;
 import com.sebrs3018.SmartSharing.Login.FingerprintDetector;
 import com.sebrs3018.SmartSharing.Login.LoginActivity;
 import com.sebrs3018.SmartSharing.FBRealtimeDB.Database.DataManager;
@@ -113,7 +114,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
                 if(dm.addUser(_user, Utils.md5(_password), _address, _email)) {    //salvo in DB password cifrata
                     /* finestrella pop-up per inserimento impronta */
-                    registerFingerPrint(_user);
+                    registerFingerPrint(_user, _address);
                 }
                 else
                     Toast.makeText(RegistrationActivity.this, "Utente già registrato", Toast.LENGTH_LONG).show();
@@ -124,6 +125,10 @@ public class RegistrationActivity extends AppCompatActivity {
 
     /*IDEA: salvare tutte le email usate dall'utente nel SUO dispositivo */
     // Precondizione: si salva su Storage sse l'utente si registra!
+    /**
+     * @param sFileName nameOfFile in which you want to save yout data
+     * @param sBody contains what do you want to write in sFileName
+     * */
     public void writeFileOnInternalStorage(Context mcoContext, String sFileName, String sBody){
 
         File dir = new File(mcoContext.getFilesDir(), "SmartSharing");
@@ -140,6 +145,7 @@ public class RegistrationActivity extends AppCompatActivity {
             File gpxfile = new File(dir, sFileName);
             FileWriter writer = new FileWriter(gpxfile, true);
             BufferedWriter bw = new BufferedWriter(writer);
+            Log.i(TAG, "writeFileOnInternalStorage: user data to save ==> " + sBody);
             bw.write(sBody + "\n");
             bw.close();
         } catch (Exception e){
@@ -177,7 +183,7 @@ public class RegistrationActivity extends AppCompatActivity {
         etCPassword.setText(null);
     }
 
-    private void registerFingerPrint(String _user){
+    private void registerFingerPrint(String _user, String _address){
         new AlertDialog.Builder(RegistrationActivity.this)
                 .setTitle("Salva FingerPrint")
                 .setMessage("Vuoi inserire un'impronta?")
@@ -185,10 +191,10 @@ public class RegistrationActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         /* Associo all'email dell'utente la sua impronta digitale*/
-                        FingerprintDetector fingerprintDetector = new FingerprintDetector(_user, RegistrationActivity.this);
+                        FingerprintDetector fingerprintDetector = new FingerprintDetector(new User(_user, _address), RegistrationActivity.this);
                         fingerprintDetector.startFingerPrintDetection(true);
                         /* Tengo traccia degli utenti che hanno inserito anche le loro impronta */
-                        writeFileOnInternalStorage(RegistrationActivity.this, getString(R.string.LogFileName), _user);
+                        writeFileOnInternalStorage(RegistrationActivity.this, getString(R.string.LogFileName), _user + "-" +  _address);
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
