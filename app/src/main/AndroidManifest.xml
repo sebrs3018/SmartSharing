@@ -39,7 +39,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="${MAPS_API_KEY}" />
+            android:value="AIzaSyAQvnlBFW0sRnldRH5EZ5BmDjaBoLwEdGE" />
 
         <activity android:name=".Login.LoginActivity">
             <intent-filter>
