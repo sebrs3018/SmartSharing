@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.sebrs3018.SmartSharing.BookInfoStructure.Tabs.DoveTrovarloTab;
 import com.sebrs3018.SmartSharing.BookInfoStructure.Tabs.InfoTab;
+import com.sebrs3018.SmartSharing.BookInfoStructure.Tabs.PageAdapter;
 import com.sebrs3018.SmartSharing.FBRealtimeDB.Entities.Book;
 import com.sebrs3018.SmartSharing.FBRealtimeDB.Entities.User;
 import com.sebrs3018.SmartSharing.FBRealtimeDB.Database.DataManager;

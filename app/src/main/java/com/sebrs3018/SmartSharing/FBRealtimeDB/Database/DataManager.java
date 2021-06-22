@@ -28,7 +28,6 @@ import java.util.List;
 
 import static com.sebrs3018.SmartSharing.Constants.*;
 
-
 public class DataManager {
 
     private static final String TAG = "DataManager";
@@ -40,14 +39,7 @@ public class DataManager {
     private Context c;
 
     private long progessiveID = 0;
-
     private boolean isUserInDb = true;
-
-    public DataManager() {
-        db = FirebaseDatabase.getInstance();
-        userRoot = db.getReference().child("Users");
-        bookRoot = db.getReference().child("Books");
-    }
 
     public DataManager(String rootRef) {
         db = FirebaseDatabase.getInstance();
@@ -63,13 +55,20 @@ public class DataManager {
         c = context;
     }
 
+    /**
+     * @param context used for handling errors in UI
+     * @param rootRef used for root entity in DB
+     * @param sm session in which username and address of the user will be saved
+     * */
     public DataManager(String rootRef, Context context, SessionManager sm){
         this(rootRef,context);
         sessionManager = sm;
     }
 
 
-
+    /**
+     * @param rootRef reference to the root of the entity in Firebase BD
+     * */
     private void setRoot(String rootRef) {
         if (rootRef.equals(USERS)){
             userRoot = db.getReference().child(USERS);
@@ -91,23 +90,15 @@ public class DataManager {
 
                 @Override
                 public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
+                    Log.e(TAG, "onCancelled: ", error.toException());
                 }
             });
         }
     }
 
-    /**
-     * This class contain only the methods to add data
-     * to the DB, to get data the query has to be made before
-     * the visualization in UI.
-     */
-
-
     public DatabaseReference getUserRoot() {
         return userRoot;
     }
-
     public DatabaseReference getBookRoot() {
         return bookRoot;
     }
@@ -125,49 +116,41 @@ public class DataManager {
 
     public boolean login(String _username, String _password) {
 
-            userRoot.child(_username).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DataSnapshot> task) {
-                    if (!task.isSuccessful()) {
-                        Log.e("firebase", "Error getting data", task.getException());
-                    } else {
-                        User u = task.getResult().getValue(User.class);
+        userRoot.child(_username).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                } else {
+                    User u = task.getResult().getValue(User.class);
 
-                            if(u == null) { isUserInDb = false;
-                                Log.i(TAG, "onComplete: Utente non trovato!!");
-                                ((LoginActivity) c).setUserError();
-                            }
-                            else{
+                        if(u == null) {
+                            isUserInDb = false;
+                            Log.i(TAG, "onComplete: Utente non trovato!!");
+                            ((LoginActivity) c).setUserError();
+                        }
+                        else{
+                            if(!u.getPassword().equals(Utils.md5(_password))){
+                                ((LoginActivity) c).setPasswdError();
+                                Log.i(TAG, "onComplete: Password non corretta!" + _password + "\t!=\t" + u.getPassword());
+                                return; }
 
-                                if(!u.getPassword().equals(Utils.md5(_password))){
-                                    ((LoginActivity) c).setPasswdError();
-                                    Log.i(TAG, "onComplete: Password non corretta!" + _password + "\t!=\t" + u.getPassword());
-                                    return; }
+                            Log.i(TAG, "onDataChange: " + u.getPassword());
+                            Log.i(TAG, "onDataChange: " + u.getUsername());
+                            Log.i(TAG, "onDataChange: " + u.getAddress());
 
-                                Log.i(TAG, "onDataChange: " + u.getPassword());
-                                Log.i(TAG, "onDataChange: " + u.getUsername());
-                                Log.i(TAG, "onDataChange: " + u.getAddress());
+                            //Salvo il nome e l'indirizzo in sessione
+                            sessionManager.setUserSession(u.getUsername(), u.getAddress());
 
-                                //Salvo il nome e l'indirizzo in sessione
-                                sessionManager.setUserSession(u.getUsername(), u.getAddress());
-
-                                //Una volta eseguito il login, posso proseguire!
-                                c.startActivity(new Intent(c, Navigation_Activity.class));
-                            }
-                    }
+                            //Una volta eseguito il login, posso proseguire!
+                            c.startActivity(new Intent(c, Navigation_Activity.class));
+                        }
                 }
-            });
+            }
+        });
 
         Log.i(TAG, "login: login successs!\t" + isUserInDb);
         return true;
-    }
-
-
-    /*
-    *
-    * */
-    public void addBookLender(String _ISBN, String _titolo, String _autore, String _editore, String _dataPubblicazione, String _nroPagine, String _descrizione, String _urlImage, String _lender ){
-        bookRoot.child(_ISBN).setValue(new Book(_ISBN, _titolo, _autore, _editore, _dataPubblicazione, _nroPagine, _descrizione, _urlImage, _lender));
     }
 
     /**
@@ -178,45 +161,5 @@ public class DataManager {
         bookToAdd.setIDlogicalClock(progessiveID);
         bookRoot.child(String.valueOf(progessiveID)).setValue(bookToAdd);
     }
-
-    public List<Book> getBooksAvailable() {
-
-        List<Book> bookList = new ArrayList<>();
-        bookRoot.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot ds : snapshot.getChildren()) {
-                    Book book = ds.getValue(Book.class);
-
-                    if (book != null) {
-                        bookList.add(new Book(book.getISBN(), book.getTitolo(), book.getAutore(), book.getEditore(), book.getDataPubblicazione(), book.getNroPagine(), book.getDescrizione(), book.getUrlImage(), book.getLender()));
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // TODO show error message
-            }
-        });
-        return bookList;
-
-    }
-
-
-
-    /**
-     * Add a book on the DB
-     */
-/*
-    public boolean addBookLender(String _ISBN, String _lender, String _author) {
-        Book book = new Book(_name, _category, _author);
-        bookRoot.push().setValue(book);
-        return true;
-    }
-*/
-
-
-
 
 }

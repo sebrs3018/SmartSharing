@@ -49,7 +49,6 @@ public class SearchFragment extends Fragment implements OnTouchedItemListener, O
     protected static final int RESULT_SPEECH = 1;
 
     private final String TAG = "SearchFragment";
-    private SearchViewModel searchViewModel;
     private FragmentSearchBinding binding;
     private SearchView searchView;
     private BookCardRecyclerViewAdapter adapter;
@@ -67,8 +66,6 @@ public class SearchFragment extends Fragment implements OnTouchedItemListener, O
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        searchViewModel = new ViewModelProvider(this).get(SearchViewModel.class);
 
         binding = FragmentSearchBinding.inflate(inflater, container, false);
         View root = binding.getRoot();

@@ -1,4 +1,4 @@
-package com.sebrs3018.SmartSharing.BookInfoStructure;
+package com.sebrs3018.SmartSharing.BookInfoStructure.Tabs;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

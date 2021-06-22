@@ -15,9 +15,9 @@ import java.util.List;
 public class User implements Parcelable {
 
     private static String TAG = "User";
-    public String username;
-    public String address;
-    public String password;
+    private String username;
+    private String address;
+    private String password;
     private String email;
 
     public User(){ }
@@ -35,13 +35,24 @@ public class User implements Parcelable {
     }
 
 
-
-
     protected User(Parcel in) {
-        TAG = in.readString();
         username = in.readString();
         address = in.readString();
         password = in.readString();
+        email = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(username);
+        dest.writeString(address);
+        dest.writeString(password);
+        dest.writeString(email);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -89,21 +100,7 @@ public class User implements Parcelable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return usernames;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(TAG);
-        dest.writeString(username);
-        dest.writeString(address);
-        dest.writeString(password);
     }
 
     public String getEmail() {

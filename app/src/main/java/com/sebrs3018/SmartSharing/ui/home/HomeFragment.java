@@ -45,7 +45,6 @@ public class HomeFragment extends Fragment implements OnTouchedItemListener {
     private static final String CONSIGLIATI = "Consigliati";
     private static final int LIMITELIBRICATEGORIA = 10;
 
-    private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
 
     private List<Book> consigliati  = new ArrayList<>();
@@ -59,8 +58,6 @@ public class HomeFragment extends Fragment implements OnTouchedItemListener {
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        homeViewModel =  new ViewModelProvider(this).get(HomeViewModel.class);
 
         //Il binding mi offre la possibilità di esplorare i componenti del layout come se fossero degli attributi!
         binding = FragmentHomeBinding.inflate(inflater, container, false);

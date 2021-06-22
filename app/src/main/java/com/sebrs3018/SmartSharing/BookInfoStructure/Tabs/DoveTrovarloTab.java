@@ -16,7 +16,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -28,9 +27,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.maps.GeoApiContext;
-import com.sebrs3018.SmartSharing.BookInfoStructure.GeoLocalization.UserLocation;
 import com.sebrs3018.SmartSharing.FBRealtimeDB.Entities.User;
-import com.sebrs3018.SmartSharing.Login.LoginActivity;
 import com.sebrs3018.SmartSharing.R;
 import com.sebrs3018.SmartSharing.databinding.FragmentDoveTrovarloTabBinding;
 
@@ -53,11 +50,8 @@ public class DoveTrovarloTab extends Fragment implements OnMapReadyCallback {
     private FusedLocationProviderClient mfusedLocaltionClient;
 
     private GoogleMap mGoogleMap;
-    private UserLocation mUserPosition;
-    private GeoApiContext mGeoApiContext = null;
     private boolean isCurrentPositionAvailable = false;
     private boolean isLenderAddressAvailable = true;
-
     private static final String TAG = "DoveTrovarloTab";
 
 
@@ -72,13 +66,11 @@ public class DoveTrovarloTab extends Fragment implements OnMapReadyCallback {
 
         binding = FragmentDoveTrovarloTabBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
         mfusedLocaltionClient = LocationServices.getFusedLocationProviderClient(getContext());
         initGoogleMap(savedInstanceState);
-
         return root;
-    }
 
+    }
 
     /* This function founds your current location - if GPS is recently activated, the result may be null */
     private void getLastKnownLocation() {
@@ -95,9 +87,7 @@ public class DoveTrovarloTab extends Fragment implements OnMapReadyCallback {
                 if(location == null) return;
 
                 LatLng myLocation = new LatLng(location.getLatitude(), location.getLongitude());
-
-                mUserPosition = new UserLocation(null, myLocation, null);
-                mGoogleMap.addMarker(new MarkerOptions().position(mUserPosition.getGeo_point()).title("It's me!"));
+                mGoogleMap.addMarker(new MarkerOptions().position(myLocation).title("It's me!"));
                 isCurrentPositionAvailable = true;
                 if(!isLenderAddressAvailable)
                     mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 10));
@@ -108,19 +98,12 @@ public class DoveTrovarloTab extends Fragment implements OnMapReadyCallback {
 
     private void initGoogleMap(Bundle savedInstanceState) {
         Bundle mapViewBundle = null;
-
-
         if (savedInstanceState != null) {
             mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
         }
 
         binding.map.onCreate(mapViewBundle);
         binding.map.getMapAsync(this);
-
-        if (mGeoApiContext == null) {
-            mGeoApiContext = new GeoApiContext.Builder().apiKey(getString(R.string.google_api_key)).build();
-        }
-
     }
 
 
@@ -202,7 +185,6 @@ public class DoveTrovarloTab extends Fragment implements OnMapReadyCallback {
         Log.i(TAG, "setUserInfo: email utente ==>" + lender.getEmail());
         binding.tvEmail.setText(lender.getEmail());
     }
-
 
 
     @Override
