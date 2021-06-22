@@ -1,6 +1,6 @@
 package com.sebrs3018.SmartSharing.ui.BCScan;
 
-import android.content.Intent;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -19,7 +19,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.os.Environment;
+
 import android.util.Log;
 import android.util.Rational;
 import android.util.Size;
@@ -29,7 +29,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.camerakit.CameraKitView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -39,9 +38,7 @@ import com.google.mlkit.vision.barcode.BarcodeScanning;
 import com.google.mlkit.vision.common.InputImage;
 import com.sebrs3018.SmartSharing.barcode.BarcodeLookup;
 import com.sebrs3018.SmartSharing.databinding.FragmentBCScanBinding;
-import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
 import java.nio.ByteBuffer;
 import java.util.List;
 
@@ -88,7 +85,7 @@ public class BCScanFragment extends Fragment {
                                     sendISBNresult(ISBN);
                             }
                             else
-                                Log.i(TAG, "Wrong barcode found " );
+                                Toast.makeText(getContext(),"Il barcode non è un ISBN",Toast.LENGTH_SHORT).show();
                         }
                     }
                 })

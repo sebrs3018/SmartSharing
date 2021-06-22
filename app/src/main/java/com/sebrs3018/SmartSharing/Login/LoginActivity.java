@@ -62,10 +62,8 @@ public class LoginActivity extends AppCompatActivity {
             "android.permission.RECORD_AUDIO",
     };
 
-
-//    private final String FullPathLog = "/data/user/0/com.sebrs3018.login/files/SmartSharing/Logs.txt";
     private final String TAG = "LoginActivity";
-    private TextView tvRegister_page = null; // tvLogin è il bottone per loggare.
+    private TextView tvRegister_page = null;
 
     private TextInputLayout ilUser = null, ilPassword = null;
     private TextInputEditText etUser = null, etPassword = null;
@@ -170,7 +168,7 @@ public class LoginActivity extends AppCompatActivity {
         return text.toString().trim().length() != 0;
     }
 
-    //Method to force current location for GPS
+    // Method to force current location for GPS
     public void getLocationUpdate() {
         LocationRequest mLocationRequest = LocationRequest.create();
         mLocationRequest.setInterval(10000);
@@ -183,8 +181,6 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-               // Log.i(TAG, "onLocationResult: " + locationResult.getLocations().get(0).getLatitude());
-
                 /* Idea: dopo aver trovato la prima posizione attuale, aumento l'intervallo... */
                 mLocationRequest.setInterval(60000);
                 mLocationRequest.setFastestInterval(5000);
@@ -196,41 +192,6 @@ public class LoginActivity extends AppCompatActivity {
         LocationServices.getFusedLocationProviderClient(getApplicationContext()).requestLocationUpdates(mLocationRequest, mLocationCallback, null);
     }
 
-
-
-
-    private boolean checkMapServices(){
-        if(isServicesOK()){
-            if(isMapsEnabled()){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private void buildAlertMessageNoGps() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("This application requires GPS to work properly, do you want to enable it?")
-                .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                        Intent enableGpsIntent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                        startActivityForResult(enableGpsIntent, PERMISSIONS_REQUEST_ENABLE_GPS);
-                    }
-                });
-        final AlertDialog alert = builder.create();
-        alert.show();
-    }
-
-    public boolean isMapsEnabled(){
-        final LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
-
-        if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
-            buildAlertMessageNoGps();
-            return false;
-        }
-        return true;
-    }
 
     /* richiesta permessi in maniera dinamica */
     private void getLocationPermission() {
@@ -250,26 +211,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public boolean isServicesOK(){
-        Log.d(TAG, "isServicesOK: checking google services version");
-
-        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(LoginActivity.this);
-
-        if(available == ConnectionResult.SUCCESS){
-            //everything is fine and the user can make map requests
-            Log.d(TAG, "isServicesOK: Google Play Services is working");
-            return true;
-        }
-        else if(GoogleApiAvailability.getInstance().isUserResolvableError(available)){
-            //an error occured but we can resolve it
-            Log.d(TAG, "isServicesOK: an error occured but we can fix it");
-            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(LoginActivity.this, available, ERROR_DIALOG_REQUEST);
-            dialog.show();
-        }else{
-            Toast.makeText(this, "You can't make map requests", Toast.LENGTH_SHORT).show();
-        }
-        return false;
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode,

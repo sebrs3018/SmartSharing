@@ -30,7 +30,7 @@ import static com.sebrs3018.SmartSharing.Constants.*;
 public class RegistrationActivity extends AppCompatActivity {
 
     private final String TAG = "RegistrationActivity";
-    private TextView tvLogin_page = null;                       // tvRegister è il bottone per registrarsi.
+    private TextView tvLogin_page = null;
     private TextInputEditText etUser = null, etPassword = null, etCPassword = null, etAddress = null, etEmail = null; // campi di input per user e password
     private TextInputLayout ilPassword, ilCPassword, ilUser, ilAddress, ilEmail;
     private CardView cvRegister = null;
@@ -126,7 +126,7 @@ public class RegistrationActivity extends AppCompatActivity {
     /*IDEA: salvare tutte le email usate dall'utente nel SUO dispositivo */
     // Precondizione: si salva su Storage sse l'utente si registra!
     /**
-     * @param sFileName nameOfFile in which you want to save yout data
+     * @param sFileName nameOfFile in which you want to save your data
      * @param sBody contains what do you want to write in sFileName
      * */
     public void writeFileOnInternalStorage(Context mcoContext, String sFileName, String sBody){
@@ -161,6 +161,7 @@ public class RegistrationActivity extends AppCompatActivity {
             return false;
         return text.toString().trim().length() != 0;
     }
+
     private void initRegistrationFields(){
         ilUser = findViewById(R.id.ilRegUser);
         etUser = findViewById(R.id.etRegUser);
@@ -182,6 +183,7 @@ public class RegistrationActivity extends AppCompatActivity {
         etPassword.setText(null);
         etCPassword.setText(null);
     }
+
 
     private void registerFingerPrint(String _user, String _address){
         new AlertDialog.Builder(RegistrationActivity.this)

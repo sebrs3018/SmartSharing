@@ -40,7 +40,8 @@ public class RegisteredUsers extends AppCompatActivity implements OnTouchedItemL
 
         }
 
-    @Override //Se volessi navigare su una nuova activity associata all'utente appena premuto passerei da qui
+    @Override
+    //Se volessi navigare su una nuova activity associata all'utente appena premuto passerei da qui
     //E' questo metodo che attiva il processo di individuazione e gestione del click!
     public void onItemTouched(int position, String from) {
         Log.i(TAG, "onUserClick: clicked " + registeredUsers.get(position).getUsername());

@@ -108,7 +108,7 @@ public class SearchFragment extends Fragment implements OnTouchedItemListener, O
 
                 String ISBNresult = getISBNresult();
                 if(!ISBNresult.equals(FIRSTTIME)){
-                    Log.i(TAG, "onCreateOptionsMenu: ho appena ricevuto questo ISBN scanerizzato! " + ISBNresult);
+                    Log.i(TAG, "onCreateOptionsMenu: ho appena ricevuto questo ISBN scannerizzato! " + ISBNresult);
                     searchView.setQuery(ISBNresult, true);
                 }
 

@@ -102,9 +102,6 @@ public class FingerprintDetector  {
                     Toast.makeText(context, "Benvenuto " + user.getUsername() , Toast.LENGTH_SHORT).show();
                     SessionManager sm = new SessionManager(context);
                     sm.setUserSession(user.getUsername(), user.getAddress());
-
-//                    sm.setUserSession();
-
                     context.startActivity(new Intent(context, Navigation_Activity.class));
                 }
             }
@@ -123,8 +120,6 @@ public class FingerprintDetector  {
         // Prompt appears when user clicks "Log in".
         // Consider integrating with the keystore to unlock cryptographic operations,
         // if needed by your app.
-/*        Button biometricLoginButton = findViewById(R.id.biometric_login);
-        biometricLoginButton.setOnClickListener(view -> {*/
 
             Cipher cipher = getCipher();
             SecretKey secretKey = getSecretKey();   //Se viene data una secretKey sbagliata...
