@@ -167,6 +167,7 @@ public class DoveTrovarloTab extends Fragment implements OnMapReadyCallback {
                 }
 
             }
+        else Log.e(TAG, "addMapMarkers: mappa non inizializzata");
         }
 
     private void getCurrentPosition(){
@@ -185,7 +186,9 @@ public class DoveTrovarloTab extends Fragment implements OnMapReadyCallback {
                     e.printStackTrace();
                 }
             });
-
+        }
+        else {
+            Log.e(TAG, "getCurrentPosition: Versione non supportata" );
         }
 }
 
