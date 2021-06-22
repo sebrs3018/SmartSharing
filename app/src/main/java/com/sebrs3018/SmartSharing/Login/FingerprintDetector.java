@@ -54,8 +54,8 @@ public class FingerprintDetector  {
                 .setTitle("Biometric login")
                 .setNegativeButtonText("Annulla")
                 .build();
-
     }
+
     private void createKey(){
         /* Creating a key */
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
