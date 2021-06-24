@@ -29,7 +29,7 @@ public class BarcodeLookup extends AsyncTask<String, Void, Book> {
     private Context context;
 
     private String initial_url = "https://api.barcodelookup.com/v2/products?barcode=";
-    private final String key = "&formatted=y&key=r93822v6r228etpb16cxfllvvjvy2n";
+    private final String key = "&formatted=y&key=idwuike89q98a4lii72m0zvo3vgg9r";
     private Product productFound;
 
     /**
